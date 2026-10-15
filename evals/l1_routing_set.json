@@ -1,0 +1,37 @@
+[
+  {
+    "id": "eval_01",
+    "query": "Saya mau bikin website landing page untuk bengkel motor",
+    "expected_intent": "need_website",
+    "expected_action": "navigate",
+    "expected_target": "/webia"
+  },
+  {
+    "id": "eval_02",
+    "query": "Bisa pesan undangan pernikahan online ada peta lokasi?",
+    "expected_intent": "need_invitation",
+    "expected_action": "navigate",
+    "expected_target": "/undangan"
+  },
+  {
+    "id": "eval_03",
+    "query": "Apakah D-Kreasi menyediakan jasa pembuatan aplikasi android?",
+    "expected_intent": "coming_soon",
+    "expected_action": "inform",
+    "expected_target": null
+  },
+  {
+    "id": "eval_04",
+    "query": "Saya mau ngobrol langsung dengan customer service via whatsapp",
+    "expected_intent": "customer_support",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "eval_05",
+    "query": "Halo selamat pagi",
+    "expected_intent": "need_clarification",
+    "expected_action": "clarify",
+    "expected_target": null
+  }
+]
