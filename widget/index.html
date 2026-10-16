@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant — PakDe Group</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="./widget.css">
+    <style>
+        :root {
+            --bg: #0A0D14;
+            --text: #F8FAFC;
+            --muted: #64748B;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle ambient glow */
+        .ambient {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.18;
+            pointer-events: none;
+            z-index: 0;
+            transition: all 0.5s ease;
+        }
+
+        /* Top Minimalist Switcher */
+        .nav-header {
+            width: 100%;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tabs {
+            display: inline-flex;
+            gap: 8px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            backdrop-filter: blur(12px);
+        }
+
+        .tab-btn {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: all 0.25s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Center Minimalist Display: Simple Nama Web */
+        .main-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .brand-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .brand-title {
+            font-size: clamp(48px, 9vw, 96px);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .brand-subtitle {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+        }
+
+        /* Footer */
+        .footer-note {
+            padding: 24px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient" id="ambientGlow"></div>
+
+    <!-- Switcher Nav -->
+    <header class="nav-header">
+        <nav class="tabs">
+            <a href="?site=dkreasi" class="tab-btn" id="tabDkreasi">
+                <span>🔵</span> D-KREASI
+            </a>
+            <a href="?site=webia" class="tab-btn" id="tabWebia">
+                <span>🟣</span> WEBIA
+            </a>
+            <a href="?site=dkarsa" class="tab-btn" id="tabDkarsa">
+                <span>🌸</span> D-KARSA
+            </a>
+        </nav>
+    </header>
+
+    <!-- Center Display: Hanya Nama Web & AI Assistant -->
+    <main class="main-display">
+        <div class="brand-eyebrow" id="brandEyebrow">PAKDE GROUP</div>
+        <h1 class="brand-title" id="brandTitle">D-KREASI</h1>
+        <p class="brand-subtitle" id="brandSubtitle">AI Assistant Integration</p>
+    </main>
+
+    <footer class="footer-note">
+        PakDe AI Assistant · Integration Engine
+    </footer>
+
+    <!-- Dynamic Script Initialization -->
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const currentSite = params.get('site') || 'dkreasi';
+
+        const configs = {
+            'dkreasi': {
+                siteKey: 'site_dkreasi_public',
+                layer: 'l1',
+                title: 'D-KREASI',
+                eyebrow: 'PORTAL · TIER L1',
+                subtitle: 'Front-Desk AI Concierge',
+                color: '#38BDF8',
+                glow: 'rgba(56, 189, 248, 0.25)'
+            },
+            'webia': {
+                siteKey: 'site_webia_public',
+                layer: 'l3',
+                title: 'WEBIA',
+                eyebrow: 'WEBSITE BISNIS · TIER L3',
+                subtitle: 'Sales AI Assistant',
+                color: '#C084FC',
+                glow: 'rgba(168, 85, 247, 0.25)'
+            },
+            'dkarsa': {
+                siteKey: 'site_dkarsa_public',
+                layer: 'l2',
+                title: "D'KARSA",
+                eyebrow: 'UNDANGAN DIGITAL · TIER L2',
+                subtitle: "Tanya D'Karsa AI",
+                color: '#FB7185',
+                glow: 'rgba(244, 63, 94, 0.25)'
+            }
+        };
+
+        const active = configs[currentSite] || configs['dkreasi'];
+
+        // Update Text
+        document.title = `${active.title} — AI Assistant`;
+        document.getElementById('brandTitle').textContent = active.title;
+        document.getElementById('brandTitle').style.color = active.color;
+        document.getElementById('brandEyebrow').textContent = active.eyebrow;
+        document.getElementById('brandSubtitle').textContent = active.subtitle;
+        document.getElementById('ambientGlow').style.background = active.glow;
+
+        // Update Active Tab
+        if (currentSite === 'webia') {
+            document.getElementById('tabWebia').classList.add('active');
+        } else if (currentSite === 'dkarsa') {
+            document.getElementById('tabDkarsa').classList.add('active');
+        } else {
+            document.getElementById('tabDkreasi').classList.add('active');
+        }
+
+        // Inject Widget Script for Selected Site
+        const widgetScript = document.createElement('script');
+        widgetScript.src = './widget.js';
+        widgetScript.dataset.siteKey = active.siteKey;
+        widgetScript.dataset.layer = active.layer;
+        widgetScript.defer = true;
+        document.body.appendChild(widgetScript);
+    </script>
+</body>
+</html>

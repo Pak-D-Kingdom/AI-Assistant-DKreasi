@@ -1,0 +1,22 @@
+services:
+  ai-assistant-dkreasi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-assistant-dkreasi
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    volumes:
+      # Data runtime persisten (SQLite app.db dan index vektor FAISS tidak akan hilang saat container restart)
+      - ./data:/app/data
+      # Knowledge base di-mount secara read-only agar bisa di-update langsung tanpa rebuild container
+      - ./knowledge_base:/app/knowledge_base:ro
+    networks:
+      - pakde-network
+
+networks:
+  pakde-network:
+    driver: bridge

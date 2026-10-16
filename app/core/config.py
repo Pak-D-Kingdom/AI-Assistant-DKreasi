@@ -4,14 +4,14 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = "PakDe-AI-Engine"
+    APP_NAME: str = "ai-assistant-dkreasi"
     APP_ENV: str = "local"
     DEBUG: bool = True
-    PORT: int = 8000
+    PORT: int = 8001
     HOST: str = "0.0.0.0"
 
     # CORS
-    ALLOWED_ORIGINS: str = "http://localhost:8000,http://127.0.0.1:8000,http://localhost:3000"
+    ALLOWED_ORIGINS: str = "http://localhost:8000,http://127.0.0.1:8000,http://localhost:8001,http://127.0.0.1:8001,http://localhost:8002,http://127.0.0.1:8002,http://localhost:8003,http://127.0.0.1:8003,http://localhost:3000,https://webia.id,https://d-kreasi.com,https://dkarsa.id"
 
     # LLM Settings
     AI_PROVIDER: str = "mock"  # llm, gemini, mock

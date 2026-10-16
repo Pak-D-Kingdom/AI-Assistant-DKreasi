@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBIA — AI Assistant</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap">
+    <link rel="stylesheet" href="./widget.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0D14;
+            color: #F8FAFC;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+        }
+        .ambient {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, 0.18);
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .top-nav { width: 100%; padding: 24px; display: flex; justify-content: center; position: relative; z-index: 10; }
+        .tabs { display: inline-flex; gap: 8px; padding: 5px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 999px; backdrop-filter: blur(12px); }
+        .tab-btn { text-decoration: none; padding: 8px 20px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #64748B; transition: all 0.2s; }
+        .tab-btn:hover { color: #fff; }
+        .tab-btn.active { color: #fff; background: rgba(255, 255, 255, 0.12); }
+        .main { text-align: center; position: relative; z-index: 10; padding: 20px; }
+        .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #64748B; margin-bottom: 14px; }
+        h1 { font-size: clamp(48px, 9vw, 96px); font-weight: 900; letter-spacing: -0.04em; color: #C084FC; margin-bottom: 14px; user-select: none; }
+        p { font-size: 14px; color: #64748B; }
+        footer { padding: 24px; font-size: 11px; color: rgba(255, 255, 255, 0.25); text-transform: uppercase; letter-spacing: 0.05em; position: relative; z-index: 10; }
+    </style>
+</head>
+<body>
+    <div class="ambient"></div>
+    <header class="top-nav">
+        <nav class="tabs">
+            <a href="./dkreasi.html" class="tab-btn">🔵 D-KREASI</a>
+            <a href="./webia.html" class="tab-btn active">🟣 WEBIA</a>
+            <a href="./dkarsa.html" class="tab-btn">🌸 D-KARSA</a>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="eyebrow">WEBSITE BISNIS · TIER L3</div>
+        <h1>WEBIA</h1>
+        <p>Sales AI Assistant</p>
+    </main>
+    <footer>PakDe AI Assistant · Integration Engine</footer>
+    <script src="./widget.js" data-site-key="site_webia_public" data-layer="l3" defer></script>
+</body>
+</html>
