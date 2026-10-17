@@ -1,10 +1,15 @@
 import os
 import json
+import argparse
 from app.layers.l1_dkreasi.tools import L1IntentRouter
+from app.layers.l3_webia.tools import L3IntentRouter
 
 
-def run_evaluation():
-    eval_file = os.path.join(os.path.dirname(__file__), "l1_routing_set.json")
+def evaluate_dataset(eval_file: str, router_cls, layer_name: str) -> bool:
+    if not os.path.exists(eval_file):
+        print(f"Dataset {eval_file} not found.")
+        return False
+
     with open(eval_file, "r", encoding="utf-8") as f:
         dataset = json.load(f)
 
@@ -12,7 +17,7 @@ def run_evaluation():
     total = len(dataset)
 
     print(f"\n==========================================")
-    print(f"RUNNING EVALUATION ON L1 ROUTING SET ({total} CASES)")
+    print(f"RUNNING EVALUATION ON {layer_name.upper()} DATASET ({total} CASES)")
     print(f"==========================================")
 
     for case in dataset:
@@ -22,7 +27,7 @@ def run_evaluation():
         expected_action = case["expected_action"]
         expected_target = case.get("expected_target")
 
-        decision = L1IntentRouter.detect_and_route(query)
+        decision = router_cls.detect_and_route(query)
         actual_intent = decision["intent"]
         actual_action = decision["action"]
         actual_target = decision.get("target_url")
@@ -37,15 +42,37 @@ def run_evaluation():
             passed += 1
             print(f"[{cid}] PASS: '{query}' -> {actual_intent} ({actual_action})")
         else:
-            print(f"[{cid}] FAIL: '{query}' -> Expected: {expected_intent}/{expected_action}, Got: {actual_intent}/{actual_action}")
+            print(f"[{cid}] FAIL: '{query}'")
+            print(f"   Expected: {expected_intent} | {expected_action} | {expected_target}")
+            print(f"   Actual:   {actual_intent} | {actual_action} | {actual_target}")
 
-    accuracy = (passed / total) * 100
+    accuracy = (passed / total) * 100 if total > 0 else 0
     print(f"==========================================")
-    print(f"EVALUATION RESULT: {passed}/{total} Passed ({accuracy:.1f}%)")
+    print(f"{layer_name.upper()} RESULT: {passed}/{total} Passed ({accuracy:.1f}%)")
     print(f"==========================================\n")
     return accuracy >= 100.0
 
 
+def run_all(layer: str = "all"):
+    base_dir = os.path.dirname(__file__)
+    success = True
+
+    if layer in ["l1", "all"]:
+        l1_file = os.path.join(base_dir, "l1_routing_set.json")
+        res1 = evaluate_dataset(l1_file, L1IntentRouter, "L1 D-KREASI Routing")
+        success = success and res1
+
+    if layer in ["l3", "all"]:
+        l3_file = os.path.join(base_dir, "l3_recommendation_set.json")
+        res3 = evaluate_dataset(l3_file, L3IntentRouter, "L3 WEBIA Recommendation")
+        success = success and res3
+
+    return success
+
+
 if __name__ == "__main__":
-    success = run_evaluation()
-    exit(0 if success else 1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--layer", default="all", choices=["l1", "l3", "all"], help="Layer evaluation target")
+    args = parser.parse_args()
+    ok = run_all(args.layer)
+    exit(0 if ok else 1)

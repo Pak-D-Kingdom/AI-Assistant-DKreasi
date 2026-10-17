@@ -98,31 +98,31 @@
     --th-primary: #f63854;
     --th-secondary: #cf2445;
     --th-accent: #e02a49;
-    --th-accent-soft: #fde4e8;
-    --th-launcher-bg: #1b1416;
-    --th-launcher-shadow: 0 18px 34px -12px rgba(27, 20, 22, 0.55), 0 0 16px rgba(246, 56, 84, 0.25);
-    --th-panel-bg: #fffcfc;
-    --th-panel-border: rgba(246, 56, 84, 0.25);
-    --th-panel-shadow: 0 30px 60px -25px rgba(120, 30, 50, 0.3), 0 10px 28px -12px rgba(27, 20, 22, 0.16);
-    --th-header-bg: #1b1416;
-    --th-header-border: rgba(246, 56, 84, 0.3);
-    --th-text-title: #1b1416;
-    --th-text-body: #55474b;
-    --th-text-muted: #75686c;
-    --th-bubble-bot-bg: #ffffff;
-    --th-bubble-bot-border: rgba(246, 56, 84, 0.18);
-    --th-bubble-bot-text: #1b1416;
+    --th-accent-soft: rgba(246, 56, 84, 0.15);
+    --th-launcher-bg: linear-gradient(135deg, #1b1416, #3b1722, #f63854);
+    --th-launcher-shadow: 0 10px 30px rgba(246, 56, 84, 0.4);
+    --th-panel-bg: radial-gradient(ellipse at top right, rgba(246, 56, 84, 0.18), transparent 50%), #181014;
+    --th-panel-border: rgba(246, 56, 84, 0.3);
+    --th-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 40px rgba(246, 56, 84, 0.2);
+    --th-header-bg: #140b0f;
+    --th-header-border: rgba(246, 56, 84, 0.2);
+    --th-text-title: #fff1f3;
+    --th-text-body: #ffe4e8;
+    --th-text-muted: #fda4af;
+    --th-bubble-bot-bg: rgba(255, 255, 255, 0.06);
+    --th-bubble-bot-border: rgba(246, 56, 84, 0.22);
+    --th-bubble-bot-text: #fff1f3;
     --th-bubble-user-bg: linear-gradient(135deg, #f63854, #cf2445);
     --th-bubble-user-text: #ffffff;
-    --th-input-bg: #ffffff;
-    --th-input-border: rgba(246, 56, 84, 0.28);
-    --th-input-text: #1b1416;
-    --th-card-bg: #ffffff;
-    --th-card-border: rgba(246, 56, 84, 0.2);
-    --th-chip-bg: #ffffff;
+    --th-input-bg: rgba(255, 255, 255, 0.05);
+    --th-input-border: rgba(246, 56, 84, 0.3);
+    --th-input-text: #ffffff;
+    --th-card-bg: rgba(255, 255, 255, 0.04);
+    --th-card-border: rgba(246, 56, 84, 0.22);
+    --th-chip-bg: rgba(246, 56, 84, 0.12);
     --th-chip-border: rgba(246, 56, 84, 0.35);
-    --th-chip-text: #cf2445;
-    --th-chip-hover-bg: #fde4e8;
+    --th-chip-text: #fecdd3;
+    --th-chip-hover-bg: rgba(246, 56, 84, 0.25);
     --th-chip-hover-border: #f63854;
     --th-font-family: 'Plus Jakarta Sans', sans-serif;
     --th-title-font: 'Playfair Display', Georgia, serif;
@@ -472,16 +472,106 @@
 .pakde-ai-msg-group--assistant .pakde-ai-bubble {
     background: var(--th-bubble-bot-bg);
     border: 1px solid var(--th-bubble-bot-border);
-    color: var(--th-bubble-bot-text);
+    color: var(--th-bubble-bot-text) !important;
     border-top-left-radius: 4px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
 }
 
 .pakde-ai-msg-group--user .pakde-ai-bubble {
     background: var(--th-bubble-user-bg);
-    color: var(--th-bubble-user-text);
+    color: var(--th-bubble-user-text) !important;
     border-top-right-radius: 4px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Rich Markdown Typography inside Bubbles */
+.pakde-ai-bubble,
+.pakde-ai-bubble p,
+.pakde-ai-bubble ul,
+.pakde-ai-bubble ol,
+.pakde-ai-bubble li,
+.pakde-ai-bubble span {
+    color: inherit !important;
+}
+
+.pakde-ai-bubble p {
+    margin: 0 0 10px 0;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.pakde-ai-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+.pakde-ai-bubble strong {
+    font-weight: 700;
+    color: inherit !important;
+}
+
+.pakde-ai-bubble a {
+    color: var(--th-primary) !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+}
+
+.pakde-ai-bubble a:hover {
+    opacity: 0.8;
+}
+
+.pakde-ai-bubble .pakde-ai-list {
+    margin: 8px 0 12px 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pakde-ai-bubble .pakde-ai-list:last-child {
+    margin-bottom: 0;
+}
+
+.pakde-ai-bubble .pakde-ai-list li {
+    line-height: 1.5;
+}
+
+.pakde-ai-bubble code {
+    background: rgba(0, 0, 0, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    font-family: monospace;
+}
+
+.pakde-ai-table-wrap {
+    overflow-x: auto;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid var(--th-card-border);
+}
+
+.pakde-ai-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.pakde-ai-table th, 
+.pakde-ai-table td {
+    padding: 7px 11px;
+    border-bottom: 1px solid var(--th-card-border);
+    text-align: left;
+}
+
+.pakde-ai-table th {
+    background: var(--th-card-bg);
+    font-weight: 700;
+}
+
+.pakde-ai-table tr:last-child td {
+    border-bottom: none;
 }
 
 /* ========================================================

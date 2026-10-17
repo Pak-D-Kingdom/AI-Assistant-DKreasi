@@ -19,6 +19,25 @@ settings = get_settings()
 async def lifespan(app: FastAPI):
     logger.info("Initializing database and AI Engine...")
     await init_db()
+
+    # Model & Vector Index Warmup (eliminates first-request cold start)
+    try:
+        logger.info("Warming up embedding model and vector indices...")
+        from app.services.embedding_service import EmbeddingService
+        from app.services.rag_service import RagService
+
+        emb = EmbeddingService()
+        emb._get_model()
+        emb.embed_query("warmup check")
+
+        rag = RagService(embedding_service=emb)
+        for layer in ["l1_dkreasi", "l2_dkarsa", "l3_webia"]:
+            rag.preload(layer)
+
+        logger.info("Warmup complete. Ready for instant traffic!")
+    except Exception as e:
+        logger.warning(f"Startup warmup encountered non-blocking notice: {e}")
+
     yield
     logger.info("Shutting down AI Engine...")
 

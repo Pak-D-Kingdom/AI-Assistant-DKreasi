@@ -48,9 +48,9 @@
             welcomeDesc: 'Aku siap membantumu menjelajahi layanan WEBIA. Pilih topik di bawah atau tulis pertanyaanmu.',
             initialMsg: 'Halo! Kamu sedang mencari website untuk bisnis, ingin melihat paket layanan, atau butuh bantuan menentukan jenis website yang cocok?',
             chips: [
-                { label: '💻 Paket Website', prompt: 'Saya ingin mengetahui paket website bisnis.' },
-                { label: '✨ Jenis Website', prompt: 'Apa perbedaan website landing page dan website dengan admin?' },
-                { label: '🚀 Konsultasi', prompt: 'Saya ingin berkonsultasi tentang kebutuhan website bisnis.' },
+                { label: '💻 4 Paket Website', prompt: 'Berapa daftar 4 paket dan harga resmi website di WEBIA?' },
+                { label: '📝 Buat Business Brief', prompt: 'Bantu saya susun business brief untuk website usaha saya.' },
+                { label: '✨ 10 Kategori Bisnis', prompt: 'Kategori bisnis apa saja yang didukung oleh WEBIA?' },
                 { label: '💬 Chat Sales WhatsApp', prompt: 'Bisa hubungkan saya dengan tim sales WEBIA via WhatsApp?' }
             ],
             footer: 'WEBIA Assistant · Sales AI by PakDe Group'
@@ -196,7 +196,7 @@
     launcher.addEventListener('click', () => togglePanel(!panel.classList.contains('is-open')));
     closeBtn.addEventListener('click', () => togglePanel(false));
 
-    document.querySelectorAll('[data-ai]').forEach(b => {
+    document.querySelectorAll('[data-ai], #webia-nav-consult').forEach(b => {
         b.addEventListener('click', (e) => { e.preventDefault(); togglePanel(true); });
     });
 
@@ -213,16 +213,116 @@
         }
     });
 
+    const renderMarkdown = (rawText) => {
+        if (!rawText) return '';
+        let text = rawText
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        // Tables
+        text = text.replace(/((?:^|\n)\|[^\n]+\|\r?\n\|[-:\s|]+\|\r?\n(?:\|[^\n]+\|\r?\n?)+)/g, (match) => {
+            const rows = match.trim().split('\n').map(r => r.trim()).filter(Boolean);
+            if (rows.length < 2) return match;
+            const headerCells = rows[0].replace(/^\||\|$/g, '').split('|').map(c => `<th>${c.trim()}</th>`).join('');
+            const thead = `<thead><tr>${headerCells}</tr></thead>`;
+            const bodyRows = rows.slice(2).map(r => {
+                const cells = r.replace(/^\||\|$/g, '').split('|').map(c => `<td>${c.trim()}</td>`).join('');
+                return `<tr>${cells}</tr>`;
+            }).join('');
+            return `\n\n<div class="pakde-ai-table-wrap"><table class="pakde-ai-table">${thead}<tbody>${bodyRows}</tbody></table></div>\n\n`;
+        });
+
+        // Bold & Inline Code
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+
+        // Markdown Links
+        text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+        // Raw URLs
+        text = text.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>');
+
+        // Lists (ordered & unordered)
+        const lines = text.split('\n');
+        const outputLines = [];
+        let inList = null;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const trimmed = line.trim();
+            const ulMatch = trimmed.match(/^[-*]\s+(.*)$/);
+            const olMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
+
+            if (ulMatch) {
+                if (inList !== 'ul') {
+                    if (inList) outputLines.push(`</${inList}>\n`);
+                    else outputLines.push('\n');
+                    outputLines.push('<ul class="pakde-ai-list">');
+                    inList = 'ul';
+                }
+                outputLines.push(`<li>${ulMatch[1]}</li>`);
+            } else if (olMatch) {
+                if (inList !== 'ol') {
+                    if (inList) outputLines.push(`</${inList}>\n`);
+                    else outputLines.push('\n');
+                    outputLines.push('<ol class="pakde-ai-list">');
+                    inList = 'ol';
+                }
+                outputLines.push(`<li>${olMatch[2]}</li>`);
+            } else {
+                if (inList) {
+                    outputLines.push(`</${inList}>\n`);
+                    inList = null;
+                }
+                outputLines.push(line);
+            }
+        }
+        if (inList) outputLines.push(`</${inList}>`);
+
+        const joined = outputLines.join('\n');
+        const blocks = joined.split(/\n{2,}/);
+        return blocks.map(b => {
+            const t = b.trim();
+            if (!t) return '';
+            if (t.startsWith('<ul') || t.startsWith('<ol') || t.startsWith('<div class="pakde-ai-table-wrap"')) {
+                return t;
+            }
+            return `<p>${t.replace(/\n/g, '<br>')}</p>`;
+        }).filter(Boolean).join('');
+    };
+
     const appendMessage = (role, text) => {
         const group = document.createElement('div');
         group.className = `pakde-ai-msg-group pakde-ai-msg-group--${role}`;
         const bubble = document.createElement('div');
         bubble.className = 'pakde-ai-bubble';
-        bubble.textContent = text ? text.trim() : '';
+        if (role === 'assistant') {
+            bubble.innerHTML = renderMarkdown(text ? text.trim() : '');
+        } else {
+            bubble.textContent = text ? text.trim() : '';
+        }
         group.appendChild(bubble);
         messages.insertBefore(group, typing);
         messages.scrollTop = messages.scrollHeight;
         return group;
+    };
+
+    const createStreamingBubble = () => {
+        const group = document.createElement('div');
+        group.className = 'pakde-ai-msg-group pakde-ai-msg-group--assistant';
+        const bubble = document.createElement('div');
+        bubble.className = 'pakde-ai-bubble';
+        group.appendChild(bubble);
+        messages.insertBefore(group, typing);
+        messages.scrollTop = messages.scrollHeight;
+        return {
+            update: (fullText) => {
+                bubble.innerHTML = renderMarkdown(fullText);
+                messages.scrollTop = messages.scrollHeight;
+            },
+            element: bubble,
+        };
     };
 
     const renderActionCard = (routing) => {
@@ -235,6 +335,15 @@
                 <span class="pakde-ai-action-label">✦ Rekomendasi Solusi</span>
                 <a href="${routing.target_url}" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
                     ${routing.button_text || 'Lihat Layanan →'}
+                </a>
+            `;
+            messages.insertBefore(card, typing);
+        } else if (routing.action === 'brief') {
+            card.innerHTML = `
+                <span class="pakde-ai-action-label">📝 AI Business Brief Generator</span>
+                ${routing.prompt_guide ? `<p style="font-size: 11.5px; color: var(--pakde-ai-muted); margin-bottom: 8px; line-height: 1.4;">${routing.prompt_guide}</p>` : ''}
+                <a href="${routing.target_url || 'https://wa.me/6281234567890'}" target="_blank" rel="noopener noreferrer" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
+                    ${routing.button_text || 'Konsultasi Brief via WhatsApp →'}
                 </a>
             `;
             messages.insertBefore(card, typing);
@@ -270,23 +379,71 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'text/event-stream, application/json',
                     'X-Site-Key': siteKey,
                 },
                 body: JSON.stringify({
                     layer: activeConfig.layer,
                     session_id: sessionId,
                     messages: history,
+                    stream: true,
                 }),
             });
-            const data = await res.json();
-            typing.style.display = 'none';
 
-            if (res.ok && data.success && data.message) {
-                const reply = data.message.content || 'Terima kasih atas pesan Anda.';
-                appendMessage('assistant', reply);
-                history.push({ role: 'assistant', content: reply });
-                if (data.routing) renderActionCard(data.routing);
+            const contentType = res.headers.get('content-type') || '';
+            if (res.ok && contentType.includes('text/event-stream')) {
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+                let bubbleController = null;
+                let buffer = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop();
+
+                    for (const line of lines) {
+                        const trimmed = line.trim();
+                        if (trimmed.startsWith('data:')) {
+                            try {
+                                const payload = JSON.parse(trimmed.slice(5).trim());
+                                if (payload.type === 'meta') {
+                                    typing.style.display = 'none';
+                                    if (payload.routing) renderActionCard(payload.routing);
+                                } else if (payload.type === 'token') {
+                                    typing.style.display = 'none';
+                                    if (!bubbleController) {
+                                        bubbleController = createStreamingBubble();
+                                    }
+                                    fullText += payload.content;
+                                    bubbleController.update(fullText);
+                                } else if (payload.type === 'done') {
+                                    typing.style.display = 'none';
+                                }
+                            } catch (e) {}
+                        }
+                    }
+                }
+                typing.style.display = 'none';
+                if (fullText) {
+                    history.push({ role: 'assistant', content: fullText });
+                }
+            } else if (res.ok) {
+                const data = await res.json();
+                typing.style.display = 'none';
+                if (data.success && data.message) {
+                    const reply = data.message.content || 'Terima kasih atas pesan Anda.';
+                    appendMessage('assistant', reply);
+                    history.push({ role: 'assistant', content: reply });
+                    if (data.routing) renderActionCard(data.routing);
+                } else {
+                    appendMessage('assistant', 'Mohon maaf, asisten sedang mengalami kendala teknis.');
+                }
             } else {
+                typing.style.display = 'none';
                 appendMessage('assistant', 'Mohon maaf, asisten sedang mengalami kendala teknis.');
             }
         } catch (err) {

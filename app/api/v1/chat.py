@@ -1,5 +1,6 @@
 from typing import List, Optional, Dict, Any
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -22,12 +23,14 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = Field(None, description="Session ID for multi-turn tracking")
     messages: List[ChatMessage] = Field(..., description="Chat message history")
     tenant_id: Optional[str] = Field(None, description="Tenant ID for L4")
+    stream: Optional[bool] = Field(False, description="Enable SSE streaming mode")
 
 
 @router.post("/chat")
 @router.post("/api/ai/chat")
 async def chat_endpoint(
     req: ChatRequest,
+    raw_request: Request,
     context: RequestContext = Depends(get_request_context),
     db: AsyncSession = Depends(get_db),
 ):
@@ -40,6 +43,24 @@ async def chat_endpoint(
         context.tenant_id = req.tenant_id
 
     messages_dict = [{"role": m.role, "content": m.content} for m in req.messages]
+
+    is_stream = req.stream or "text/event-stream" in raw_request.headers.get("accept", "")
+
+    if is_stream:
+        return StreamingResponse(
+            orchestrator.execute_stream(
+                messages=messages_dict,
+                context=context,
+                db=db,
+            ),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "X-Accel-Buffering": "no",
+            },
+        )
+
     response = await orchestrator.execute(
         messages=messages_dict,
         context=context,

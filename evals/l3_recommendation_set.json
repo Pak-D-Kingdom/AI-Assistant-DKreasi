@@ -1,0 +1,65 @@
+[
+  {
+    "id": "l3_eval_01",
+    "query": "Saya butuh website untuk cafe kopi saya",
+    "expected_intent": "recommend_fnb_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_02",
+    "query": "Bisa buatkan website untuk bengkel motor?",
+    "expected_intent": "recommend_automotive_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_03",
+    "query": "Mau buat website salon dan klinik kecantikan",
+    "expected_intent": "recommend_beauty_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_04",
+    "query": "Saya butuh company profile untuk kontraktor bangunan",
+    "expected_intent": "recommend_company_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_05",
+    "query": "Berapa harga 4 paket website di Webia?",
+    "expected_intent": "website_packages",
+    "expected_action": "navigate",
+    "expected_target": "#paket-website"
+  },
+  {
+    "id": "l3_eval_06",
+    "query": "Bantu saya buatkan business brief untuk usaha saya",
+    "expected_intent": "business_brief_request",
+    "expected_action": "brief",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l3_eval_07",
+    "query": "Apakah di sini bisa pesan undangan pernikahan digital?",
+    "expected_intent": "cross_service_dkarsa",
+    "expected_action": "navigate",
+    "expected_target": "dkarsa"
+  },
+  {
+    "id": "l3_eval_08",
+    "query": "Saya mau ngobrol langsung dengan sales via WhatsApp",
+    "expected_intent": "sales_consultation",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l3_eval_09",
+    "query": "Halo selamat siang",
+    "expected_intent": "general_web_inquiry",
+    "expected_action": "clarify",
+    "expected_target": null
+  }
+]

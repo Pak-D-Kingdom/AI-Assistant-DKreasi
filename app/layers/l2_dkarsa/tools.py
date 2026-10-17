@@ -14,7 +14,7 @@ DKARSA_PACKAGES = [
         "description": "Desain bersih, minimalis & esensial, paling hemat & ringan.",
         "max_guests": "Fleksibel (1 link)",
         "features": [
-            "Bebas semua 7 kategori acara",
+            "Bebas semua 6 bab kategori acara",
             "RSVP konfirmasi kehadiran & simpan kalender HP",
             "Integrasi navigasi Google Maps",
             "Hitung mundur acara (Countdown Timer)",
@@ -89,13 +89,107 @@ DKARSA_PACKAGES = [
 ]
 
 DKARSA_CATEGORIES = [
-    {"slug": "pernikahan", "name": "Pernikahan", "icon": "💍"},
-    {"slug": "halalbihalal", "name": "Halal Bihalal", "icon": "🕌"},
-    {"slug": "khitanan", "name": "Khitanan", "icon": "✂️"},
-    {"slug": "aqiqah", "name": "Aqiqah & Tasmiyah", "icon": "👶"},
-    {"slug": "ultah", "name": "Ulang Tahun / Milad", "icon": "🎂"},
-    {"slug": "syukuran", "name": "Syukuran & Reuni", "icon": "🎉"},
-    {"slug": "tahlilan", "name": "Tahlilan & Haul", "icon": "🕯️"},
+    {
+        "name": "Pernikahan",
+        "icon": "💍",
+        "default_sub": "Pernikahan adat Jawa, Sunda, Minang, dan lainnya",
+        "recommended_theme": "theme-javanese-royal",
+        "recommended_package": "eksklusif",
+    },
+    {
+        "name": "Ulang Tahun",
+        "icon": "🎂",
+        "default_sub": "Sweet seventeen",
+        "recommended_theme": "theme-golden-birthday",
+        "recommended_package": "eksklusif",
+    },
+    {
+        "name": "Aqiqah",
+        "icon": "👶",
+        "default_sub": "Aqiqah anak",
+        "recommended_theme": "theme-little-prince",
+        "recommended_package": "premium",
+    },
+    {
+        "name": "Keagamaan",
+        "icon": "🕌",
+        "default_sub": "Halal bihalal",
+        "recommended_theme": "theme-green-mosque",
+        "recommended_package": "premium",
+    },
+    {
+        "name": "Wisuda",
+        "icon": "🎓",
+        "default_sub": "Wisuda kuliah",
+        "recommended_theme": "theme-golden-birthday",
+        "recommended_package": "premium",
+    },
+    {
+        "name": "Acara Formal",
+        "icon": "🏛️",
+        "default_sub": "Grand opening bisnis",
+        "recommended_theme": "theme-snow-white",
+        "recommended_package": "eksklusif",
+    },
+]
+
+DKARSA_THEMES = [
+    {
+        "id": "theme-floral-wreath",
+        "name": "Simple Minimalist Floral",
+        "tier": "basic",
+        "package_val": "Paket Basic - Rp50.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-rose-romance",
+        "name": "Elegant Rose Romance (ChungDoi Wildflower)",
+        "tier": "premium",
+        "package_val": "Paket Premium - Rp110.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-javanese-royal",
+        "name": "3D Javanese Royal Keraton",
+        "tier": "eksklusif",
+        "package_val": "Paket Eksklusif - Rp180.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-batak-heritage",
+        "name": "Batak Istimewa Heritage",
+        "tier": "eksklusif",
+        "package_val": "Paket Eksklusif - Rp180.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-green-mosque",
+        "name": "Green Mosque Harmony",
+        "tier": "premium",
+        "package_val": "Paket Premium - Rp110.000",
+        "category": "Keagamaan",
+    },
+    {
+        "id": "theme-snow-white",
+        "name": "SnowFall Minimalist White",
+        "tier": "eksklusif",
+        "package_val": "Paket Eksklusif - Rp180.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-golden-birthday",
+        "name": "Golden Luxury Birthday / Wisuda",
+        "tier": "eksklusif",
+        "package_val": "Paket Eksklusif - Rp180.000",
+        "category": "Ulang Tahun",
+    },
+    {
+        "id": "theme-little-prince",
+        "name": "Little Prince Safari Khitan",
+        "tier": "basic",
+        "package_val": "Paket Basic - Rp50.000",
+        "category": "Aqiqah",
+    },
 ]
 
 
@@ -138,40 +232,79 @@ class L2IntentRouter:
     def detect_and_route(cls, query: str) -> Dict[str, Any]:
         normalized = query.lower().strip()
 
-        # 1. Harga / Biaya / Paket
-        if any(w in normalized for w in ["harga", "biaya", "tarif", "paket", "berapa", "promo", "murah"]):
+        # 1. Custom / Request Khusus -> Handoff WA
+        if any(w in normalized for w in ["custom", "kustom", "request khusus", "desain sendiri", "dari nol", "pinterest"]):
             return {
-                "intent": "pricing_inquiry",
+                "intent": "custom_design_request",
                 "confidence": 0.95,
-                "action": "navigate",
-                "target_url": "#harga",
-                "button_text": "Lihat 4 Paket Harga D'Karsa →",
-                "service_name": "Paket Harga D'Karsa (Mulai Rp50.000)",
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo Admin D'Karsa, saya tertarik dengan Paket Kustom (Rp280.000). Saya ingin konsultasi desain undangan kustom dari nol."),
+                "button_text": "Konsultasi Paket Kustom via WhatsApp →",
+                "service_name": "Paket Kustom D'Karsa",
             }
 
-        # 2. Pernikahan / Wedding
+        # 2. Tema Spesifik -> Handoff WhatsApp / Katalog
+        if "jawa" in normalized or "gunungan" in normalized or "wayang" in normalized:
+            return {
+                "intent": "wedding_javanese_royal",
+                "confidence": 0.95,
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya tertarik memesan undangan tema 3D Javanese Royal Keraton (Paket Eksklusif - Rp180.000)."),
+                "button_text": "Pesan Tema 3D Javanese Royal via WhatsApp →",
+                "service_name": "Tema 3D Javanese Royal (Eksklusif - Rp180.000)",
+            }
+
+        if "batak" in normalized or "ulos" in normalized or "gorga" in normalized:
+            return {
+                "intent": "wedding_batak_heritage",
+                "confidence": 0.95,
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya tertarik memesan undangan tema Batak Istimewa Heritage (Paket Eksklusif - Rp180.000)."),
+                "button_text": "Pesan Tema Batak Heritage via WhatsApp →",
+                "service_name": "Tema Batak Istimewa Heritage (Eksklusif - Rp180.000)",
+            }
+
+        if "rose romance" in normalized or "wildflower" in normalized or "chungdoi" in normalized:
+            return {
+                "intent": "wedding_rose_romance",
+                "confidence": 0.95,
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya tertarik memesan undangan tema Elegant Rose Romance (Paket Premium - Rp110.000)."),
+                "button_text": "Pesan Tema Rose Romance via WhatsApp →",
+                "service_name": "Tema Elegant Rose Romance (Premium - Rp110.000)",
+            }
+
+        if "snowfall" in normalized or "snow white" in normalized or "salju" in normalized:
+            return {
+                "intent": "wedding_snow_white",
+                "confidence": 0.95,
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya tertarik memesan undangan tema SnowFall Minimalist White (Paket Eksklusif - Rp180.000)."),
+                "button_text": "Pesan Tema SnowFall White via WhatsApp →",
+                "service_name": "Tema SnowFall Minimalist White (Eksklusif - Rp180.000)",
+            }
+
+        # 3. Kategori Bab Acara -> Katalog Desain / Konsultasi
         if any(w in normalized for w in ["nikah", "pernikahan", "wedding", "akad", "resepsi"]):
             return {
                 "intent": "wedding_invitation",
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#desain",
-                "button_text": "Lihat Tema Pernikahan D'Karsa →",
+                "button_text": "Lihat Katalog Undangan Pernikahan →",
                 "service_name": "Undangan Pernikahan D'Karsa",
             }
 
-        # 3. Halal Bihalal / Idul Fitri
-        if any(w in normalized for w in ["halal bihalal", "halalbihalal", "lebaran", "idul fitri", "silaturahmi"]):
+        if any(w in normalized for w in ["ulang tahun", "ultah", "birthday", "sweet 17", "sweet seventeen", "milad"]):
             return {
-                "intent": "halalbihalal_invitation",
+                "intent": "birthday_invitation",
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#desain",
-                "button_text": "Lihat Tema Halal Bihalal →",
-                "service_name": "Undangan Silaturahmi Halal Bihalal",
+                "button_text": "Lihat Tema Ulang Tahun & Sweet 17 →",
+                "service_name": "Undangan Ulang Tahun D'Karsa",
             }
 
-        # 4. Khitanan / Sunatan
         if any(w in normalized for w in ["khitan", "khitanan", "sunat", "sunatan", "walimatul khitan"]):
             return {
                 "intent": "khitanan_invitation",
@@ -179,10 +312,9 @@ class L2IntentRouter:
                 "action": "navigate",
                 "target_url": "#desain",
                 "button_text": "Lihat Tema Walimatul Khitan →",
-                "service_name": "Undangan Khitanan D'Karsa",
+                "service_name": "Undangan Walimatul Khitan D'Karsa",
             }
 
-        # 5. Aqiqah / Kelahiran
         if any(w in normalized for w in ["aqiqah", "akikah", "kelahiran", "tasmiyah", "bayi"]):
             return {
                 "intent": "aqiqah_invitation",
@@ -193,59 +325,56 @@ class L2IntentRouter:
                 "service_name": "Undangan Aqiqah D'Karsa",
             }
 
-        # 6. Ulang Tahun / Birthday / Milad
-        if any(w in normalized for w in ["ulang tahun", "ultah", "birthday", "sweet 17", "milad", "pesta"]):
+        if any(w in normalized for w in ["wisuda", "kelulusan", "sarjana"]):
             return {
-                "intent": "birthday_invitation",
+                "intent": "wisuda_invitation",
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#desain",
-                "button_text": "Lihat Tema Pesta Ulang Tahun →",
-                "service_name": "Undangan Ulang Tahun D'Karsa",
+                "button_text": "Lihat Tema Wisuda & Kelulusan →",
+                "service_name": "Undangan Wisuda D'Karsa",
             }
 
-        # 7. Syukuran / Reuni / Tahlilan
-        if any(w in normalized for w in ["syukuran", "reuni", "tahlilan", "tahlil", "haul", "rumah baru", "wisuda"]):
+        if any(w in normalized for w in ["formal", "seminar", "workshop", "gathering", "grand opening"]):
             return {
-                "intent": "special_event_invitation",
+                "intent": "formal_invitation",
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#desain",
-                "button_text": "Lihat Katalog Acara Spesial →",
-                "service_name": "Undangan Acara Spesial D'Karsa",
+                "button_text": "Lihat Tema Acara Formal & Bisnis →",
+                "service_name": "Undangan Acara Formal D'Karsa",
             }
 
-        # 8. Request Custom Desain
-        if any(w in normalized for w in ["custom", "kustom", "request", "desain sendiri", "nol", "pinterest"]):
+        if any(w in normalized for w in ["halal bihalal", "halalbihalal", "lebaran", "idul fitri", "silaturahmi", "tahlilan", "tahlil", "haul", "syukuran"]):
             return {
-                "intent": "custom_design_request",
+                "intent": "keagamaan_invitation",
                 "confidence": 0.95,
-                "action": "handoff",
-                "target_url": HandoffService.get_whatsapp_url("Halo Admin D'Karsa, saya tertarik dengan Paket Kustom (Rp280.000). Saya ingin konsultasi desain undangan kustom sesuai request saya."),
-                "button_text": "Konsultasi Paket Kustom via WhatsApp →",
-                "service_name": "Paket Kustom D'Karsa",
+                "action": "navigate",
+                "target_url": "#desain",
+                "button_text": "Lihat Tema Keagamaan & Silaturahmi →",
+                "service_name": "Undangan Keagamaan D'Karsa",
             }
 
-        # 9. Fitur Teknis (RSVP, Maps, Musik, Amplop)
-        if any(w in normalized for w in ["rsvp", "peta", "maps", "musik", "lagu", "amplop", "qris", "rekening"]):
+        # 4. Harga / Biaya / Paket
+        if any(w in normalized for w in ["harga", "biaya", "tarif", "paket", "berapa", "promo", "murah"]):
             return {
-                "intent": "invitation_features",
-                "confidence": 0.9,
-                "action": "inform",
-                "target_url": None,
-                "button_text": None,
-                "service_name": "Fitur Interaktif D'Karsa",
+                "intent": "pricing_inquiry",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#harga",
+                "button_text": "Lihat 4 Paket Harga D'Karsa (Mulai Rp50.000) →",
+                "service_name": "Paket Harga D'Karsa",
             }
 
-        # 10. WhatsApp CS / Pemesanan Langsung
-        if any(w in normalized for w in ["whatsapp", "wa", "cs", "admin", "kontak", "hubungi"]):
+        # 5. WhatsApp CS / Pemesanan Langsung
+        if any(w in normalized for w in ["whatsapp", "wa", "cs", "admin", "kontak", "hubungi", "telepon", "pesan", "order", "bikin", "buat"]):
             return {
                 "intent": "order_consultation",
                 "confidence": 0.95,
                 "action": "handoff",
-                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya ingin konsultasi pemesanan undangan digital."),
-                "button_text": "Konsultasi Pemesanan via WhatsApp →",
-                "service_name": "Customer Service D-Karsa",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya ingin memesan / konsultasi undangan digital."),
+                "button_text": "Hubungi CS Pemesanan via WhatsApp →",
+                "service_name": "Customer Service D'Karsa",
             }
 
         return {
@@ -255,5 +384,5 @@ class L2IntentRouter:
             "target_url": None,
             "button_text": None,
             "service_name": None,
-            "clarification_question": "Apakah Anda sedang mempersiapkan undangan Pernikahan, Halal Bihalal, Khitanan, Aqiqah, Ulang Tahun, Syukuran, atau Tahlilan?",
+            "clarification_question": "Apakah Anda sedang mempersiapkan undangan Pernikahan, Ulang Tahun, Aqiqah, Keagamaan, Wisuda, atau Acara Formal?",
         }
