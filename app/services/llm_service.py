@@ -10,7 +10,6 @@ settings = get_settings()
 
 class LlmService:
     def __init__(self):
-        self.provider = settings.AI_PROVIDER
         self.base_url = settings.LLM_BASE_URL
         self.api_key = settings.LLM_API_KEY
         self.model = settings.LLM_MODEL
@@ -31,18 +30,6 @@ class LlmService:
             formatted_messages.append({"role": "system", "content": system_prompt})
         formatted_messages.extend(messages)
 
-        # Mock Provider
-        if self.provider == "mock":
-            return {
-                "content": "Halo! Saya AI Assistant resmi D-KREASI. Ada yang bisa saya bantu terkait Undangan Digital atau Website Bisnis?",
-                "provider": "mock",
-                "model": "mock-v1",
-                "usage": {"prompt_tokens": 10, "completion_tokens": 20, "total_tokens": 30},
-                "latency_ms": int((time.time() - start_time) * 1000),
-                "is_fallback": False,
-            }
-
-        # Standard OpenAI-compatible HTTP REST (e.g. 9router / Ollama / OpenAI)
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -145,13 +132,6 @@ class LlmService:
             formatted_messages.append({"role": "system", "content": system_prompt})
         formatted_messages.extend(messages)
 
-        if self.provider == "mock":
-            sample_words = "Halo! Saya AI Assistant resmi D-KREASI. Ada yang bisa saya bantu terkait layanan kreasi kami?".split(" ")
-            for w in sample_words:
-                yield f"{w} "
-                await asyncio.sleep(0.04)
-            return
-
         headers = {
             "Content-Type": "application/json",
             "Accept": "text/event-stream",
@@ -191,7 +171,7 @@ class LlmService:
                                 except Exception:
                                     pass
         except Exception as e:
-            logger.error(f"Streaming error: {e}. Falling back to safe message.")
+            logger.error(f"Streaming error: {repr(e)}. Falling back to safe message.")
             from app.services.fallback_service import FallbackService
             fb = FallbackService.get_fallback_response(layer or "l1")
             yield fb.get("content", "Layanan asisten AI sedang dalam optimalisasi koneksi. Silakan hubungi CS kami.")
