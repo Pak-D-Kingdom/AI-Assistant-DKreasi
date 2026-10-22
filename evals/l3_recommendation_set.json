@@ -61,5 +61,19 @@
     "expected_intent": "general_web_inquiry",
     "expected_action": "clarify",
     "expected_target": null
+  },
+  {
+    "id": "l3_eval_10",
+    "query": "Saya mau buat website petshop toko makanan kucing",
+    "expected_intent": "recommend_petshop_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_11",
+    "query": "Bisa bikin website untuk klinik dokter gigi?",
+    "expected_intent": "recommend_dental_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
   }
 ]

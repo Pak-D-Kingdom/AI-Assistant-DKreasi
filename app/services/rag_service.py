@@ -155,6 +155,6 @@ class RagService:
         for i, chunk in enumerate(retrieved_chunks, 1):
             title = chunk.get("title", f"Document {i}")
             content = chunk.get("content", "").strip()
-            context_blocks.append(f"### [Knowledge: {title}]\n{content}")
+            context_blocks.append(f"[Konteks Pengetahuan: {title}]\n{content}")
 
         return "\n\n".join(context_blocks)

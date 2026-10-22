@@ -106,23 +106,23 @@
     --th-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 40px rgba(246, 56, 84, 0.2);
     --th-header-bg: #140b0f;
     --th-header-border: rgba(246, 56, 84, 0.2);
-    --th-text-title: #fff1f3;
-    --th-text-body: #ffe4e8;
+    --th-text-title: #ffffff;
+    --th-text-body: #f8fafc;
     --th-text-muted: #fda4af;
-    --th-bubble-bot-bg: rgba(255, 255, 255, 0.06);
-    --th-bubble-bot-border: rgba(246, 56, 84, 0.22);
-    --th-bubble-bot-text: #fff1f3;
+    --th-bubble-bot-bg: #27161c;
+    --th-bubble-bot-border: rgba(246, 56, 84, 0.35);
+    --th-bubble-bot-text: #ffffff;
     --th-bubble-user-bg: linear-gradient(135deg, #f63854, #cf2445);
     --th-bubble-user-text: #ffffff;
-    --th-input-bg: rgba(255, 255, 255, 0.05);
-    --th-input-border: rgba(246, 56, 84, 0.3);
+    --th-input-bg: #24141a;
+    --th-input-border: rgba(246, 56, 84, 0.4);
     --th-input-text: #ffffff;
     --th-card-bg: rgba(255, 255, 255, 0.04);
     --th-card-border: rgba(246, 56, 84, 0.22);
-    --th-chip-bg: rgba(246, 56, 84, 0.12);
-    --th-chip-border: rgba(246, 56, 84, 0.35);
-    --th-chip-text: #fecdd3;
-    --th-chip-hover-bg: rgba(246, 56, 84, 0.25);
+    --th-chip-bg: rgba(246, 56, 84, 0.15);
+    --th-chip-border: rgba(246, 56, 84, 0.4);
+    --th-chip-text: #ffe4e8;
+    --th-chip-hover-bg: rgba(246, 56, 84, 0.3);
     --th-chip-hover-border: #f63854;
     --th-font-family: 'Plus Jakarta Sans', sans-serif;
     --th-title-font: 'Playfair Display', Georgia, serif;
@@ -395,6 +395,12 @@
     flex-direction: column;
     gap: 14px;
     scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox: sembunyikan scrollbar */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.pakde-ai-messages::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera: sembunyikan scrollbar */
 }
 
 /* Welcome Card */
@@ -483,6 +489,22 @@
     border-top-right-radius: 4px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
+
+.pakde-ai-bubble h2,
+.pakde-ai-bubble h3,
+.pakde-ai-bubble h4,
+.pakde-ai-bubble h5 {
+    color: inherit !important;
+    font-family: var(--th-title-font);
+    font-weight: 700;
+    margin: 10px 0 6px 0;
+    line-height: 1.35;
+}
+
+.pakde-ai-bubble h2 { font-size: 15px; }
+.pakde-ai-bubble h3 { font-size: 14px; }
+.pakde-ai-bubble h4 { font-size: 13.5px; }
+.pakde-ai-bubble h5 { font-size: 12.5px; }
 
 /* Rich Markdown Typography inside Bubbles */
 .pakde-ai-bubble,
@@ -664,6 +686,52 @@
     transform: translateY(-2px);
 }
 
+.pakde-ai-followup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+    align-self: flex-start;
+    animation: pakdeFadeIn 0.3s ease;
+}
+
+.pakde-ai-followup-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--th-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pakde-ai-followup-btn {
+    background: var(--th-card-bg);
+    border: 1px dashed var(--th-primary);
+    color: var(--th-text-body);
+    font-family: var(--th-font-family);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pakde-ai-followup-btn:hover {
+    background: var(--th-primary);
+    color: #ffffff !important;
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
 /* ========================================================
    8. TYPING INDICATOR
 ======================================================== */
@@ -671,34 +739,45 @@
 .pakde-ai-typing {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
+    gap: 8px;
+    padding: 6px 4px;
+    animation: pakdeFadeIn 0.2s ease;
 }
 
 .pakde-ai-typing-bubble {
     background: var(--th-bubble-bot-bg);
     border: 1px solid var(--th-bubble-bot-border);
-    padding: 8px 14px;
-    border-radius: 12px;
+    padding: 10px 16px;
+    border-radius: 16px;
+    border-top-left-radius: 4px;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .pakde-ai-typing-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--th-primary);
+    box-shadow: 0 0 8px var(--th-primary);
     animation: pakdeBounce 1.4s infinite ease-in-out both;
 }
 
 .pakde-ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
 .pakde-ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.pakde-ai-typing-dot:nth-child(3) { animation-delay: 0s; }
 
 @keyframes pakdeBounce {
-    0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
-    40% { transform: scale(1); opacity: 1; }
+    0%, 80%, 100% {
+        transform: scale(0.4) translateY(0);
+        opacity: 0.35;
+    }
+    40% {
+        transform: scale(1.15) translateY(-5px);
+        opacity: 1;
+    }
 }
 
 /* ========================================================
@@ -716,8 +795,8 @@
 }
 
 .pakde-ai-theme--dkarsa .pakde-ai-form {
-    background: #fffcfc;
-    border-top: 1px solid rgba(246, 56, 84, 0.2);
+    background: #181014;
+    border-top: 1px solid rgba(246, 56, 84, 0.25);
 }
 
 .pakde-ai-form textarea {
@@ -734,6 +813,12 @@
     max-height: 100px;
     line-height: 1.4;
     transition: border-color 0.2s ease;
+    scrollbar-width: none; /* Firefox: sembunyikan scrollbar di textarea */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.pakde-ai-form textarea::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 .pakde-ai-form textarea::placeholder {
@@ -779,9 +864,9 @@
 }
 
 .pakde-ai-theme--dkarsa .pakde-ai-footer {
-    background: #fdf3f4;
-    border-top: 1px solid rgba(246, 56, 84, 0.15);
-    color: #75686c;
+    background: #140b0f;
+    border-top: 1px solid rgba(246, 56, 84, 0.2);
+    color: #fda4af;
 }
 
 /* ========================================================

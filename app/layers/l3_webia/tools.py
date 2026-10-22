@@ -87,6 +87,7 @@ WEBIA_CATEGORIES = [
     {"number": "08", "slug": "personal-brand", "name": "Personal Brand", "symbol": "✧", "desc": "Creator, influencer, portfolio"},
     {"number": "09", "slug": "retail", "name": "Retail", "symbol": "▣", "desc": "Store, distributor, supplier, fashion, gadget"},
     {"number": "10", "slug": "healthcare", "name": "Healthcare", "symbol": "✚", "desc": "Clinic, pharmacy, medical practice, dental"},
+    {"number": "11", "slug": "pet-animal-service", "name": "Pet & Animal Services", "symbol": "🐾", "desc": "Pet shop, pet care, grooming salon, veterinary clinic"},
 ]
 
 # PRD WEBIA §7.6: Category & Package Recommendation Matrix
@@ -187,9 +188,19 @@ RECOMMENDATION_MATRIX = {
         "entry_price": "Rp1.499.000",
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila butuh integrasi rekam medis, portal pasien, atau sistem antrean dokter spesifik.",
-        "template_id": "Medika Care",
-        "template_name": "Medika Care (Medical & Dental Clinic)",
-        "recommended_modules": ["Jadwal Dokter Praktek", "Pendaftaran Pasien Online", "Informasi Fasilitas & Tarif", "Lokasi & Call Center Darurat"],
+        "template_id": "Medika Care / Sunset Dental / Azure Smile / Mint Dental",
+        "template_name": "Sunset Dental Care (Dental Clinic) / Azure Smile / Medika Care",
+        "recommended_modules": ["Jadwal Dokter Praktek", "Pendaftaran Pasien Online", "Kalkulator Estimasi Biaya/Cicilan", "Lokasi & Call Center Darurat"],
+    },
+    "pet_animal_service": {
+        "category_name": "Pet & Animal Services",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila pet shop memiliki ratusan stok pakan & aksesoris yang perlu dikelola mandiri via Dashboard CMS.",
+        "template_id": "PawMart / Furry & Co.",
+        "template_name": "PawMart (Pet Shop Minimalist) / Furry & Co. (Pet Boutique Luxury)",
+        "recommended_modules": ["Katalog Makanan & Perlengkapan Hewan", "Online Booking Grooming", "Direct WhatsApp Order", "AI Nutrisi & Perawatan Hewan"],
     },
 }
 
@@ -316,6 +327,30 @@ class L3IntentRouter:
                 "action": "navigate",
                 "target_url": "#koleksi-template",
                 "button_text": f"Lihat Solusi Company Profile (Nexus) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+            }
+
+        if any(w in normalized for w in ["petshop", "pet shop", "hewan", "kucing", "anjing", "grooming", "peliharaan"]):
+            sol = recommend_webia_solution("pet_animal_service")
+            return {
+                "intent": "recommend_petshop_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Template Pet Shop & Animal Services →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+            }
+
+        if any(w in normalized for w in ["gigi", "dental", "dokter gigi", "orthodontic", "klinik gigi", "behel", "veneer"]):
+            sol = recommend_webia_solution("healthcare", needs_cms=True)
+            return {
+                "intent": "recommend_dental_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Template Dental Clinic (Sunset / Azure) →",
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
             }

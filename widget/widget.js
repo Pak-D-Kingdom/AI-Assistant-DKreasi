@@ -27,12 +27,7 @@
             welcomeTitle: 'Halo! Butuh solusi kreasi digital? ✨',
             welcomeDesc: 'Saya siap memandu Anda menemukan layanan terbaik dari PakDe Group: mulai dari Website Bisnis (WEBIA) hingga Undangan Digital.',
             initialMsg: 'Halo! Ada yang bisa saya bantu hari ini? Anda sedang mencari solusi Website Bisnis, Undangan Digital, atau ingin berkonsultasi seputar layanan kami?',
-            chips: [
-                { label: '💻 Buat Website Bisnis', prompt: 'Saya butuh website untuk mengembangkan usaha bisnis saya.' },
-                { label: '💌 Undangan Digital', prompt: 'Bisa bantu buat undangan pernikahan digital?' },
-                { label: '✦ Layanan D-KREASI', prompt: 'Apa saja layanan yang tersedia di D-KREASI?' },
-                { label: '💬 Hubungi CS WhatsApp', prompt: 'Saya ingin berbicara dengan customer service WhatsApp.' }
-            ],
+            chips: [],
             footer: 'D-KREASI AI Assistant · Solusi Digital Kreatif by PakDe Group'
         },
         'site_webia_public': {
@@ -47,12 +42,7 @@
             welcomeTitle: 'Hai! Mau bikin website impianmu? ✨',
             welcomeDesc: 'Aku siap membantumu menjelajahi layanan WEBIA. Pilih topik di bawah atau tulis pertanyaanmu.',
             initialMsg: 'Halo! Kamu sedang mencari website untuk bisnis, ingin melihat paket layanan, atau butuh bantuan menentukan jenis website yang cocok?',
-            chips: [
-                { label: '💻 4 Paket Website', prompt: 'Berapa daftar 4 paket dan harga resmi website di WEBIA?' },
-                { label: '📝 Buat Business Brief', prompt: 'Bantu saya susun business brief untuk website usaha saya.' },
-                { label: '✨ 10 Kategori Bisnis', prompt: 'Kategori bisnis apa saja yang didukung oleh WEBIA?' },
-                { label: '💬 Chat Sales WhatsApp', prompt: 'Bisa hubungkan saya dengan tim sales WEBIA via WhatsApp?' }
-            ],
+            chips: [],
             footer: 'WEBIA Assistant · Sales AI by PakDe Group'
         },
         'site_dkarsa_public': {
@@ -67,12 +57,7 @@
             welcomeTitle: 'Mulai rancang hari bahagia kalian ✨',
             welcomeDesc: 'Pilih desain favorit, konsultasikan kebutuhan acara spesial secara gratis, dan dapatkan rekomendasi terbaik.',
             initialMsg: "Halo! Selamat datang di Tanya D'Karsa. Sedang merencanakan undangan Pernikahan, Halal Bihalal, Khitanan, Aqiqah, Ulang Tahun, atau Syukuran? Aku siap bantu info paket & rekomendasinya!",
-            chips: [
-                { label: '💍 Paket & Harga (Mulai 50rb)', prompt: 'Berapa daftar paket dan harga resmi undangan digital di D-Karsa?' },
-                { label: '🌸 Katalog Tema Desain', prompt: 'Bisa rekomendasikan pilihan tema desain undangan yang tersedia?' },
-                { label: '🕌 Khitan, Aqiqah & Syukuran', prompt: 'Apa saja pilihan undangan untuk Halal Bihalal, Khitanan, Aqiqah, atau Syukuran?' },
-                { label: '✨ Request Desain Kustom', prompt: 'Bagaimana cara request desain kustom dari nol di Paket Kustom (Rp280.000)?' }
-            ],
+            chips: [],
             footer: "Tanya D'Karsa · Konsultan Undangan Digital by PakDe Group"
         }
     };
@@ -144,9 +129,10 @@
                     <div class="pakde-ai-bubble">${activeConfig.initialMsg}</div>
                 </div>
 
+                ${(activeConfig.chips && activeConfig.chips.length > 0) ? `
                 <div class="pakde-ai-chips" id="pakde-ai-chips">
                     ${chipsHtml}
-                </div>
+                </div>` : ''}
 
                 <div class="pakde-ai-typing" id="pakde-ai-typing" style="display: none;">
                     <div class="pakde-ai-typing-bubble">
@@ -243,6 +229,12 @@
         // Raw URLs
         text = text.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>');
 
+        // Headings (h1 - h4)
+        text = text.replace(/^####\s+(.*)$/gm, '<h5 class="pakde-ai-h5">$1</h5>');
+        text = text.replace(/^###\s+(.*)$/gm, '<h4 class="pakde-ai-h4">$1</h4>');
+        text = text.replace(/^##\s+(.*)$/gm, '<h3 class="pakde-ai-h3">$1</h3>');
+        text = text.replace(/^#\s+(.*)$/gm, '<h2 class="pakde-ai-h2">$1</h2>');
+
         // Lists (ordered & unordered)
         const lines = text.split('\n');
         const outputLines = [];
@@ -285,7 +277,7 @@
         return blocks.map(b => {
             const t = b.trim();
             if (!t) return '';
-            if (t.startsWith('<ul') || t.startsWith('<ol') || t.startsWith('<div class="pakde-ai-table-wrap"')) {
+            if (t.startsWith('<ul') || t.startsWith('<ol') || t.startsWith('<div class="pakde-ai-table-wrap"') || t.startsWith('<h2') || t.startsWith('<h3') || t.startsWith('<h4') || t.startsWith('<h5')) {
                 return t;
             }
             return `<p>${t.replace(/\n/g, '<br>')}</p>`;
@@ -315,6 +307,7 @@
         bubble.className = 'pakde-ai-bubble';
         group.appendChild(bubble);
         messages.insertBefore(group, typing);
+        messages.appendChild(typing);
         messages.scrollTop = messages.scrollHeight;
         return {
             update: (fullText) => {
@@ -323,6 +316,79 @@
             },
             element: bubble,
         };
+    };
+
+    const renderFollowupSuggestion = (query, replyText) => {
+        // Hapus suggestion followup lama bila ada
+        const oldSuggestions = messages.querySelectorAll('.pakde-ai-followup');
+        oldSuggestions.forEach(el => el.remove());
+
+        const text = (query + ' ' + replyText).toLowerCase();
+        let prompt = '';
+        let label = '';
+
+        if (activeConfig.layer === 'l2' || activeConfig.theme === 'dkarsa') {
+            // Logika saran kontekstual D-Karsa
+            if (text.includes('harga') || text.includes('paket') || text.includes('biaya') || text.includes('tarif')) {
+                label = '🌸 Ingin lihat pilihan tema desain yang cocok?';
+                prompt = 'Bisa rekomendasikan pilihan tema desain undangan yang tersedia?';
+            } else if (text.includes('haji') || text.includes('umroh') || text.includes('safar')) {
+                label = '🕋 Ingin tahu detail paket dan cara pemesanan tema haji?';
+                prompt = 'Berapa harga paket untuk tema Walimatus Safar Haji dan bagaimana cara pesannya?';
+            } else if (text.includes('jawa') || text.includes('keraton') || text.includes('3d') || text.includes('wayang')) {
+                label = '💍 Mau info rincian fitur Paket Eksklusif 3D?';
+                prompt = 'Apa saja rincian fitur lengkap di Paket Eksklusif Rp180.000?';
+            } else if (text.includes('batak') || text.includes('ulos')) {
+                label = '💍 Mau konsultasi pemesanan tema Batak Istimewa?';
+                prompt = 'Bagaimana alur pemesanan terima beres untuk tema Batak Istimewa?';
+            } else if (text.includes('bayar') || text.includes('midtrans') || text.includes('qris')) {
+                label = '💬 Mau konsultasi langsung dengan CS WhatsApp?';
+                prompt = 'Saya ingin berkonsultasi langsung dengan CS D-Karsa seputar pesanan saya.';
+            } else {
+                label = '💍 Cek daftar harga paket undangan resmi?';
+                prompt = 'Berapa daftar paket dan harga resmi undangan digital di D-Karsa?';
+            }
+        } else {
+            // Logika saran kontekstual Webia (L3) & Portal (L1)
+            if (text.includes('petshop') || text.includes('hewan') || text.includes('kucing') || text.includes('anjing')) {
+                label = '🐾 Mau tahu perbedaan fitur PawMart vs Furry & Co.?';
+                prompt = 'Apa perbedaan antara template PawMart dengan Furry & Co.?';
+            } else if (text.includes('dental') || text.includes('gigi') || text.includes('dokter')) {
+                label = '🦷 Mau cek fitur kalkulator cicilan di Sunset Dental?';
+                prompt = 'Bisa jelaskan fitur kalkulator cicilan dan paket di Sunset Dental Care?';
+            } else if (text.includes('harga') || text.includes('paket') || text.includes('pixel') || text.includes('pulse')) {
+                label = '📝 Mau dibantu buatkan Business Brief website usaha Anda?';
+                prompt = 'Bantu saya susun business brief untuk website usaha saya.';
+            } else if (text.includes('bengkel') || text.includes('otomotif') || text.includes('mobil')) {
+                label = '🚗 Cek rekomendasi paket untuk bengkel dan showroom?';
+                prompt = 'Untuk usaha bengkel dan showroom mobil, paket website apa yang paling pas?';
+            } else if (text.includes('cafe') || text.includes('resto') || text.includes('fnb') || text.includes('kopi')) {
+                label = '☕ Mau lihat fitur reservasi meja di template Cafe Earthtone?';
+                prompt = 'Apa saja fitur reservasi meja dan menu di template Cafe Earthtone?';
+            } else {
+                label = '💡 Mau tahu 4 paket website dan estimasi harganya?';
+                prompt = 'Berapa daftar 4 paket dan harga resmi website di WEBIA?';
+            }
+        }
+
+        if (label && prompt) {
+            const wrap = document.createElement('div');
+            wrap.className = 'pakde-ai-followup';
+            wrap.innerHTML = `
+                <span class="pakde-ai-followup-label">✦ Saran Pertanyaan Selanjutnya</span>
+                <button type="button" class="pakde-ai-followup-btn">
+                    <span>${label}</span>
+                    <span style="opacity: 0.7;">→</span>
+                </button>
+            `;
+            const btn = wrap.querySelector('.pakde-ai-followup-btn');
+            btn.addEventListener('click', () => {
+                wrap.remove();
+                sendMessage(prompt);
+            });
+            messages.insertBefore(wrap, typing);
+            messages.scrollTop = messages.scrollHeight;
+        }
     };
 
     const renderActionCard = (routing) => {
@@ -372,6 +438,7 @@
         input.style.height = 'auto';
         sendBtn.disabled = true;
         typing.style.display = 'flex';
+        messages.appendChild(typing);
         messages.scrollTop = messages.scrollHeight;
 
         try {
@@ -411,7 +478,7 @@
                             try {
                                 const payload = JSON.parse(trimmed.slice(5).trim());
                                 if (payload.type === 'meta') {
-                                    typing.style.display = 'none';
+                                    // Sembunyikan typing indicator hanya saat token pertama keluar
                                     if (payload.routing) renderActionCard(payload.routing);
                                 } else if (payload.type === 'token') {
                                     typing.style.display = 'none';
@@ -430,6 +497,7 @@
                 typing.style.display = 'none';
                 if (fullText) {
                     history.push({ role: 'assistant', content: fullText });
+                    renderFollowupSuggestion(query, fullText);
                 }
             } else if (res.ok) {
                 const data = await res.json();
@@ -439,6 +507,7 @@
                     appendMessage('assistant', reply);
                     history.push({ role: 'assistant', content: reply });
                     if (data.routing) renderActionCard(data.routing);
+                    renderFollowupSuggestion(query, reply);
                 } else {
                     appendMessage('assistant', 'Mohon maaf, asisten sedang mengalami kendala teknis.');
                 }

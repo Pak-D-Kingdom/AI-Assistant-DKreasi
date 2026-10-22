@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -22,8 +23,9 @@ class Settings(BaseSettings):
     LLM_TIMEOUT: int = 60
 
     # Database & Storage
-    DATABASE_URL: str = "sqlite+aiosqlite:///data/app.db"
-    FAISS_BASE_PATH: str = "data/faiss_index"
+    BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    DATABASE_URL: str = f"sqlite+aiosqlite:///{os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data', 'app.db')}"
+    FAISS_BASE_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data", "faiss_index")
     EMBEDDING_MODEL: str = "intfloat/multilingual-e5-small"
 
     # Customer Support WhatsApp Handoff

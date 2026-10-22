@@ -46,6 +46,20 @@ def test_l3_routes_to_automotive_solution():
     assert "Pitstop" in res["recommendation"]["recommended_template"]
 
 
+def test_l3_routes_to_petshop_solution():
+    res = L3IntentRouter.detect_and_route("Saya mau buat website petshop toko makanan kucing")
+    assert res["intent"] == "recommend_petshop_website"
+    assert res["action"] == "navigate"
+    assert "PawMart" in res["recommendation"]["recommended_template"]
+
+
+def test_l3_routes_to_dental_solution():
+    res = L3IntentRouter.detect_and_route("Bisa bikin website untuk klinik dokter gigi?")
+    assert res["intent"] == "recommend_dental_website"
+    assert res["action"] == "navigate"
+    assert "Dental" in res["recommendation"]["recommended_template"]
+
+
 def test_l3_brief_creation():
     data = {
         "business_name": "Kopi Senja Utama",

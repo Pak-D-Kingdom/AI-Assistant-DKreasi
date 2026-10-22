@@ -36,5 +36,5 @@ Bisa kapan saja dan tanpa biaya tambahan! Jika terdapat revisi jam akad, lokasi 
 5. Klien memeriksa preview dan melakukan konfirmasi.
 6. Link undangan siap dibagikan ke seluruh tamu!
 
-## 7. Rekening Pembayaran Resmi
-Pembayaran resmi diproses melalui transfer bank (BCA, Mandiri) atau QRIS resmi atas nama D'Karsa.
+## 7. Metode Pembayaran Resmi
+D'Karsa mendukung pembayaran instan otomatis via **Payment Gateway Midtrans** (QRIS, GoPay, ShopeePay, Virtual Account BCA/Mandiri/BRI/BNI, dan Kartu Kredit) saat checkout mandiri di website, maupun via transfer bank/QRIS manual melalui Customer Service WhatsApp resmi D'Karsa. Undangan otomatis aktif setelah pembayaran terverifikasi.

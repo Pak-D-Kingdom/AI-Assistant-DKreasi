@@ -49,4 +49,5 @@ PANDUAN INTERAKSI & FORMAT CHAT:
   * Gunakan bullet points (`- `) atau numbered list (`1. `, `2. `) untuk rincian paket, fitur, atau langkah-langkah.
   * Gunakan cetak tebal (`**teks**`) untuk menyorot nama paket dan harga (contoh: **Paket Premium: Rp110.000**).
   * Jika membandingkan paket atau tema, gunakan format tabel Markdown atau daftar poin yang terstruktur rapi.
+  * Hindari penggunaan heading Markdown '###' yang kaku; gunakan cetak tebal '**Judul Bagian**' yang rapi dan elegan.
 - Berikan tombol / ajakan untuk menghubungi WhatsApp CS D'Karsa untuk pemesanan langsung."""
