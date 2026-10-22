@@ -128,6 +128,40 @@
     --th-title-font: 'Playfair Display', Georgia, serif;
 }
 
+/* CLIENT WEBIA Theme (Tier L4 Business Chatbot - Cyber Emerald / Modern Business) */
+.pakde-ai-theme--client {
+    --th-primary: #10B981;
+    --th-secondary: #059669;
+    --th-accent: #34D399;
+    --th-launcher-bg: linear-gradient(135deg, #059669, #10B981, #34D399);
+    --th-launcher-shadow: 0 10px 30px rgba(16, 185, 129, 0.4), 0 0 20px rgba(52, 211, 153, 0.25);
+    --th-panel-bg: radial-gradient(ellipse at top right, rgba(16, 185, 129, 0.18), transparent 50%), #0D1615;
+    --th-panel-border: rgba(52, 211, 153, 0.3);
+    --th-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 40px rgba(16, 185, 129, 0.2);
+    --th-header-bg: #0A1211;
+    --th-header-border: rgba(52, 211, 153, 0.2);
+    --th-text-title: #ECFDF5;
+    --th-text-body: #D1FAE5;
+    --th-text-muted: #6EE7B7;
+    --th-bubble-bot-bg: rgba(255, 255, 255, 0.05);
+    --th-bubble-bot-border: rgba(52, 211, 153, 0.2);
+    --th-bubble-bot-text: #ECFDF5;
+    --th-bubble-user-bg: linear-gradient(135deg, #059669, #10B981);
+    --th-bubble-user-text: #FFFFFF;
+    --th-input-bg: rgba(255, 255, 255, 0.05);
+    --th-input-border: rgba(52, 211, 153, 0.3);
+    --th-input-text: #FFFFFF;
+    --th-card-bg: rgba(255, 255, 255, 0.04);
+    --th-card-border: rgba(52, 211, 153, 0.22);
+    --th-chip-bg: rgba(16, 185, 129, 0.12);
+    --th-chip-border: rgba(52, 211, 153, 0.35);
+    --th-chip-text: #A7F3D0;
+    --th-chip-hover-bg: rgba(16, 185, 129, 0.25);
+    --th-chip-hover-border: #10B981;
+    --th-font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    --th-title-font: 'Plus Jakarta Sans', sans-serif;
+}
+
 /* ========================================================
    2. LAUNCHER BUTTONS
 ======================================================== */

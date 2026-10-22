@@ -74,13 +74,54 @@
                 { label: '✨ Request Desain Kustom', prompt: 'Bagaimana cara request desain kustom dari nol di Paket Kustom (Rp280.000)?' }
             ],
             footer: "Tanya D'Karsa · Konsultan Undangan Digital by PakDe Group"
+        },
+        'site_webia_tenant_public': {
+            theme: 'client',
+            layer: 'l4',
+            title: 'Asisten Bisnis Tenant',
+            subtitle: 'Online · AI Customer Support Resmi',
+            eyebrow: 'AI BUSINESS CHATBOT · TIER L4',
+            launcherLabel: 'Tanya CS Bisnis',
+            launcherIcon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`,
+            avatarIcon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+            welcomeTitle: 'Selamat Datang di Bisnis Kami! ✨',
+            welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar produk, jam buka, layanan, dan promo kami.',
+            initialMsg: 'Halo! Ada yang bisa saya bantu terkait produk, reservasi, atau layanan kami hari ini?',
+            chips: [
+                { label: '⏰ Jam Buka & Lokasi', prompt: 'Buka jam berapa dan di mana alamat lokasi bisnis ini?' },
+                { label: '📋 Layanan & Harga', prompt: 'Apa saja layanan atau produk yang tersedia beserta harganya?' },
+                { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
+                { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
+            ],
+            footer: 'AI Business Chatbot · Powered by WEBIA Ekosistem PakDe Group'
+        },
+        'site_client_webia_public': {
+            theme: 'client',
+            layer: 'l4',
+            title: 'Asisten Bisnis Tenant',
+            subtitle: 'Online · AI Customer Support Resmi',
+            eyebrow: 'AI BUSINESS CHATBOT · TIER L4',
+            launcherLabel: 'Tanya CS Bisnis',
+            launcherIcon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`,
+            avatarIcon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+            welcomeTitle: 'Selamat Datang di Bisnis Kami! ✨',
+            welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar produk, jam buka, layanan, dan promo kami.',
+            initialMsg: 'Halo! Ada yang bisa saya bantu terkait produk, reservasi, atau layanan kami hari ini?',
+            chips: [
+                { label: '⏰ Jam Buka & Lokasi', prompt: 'Buka jam berapa dan di mana alamat lokasi bisnis ini?' },
+                { label: '📋 Layanan & Harga', prompt: 'Apa saja layanan atau produk yang tersedia beserta harganya?' },
+                { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
+                { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
+            ],
+            footer: 'AI Business Chatbot · Powered by WEBIA Ekosistem PakDe Group'
         }
     };
 
     // Determine active profile
     let activeConfig = CONFIGS[siteKey] || CONFIGS['site_dkreasi_public'];
     if (layerParam === 'l2' || siteKey.includes('dkarsa')) activeConfig = CONFIGS['site_dkarsa_public'];
-    if (layerParam === 'l3' || siteKey.includes('webia')) activeConfig = CONFIGS['site_webia_public'];
+    if (layerParam === 'l3' || siteKey === 'site_webia_public') activeConfig = CONFIGS['site_webia_public'];
+    if (layerParam === 'l4' || siteKey.includes('tenant') || siteKey.includes('client')) activeConfig = CONFIGS['site_webia_tenant_public'];
 
     // Inject CSS
     if (!document.querySelector('link[href*="widget.css"]')) {
@@ -381,6 +422,7 @@
                     'Content-Type': 'application/json',
                     'Accept': 'text/event-stream, application/json',
                     'X-Site-Key': siteKey,
+                    ...(window.__PAKDE_TENANT_ID ? { 'X-Tenant-Id': window.__PAKDE_TENANT_ID } : {}),
                 },
                 body: JSON.stringify({
                     layer: activeConfig.layer,
