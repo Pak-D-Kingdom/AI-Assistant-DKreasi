@@ -77,7 +77,7 @@ class PipelineOrchestrator:
         rag_context = self.rag_service.format_context(retrieved_chunks)
 
         # 4. Construct System Prompt
-        base_prompt = layer_handler.get_system_prompt()
+        base_prompt = layer_handler.get_system_prompt(context=context)
         final_system_prompt = f"{base_prompt}\n\n{rag_context}" if rag_context else base_prompt
 
         # 5. Call LLM
@@ -167,7 +167,7 @@ class PipelineOrchestrator:
         rag_context = self.rag_service.format_context(retrieved_chunks)
 
         # 4. Construct System Prompt
-        base_prompt = layer_handler.get_system_prompt()
+        base_prompt = layer_handler.get_system_prompt(context=context)
         final_system_prompt = f"{base_prompt}\n\n{rag_context}" if rag_context else base_prompt
 
         # Yield Meta & Action Card info immediately
