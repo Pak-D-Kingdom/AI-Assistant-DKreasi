@@ -10,6 +10,9 @@ settings = get_settings()
 
 
 class RagService:
+    _index_cache: Dict[str, Any] = {}
+    _metadata_cache: Dict[str, List[Dict[str, Any]]] = {}
+
     def __init__(self, embedding_service: Optional[EmbeddingService] = None):
         self.embedding_service = embedding_service or EmbeddingService()
         self.base_path = settings.FAISS_BASE_PATH
@@ -33,6 +36,27 @@ class RagService:
         os.makedirs(path, exist_ok=True)
         return path
 
+    def preload(self, layer: str, tenant_id: Optional[str] = None):
+        """Preload metadata and FAISS index into memory cache during startup."""
+        ns_dir = self._get_namespace_dir(layer, tenant_id)
+        meta_file = os.path.join(ns_dir, "metadata.json")
+        faiss_file = os.path.join(ns_dir, "index.faiss")
+
+        if os.path.exists(meta_file):
+            try:
+                with open(meta_file, "r", encoding="utf-8") as f:
+                    self._metadata_cache[ns_dir] = json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to preload metadata for {ns_dir}: {e}")
+
+        if os.path.exists(faiss_file):
+            try:
+                import faiss
+                self._index_cache[ns_dir] = faiss.read_index(faiss_file)
+                logger.info(f"Preloaded FAISS index for {layer} into memory.")
+            except Exception as e:
+                logger.warning(f"Failed to preload FAISS index for {ns_dir}: {e}")
+
     def save_index(
         self,
         layer: str,
@@ -48,13 +72,17 @@ class RagService:
             dim = embeddings.shape[1]
             index = faiss.IndexFlatIP(dim)  # Inner Product (Cosine similarity when normalized)
             index.add(embeddings)
-            faiss.write_index(index, os.path.join(ns_dir, "index.faiss"))
+            faiss_path = os.path.join(ns_dir, "index.faiss")
+            faiss.write_index(index, faiss_path)
+            self._index_cache[ns_dir] = index
         except ImportError:
             # Fallback if faiss-cpu is building
             np.save(os.path.join(ns_dir, "index.npy"), embeddings)
 
-        with open(os.path.join(ns_dir, "metadata.json"), "w", encoding="utf-8") as f:
+        meta_path = os.path.join(ns_dir, "metadata.json")
+        with open(meta_path, "w", encoding="utf-8") as f:
             json.dump(chunks, f, ensure_ascii=False, indent=2)
+        self._metadata_cache[ns_dir] = chunks
 
         logger.info(f"Saved FAISS index for {layer} (tenant={tenant_id}) with {len(chunks)} chunks.")
 
@@ -66,24 +94,32 @@ class RagService:
         top_k: int = 3,
     ) -> List[Dict[str, Any]]:
         ns_dir = self._get_namespace_dir(layer, tenant_id)
-        meta_file = os.path.join(ns_dir, "metadata.json")
 
-        if not os.path.exists(meta_file):
-            return []
-
-        with open(meta_file, "r", encoding="utf-8") as f:
-            chunks = json.load(f)
+        # Retrieve metadata (from cache or disk)
+        if ns_dir in self._metadata_cache:
+            chunks = self._metadata_cache[ns_dir]
+        else:
+            meta_file = os.path.join(ns_dir, "metadata.json")
+            if not os.path.exists(meta_file):
+                return []
+            with open(meta_file, "r", encoding="utf-8") as f:
+                chunks = json.load(f)
+            self._metadata_cache[ns_dir] = chunks
 
         if not chunks:
             return []
 
         query_vec = self.embedding_service.embed_query(query).reshape(1, -1)
 
+        # Retrieve FAISS index (from cache or disk)
         faiss_file = os.path.join(ns_dir, "index.faiss")
-        if os.path.exists(faiss_file):
+        if ns_dir in self._index_cache or os.path.exists(faiss_file):
             try:
                 import faiss
-                index = faiss.read_index(faiss_file)
+                if ns_dir not in self._index_cache:
+                    self._index_cache[ns_dir] = faiss.read_index(faiss_file)
+                index = self._index_cache[ns_dir]
+
                 scores, indices = index.search(query_vec, min(top_k, len(chunks)))
                 results = []
                 for score, idx in zip(scores[0], indices[0]):
@@ -114,9 +150,11 @@ class RagService:
     def format_context(self, retrieved_chunks: List[Dict[str, Any]]) -> str:
         if not retrieved_chunks:
             return ""
-        lines = ["KONTEKS INFORMASI RESMI TERVERIFIKASI:"]
-        for c in retrieved_chunks:
-            title = c.get("title", "Info")
-            content = c.get("content", "")
-            lines.append(f"- [{title}]: {content}")
-        return "\n".join(lines)
+
+        context_blocks = []
+        for i, chunk in enumerate(retrieved_chunks, 1):
+            title = chunk.get("title", f"Document {i}")
+            content = chunk.get("content", "").strip()
+            context_blocks.append(f"[Konteks Pengetahuan: {title}]\n{content}")
+
+        return "\n\n".join(context_blocks)

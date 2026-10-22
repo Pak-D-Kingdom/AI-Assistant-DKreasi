@@ -1,33 +1,31 @@
+import os
 from functools import lru_cache
 from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = "PakDe-AI-Engine"
+    APP_NAME: str = "ai-assistant-dkreasi"
     APP_ENV: str = "local"
     DEBUG: bool = True
-    PORT: int = 8000
+    PORT: int = 8001
     HOST: str = "0.0.0.0"
 
     # CORS
-    ALLOWED_ORIGINS: str = "http://localhost:8000,http://127.0.0.1:8000,http://localhost:3000"
+    ALLOWED_ORIGINS: str = "http://localhost:8000,http://127.0.0.1:8000,http://localhost:8001,http://127.0.0.1:8001,http://localhost:8002,http://127.0.0.1:8002,http://localhost:8003,http://127.0.0.1:8003,http://localhost:3000,https://webia.id,https://d-kreasi.com,https://dkarsa.id"
 
-    # LLM Settings
-    AI_PROVIDER: str = "mock"  # llm, gemini, mock
+    # LLM Settings (9router / OpenAI-compatible Gateway)
     LLM_BASE_URL: str = "http://localhost:20128/v1"
     LLM_API_KEY: str = ""
-    LLM_MODEL: str = "Nasikotak"
+    LLM_MODEL: str = "d-kreasi"
     LLM_TEMPERATURE: float = 0.2
     LLM_MAX_TOKENS: int = 2048
-    LLM_TIMEOUT: int = 30
-
-    GEMINI_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-1.5-flash"
+    LLM_TIMEOUT: int = 60
 
     # Database & Storage
-    DATABASE_URL: str = "sqlite+aiosqlite:///data/app.db"
-    FAISS_BASE_PATH: str = "data/faiss_index"
+    BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    DATABASE_URL: str = f"sqlite+aiosqlite:///{os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data', 'app.db')}"
+    FAISS_BASE_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data", "faiss_index")
     EMBEDDING_MODEL: str = "intfloat/multilingual-e5-small"
 
     # Customer Support WhatsApp Handoff

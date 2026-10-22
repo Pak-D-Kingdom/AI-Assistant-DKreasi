@@ -7,4 +7,4 @@ logging.basicConfig(
     handlers=[logging.StreamHandler(sys.stdout)],
 )
 
-logger = logging.getLogger("pakde_ai_engine")
+logger = logging.getLogger("ai_assistant_dkreasi")
