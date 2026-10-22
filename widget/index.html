@@ -155,6 +155,9 @@
             <a href="?site=dkarsa" class="tab-btn" id="tabDkarsa">
                 <span>🌸</span> D-KARSA
             </a>
+            <a href="?site=webia_tenant" class="tab-btn" id="tabWebiaTenant">
+                <span>🟢</span> WEBIA TENANT
+            </a>
         </nav>
     </header>
 
@@ -201,6 +204,15 @@
                 subtitle: "Tanya D'Karsa AI",
                 color: '#FB7185',
                 glow: 'rgba(244, 63, 94, 0.25)'
+            },
+            'webia_tenant': {
+                siteKey: 'site_webia_tenant_public',
+                layer: 'l4',
+                title: 'WEBIA TENANT',
+                eyebrow: 'CLIENT WEBSITE · TIER L4',
+                subtitle: 'AI Business Chatbot',
+                color: '#34D399',
+                glow: 'rgba(16, 185, 129, 0.25)'
             }
         };
 
@@ -219,6 +231,8 @@
             document.getElementById('tabWebia').classList.add('active');
         } else if (currentSite === 'dkarsa') {
             document.getElementById('tabDkarsa').classList.add('active');
+        } else if (currentSite === 'webia_tenant') {
+            document.getElementById('tabWebiaTenant').classList.add('active');
         } else {
             document.getElementById('tabDkreasi').classList.add('active');
         }

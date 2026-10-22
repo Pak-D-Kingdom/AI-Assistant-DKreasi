@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBIA TENANT — AI Assistant</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap">
+    <link rel="stylesheet" href="./widget.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0D14;
+            color: #F8FAFC;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .ambient {
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.16);
+            filter: blur(140px);
+            pointer-events: none;
+            z-index: 0;
+            top: 20%;
+        }
+
+        .top-nav {
+            width: 100%;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tabs {
+            display: inline-flex;
+            gap: 8px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            backdrop-filter: blur(12px);
+        }
+
+        .tab-btn {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748B;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .main {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            max-width: 760px;
+            width: 100%;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #64748B;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(48px, 8vw, 86px);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            color: #34D399;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+
+        .main p.subtitle {
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 24px;
+        }
+
+        /* Minimalist Tenant Control Bar */
+        .tenant-panel {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .tenant-select-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tenant-select-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94A3B8;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .tenant-dropdown {
+            background: rgba(2, 6, 23, 0.85);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: #F8FAFC;
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-family: inherit;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            min-width: 260px;
+            max-width: 100%;
+            transition: all 0.2s;
+        }
+
+        .tenant-dropdown:focus {
+            border-color: #34D399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .btn-action--primary {
+            background: #10B981;
+            color: #042F2E;
+        }
+
+        .btn-action--primary:hover {
+            background: #34D399;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-action--secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #E2E8F0;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-action--secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+        }
+
+        .tenant-status-chip {
+            font-size: 11.5px;
+            color: #34D399;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 4px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #34D399;
+            box-shadow: 0 0 6px #34D399;
+        }
+
+        /* Glassmorphic Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.82);
+            backdrop-filter: blur(14px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #0B1120;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 860px;
+            height: 85vh;
+            max-height: 850px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.97) translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.6);
+            flex-shrink: 0;
+        }
+
+        .modal-title-group h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #F8FAFC;
+        }
+
+        .modal-title-group span {
+            font-size: 12px;
+            color: #34D399;
+            font-weight: 500;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            color: #FFF;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Sticky Tabs - Never Hidden */
+        .modal-tabs {
+            display: flex;
+            gap: 4px;
+            padding: 8px 24px 0 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.4);
+            flex-shrink: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .modal-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .editor-tab-btn {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .editor-tab-btn:hover {
+            color: #E2E8F0;
+        }
+
+        .editor-tab-btn.active {
+            color: #34D399;
+            border-bottom-color: #34D399;
+            background: rgba(52, 211, 153, 0.04);
+        }
+
+        /* Smooth Scrollable Body */
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 999px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, 0.5);
+        }
+
+        .editor-pane {
+            display: none;
+        }
+
+        .editor-pane.active {
+            display: block;
+        }
+
+        .pane-desc {
+            font-size: 12.5px;
+            color: #94A3B8;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* Responsive Form Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            width: 100%;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .form-group--full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94A3B8;
+            letter-spacing: 0.02em;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #F1F5F9;
+            font-family: inherit;
+            font-size: 13.5px;
+            padding: 10px 14px;
+            outline: none;
+            transition: all 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            border-color: #34D399;
+            box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.15);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* Dynamic Item Cards */
+        .items-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
+            width: 100%;
+        }
+
+        .item-card {
+            background: rgba(2, 6, 23, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: border-color 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .item-card:hover {
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+
+        .item-card-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .item-remove-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #F87171;
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .item-remove-btn:hover {
+            background: #EF4444;
+            color: #FFFFFF;
+        }
+
+        .btn-add-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: rgba(52, 211, 153, 0.08);
+            border: 1px dashed rgba(52, 211, 153, 0.3);
+            color: #34D399;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-add-item:hover {
+            background: rgba(52, 211, 153, 0.16);
+            border-color: #34D399;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.6);
+            flex-shrink: 0;
+            gap: 12px;
+        }
+
+        .modal-status {
+            font-size: 12px;
+            color: #64748B;
+        }
+
+        .footer-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #052E16;
+            border: 1px solid #10B981;
+            color: #6EE7B7;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        footer {
+            padding: 24px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ambient"></div>
+    <header class="top-nav">
+        <nav class="tabs">
+            <a href="./dkreasi.html" class="tab-btn">🔵 D-KREASI</a>
+            <a href="./webia.html" class="tab-btn">🟣 WEBIA</a>
+            <a href="./dkarsa.html" class="tab-btn">🌸 D-KARSA</a>
+            <a href="./webia_tenant.html" class="tab-btn active">🟢 WEBIA TENANT</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="eyebrow">CLIENT WEBSITE · TIER L4 MULTI-TENANT</div>
+        <h1>WEBIA TENANT</h1>
+        <p class="subtitle">AI Business Chatbot & Dedicated Knowledge Engine</p>
+
+        <!-- Minimalist Tenant Control Bar -->
+        <div class="tenant-panel">
+            <div class="tenant-select-row">
+                <span class="tenant-select-label">Pilih Tenant:</span>
+                <select id="tenantSelect" class="tenant-dropdown">
+                    <option value="" disabled selected>Memuat daftar tenant...</option>
+                </select>
+                <button id="openEditorBtn" class="btn-action btn-action--primary">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    Kelola Knowledge
+                </button>
+                <button id="openNewTenantBtn" class="btn-action btn-action--secondary">
+                    + Tambah Tenant Baru
+                </button>
+            </div>
+            <div class="tenant-status-chip">
+                <span class="status-dot"></span>
+                <span id="activeTenantInfo">Terhubung: Bengkel PakDe Motor Jaya</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Unified Knowledge Base & Tenant Editor Modal -->
+    <div id="knowledgeModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2 id="modalTenantTitle">Knowledge Base Editor</h2>
+                    <span id="modalTenantSubtitle">Form Pengaturan Knowledge Bisnis</span>
+                </div>
+                <button id="closeModalBtn" class="modal-close-btn" title="Tutup">✕</button>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="editor-tab-btn active" data-target="paneProfil">🏢 Profil & Kontak</button>
+                <button class="editor-tab-btn" data-target="paneLayanan">📋 Layanan & Harga</button>
+                <button class="editor-tab-btn" data-target="paneKebijakan">🛡️ Kebijakan & Garansi</button>
+                <button class="editor-tab-btn" data-target="paneFaq">❓ Tanya Jawab (FAQ)</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Pane 1: Profil & Kontak -->
+                <div id="paneProfil" class="editor-pane active">
+                    <p class="pane-desc">Informasi resmi identitas usaha. AI menjawab pertanyaan terkait alamat, jam
+                        buka, dan kontak WhatsApp dari data ini.</p>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Nama Bisnis / Brand:</label>
+                            <input type="text" id="formNamaBisnis" class="form-input"
+                                placeholder="Masukkan nama bisnis...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Kategori Usaha:</label>
+                            <select id="formKategori" class="form-select">
+                                <option value="" disabled selected>Pilih Kategori Usaha...</option>
+                                <option value="automotive">🚗 Automotive (Bengkel, Servis & Aksesoris)</option>
+                                <option value="fnb">🍔 F&B / Kuliner (Resto, Cafe & Katering)</option>
+                                <option value="beauty">✨ Beauty & Care (Klinik Estetika & Salon)</option>
+                                <option value="healthcare">🏥 Healthcare & Medis (Klinik Pratama & Apotek)</option>
+                                <option value="property">🏡 Property & Real Estate (Agen & Developer)</option>
+                                <option value="retail">🛍️ Retail & Fashion (Toko Online & Butik)</option>
+                                <option value="education">🎓 Education & Kursus (Bimbel & Pelatihan)</option>
+                                <option value="company">🏢 Company & B2B (Logistik & Korporasi)</option>
+                                <option value="professional_service">⚖️ Jasa Profesional (Konsultan Pajak & Notaris)
+                                </option>
+                                <option value="personal_brand">📸 Personal Brand & Kreator (Fotografer & MC)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tagline / Slogan:</label>
+                            <input type="text" id="formTagline" class="form-input"
+                                placeholder="Contoh: Kualitas Terbaik & Terpercaya">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Jam Layanan / Operasional:</label>
+                            <input type="text" id="formJamOperasional" class="form-input"
+                                placeholder="Contoh: Senin - Sabtu: 08.00 - 17.00 WIB">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">WhatsApp Booking / CS Resmi:</label>
+                            <input type="text" id="formWhatsapp" class="form-input"
+                                placeholder="Contoh: 0812-3456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Instagram / Website:</label>
+                            <input type="text" id="formInstagram" class="form-input"
+                                placeholder="Contoh: @bisnis.official / www.bisnis.com">
+                        </div>
+                        <div class="form-group form-group--full">
+                            <label class="form-label">Alamat Lengkap Fisik:</label>
+                            <textarea id="formAlamat" class="form-textarea" rows="2"
+                                placeholder="Contoh: Jl. Pemuda No. 45, Surabaya"></textarea>
+                        </div>
+                        <div class="form-group form-group--full">
+                            <label class="form-label">Deskripsi Singkat Usaha:</label>
+                            <textarea id="formDeskripsi" class="form-textarea" rows="3"
+                                placeholder="Jelaskan ringkas bidang usaha, keahlian khusus, atau spesialisasi bisnis Anda..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pane 2: Layanan & Harga -->
+                <div id="paneLayanan" class="editor-pane">
+                    <p class="pane-desc">Daftar produk, paket layanan, atau menu makanan yang tersedia beserta harganya.
+                    </p>
+                    <div id="servicesListContainer" class="items-container">
+                        <!-- Dynamic Service Rows -->
+                    </div>
+                    <button type="button" id="addServiceRowBtn" class="btn-add-item">
+                        + Tambah Layanan / Produk
+                    </button>
+                </div>
+
+                <!-- Pane 3: Kebijakan & Garansi -->
+                <div id="paneKebijakan" class="editor-pane">
+                    <p class="pane-desc">Ketentuan jaminan garansi servis/produk, metode pembayaran, dan syarat
+                        reservasi.</p>
+                    <div class="form-group" style="margin-bottom: 14px;">
+                        <label class="form-label">Jaminan / Garansi:</label>
+                        <textarea id="formGaransi" class="form-textarea" rows="2"
+                            placeholder="Contoh: Garansi servis 7 hari kerja atau jaminan retur bila cacat..."></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 14px;">
+                        <label class="form-label">Metode Pembayaran:</label>
+                        <input type="text" id="formPembayaran" class="form-input"
+                            placeholder="Contoh: Tunai, QRIS (BCA, Mandiri, GoPay, OVO), dan Transfer Bank">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ketentuan Layanan / Reservasi:</label>
+                        <textarea id="formKetentuan" class="form-textarea" rows="2"
+                            placeholder="Contoh: Reservasi disarankan H-1 melalui WhatsApp resmi..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Pane 4: Tanya Jawab (FAQ) -->
+                <div id="paneFaq" class="editor-pane">
+                    <p class="pane-desc">Pertanyaan umum dan jawaban resmi yang sering diajukan pelanggan.</p>
+                    <div id="faqListContainer" class="items-container">
+                        <!-- Dynamic FAQ Rows -->
+                    </div>
+                    <button type="button" id="addFaqRowBtn" class="btn-add-item">
+                        + Tambah Tanya Jawab (FAQ)
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <span id="editorStatusText" class="modal-status">Form terstruktur tanpa simbol markdown. AI menyusun
+                    otomatis.</span>
+                <div class="footer-buttons">
+                    <button id="cancelModalBtn" class="btn-action btn-action--secondary">Batal</button>
+                    <button id="saveKnowledgeBtn" class="btn-action btn-action--primary">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        💾 Simpan & Re-Index AI
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toastNotification" class="toast">
+        Knowledge base berhasil disimpan & AI FAISS Index telah diperbarui!
+    </div>
+
+    <footer>PakDe AI Assistant · Integration Engine</footer>
+
+    <!-- Universal AI Widget -->
+    <script src="./widget.js" data-site-key="site_webia_tenant_public" data-layer="l4" defer></script>
+
+    <!-- Interactive Human-Friendly Tenant Manager Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tenantSelect = document.getElementById('tenantSelect');
+            const openEditorBtn = document.getElementById('openEditorBtn');
+            const openNewTenantBtn = document.getElementById('openNewTenantBtn');
+            const activeTenantInfo = document.getElementById('activeTenantInfo');
+
+            // Modal Elements
+            const modal = document.getElementById('knowledgeModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelModalBtn = document.getElementById('cancelModalBtn');
+            const saveKnowledgeBtn = document.getElementById('saveKnowledgeBtn');
+            const modalTenantTitle = document.getElementById('modalTenantTitle');
+            const modalTenantSubtitle = document.getElementById('modalTenantSubtitle');
+            const editorStatusText = document.getElementById('editorStatusText');
+            const toast = document.getElementById('toastNotification');
+
+            // Form inputs
+            const formNamaBisnis = document.getElementById('formNamaBisnis');
+            const formKategori = document.getElementById('formKategori');
+            const formTagline = document.getElementById('formTagline');
+            const formJamOperasional = document.getElementById('formJamOperasional');
+            const formWhatsapp = document.getElementById('formWhatsapp');
+            const formInstagram = document.getElementById('formInstagram');
+            const formAlamat = document.getElementById('formAlamat');
+            const formDeskripsi = document.getElementById('formDeskripsi');
+
+            const servicesListContainer = document.getElementById('servicesListContainer');
+            const addServiceRowBtn = document.getElementById('addServiceRowBtn');
+
+            const formGaransi = document.getElementById('formGaransi');
+            const formPembayaran = document.getElementById('formPembayaran');
+            const formKetentuan = document.getElementById('formKetentuan');
+
+            const faqListContainer = document.getElementById('faqListContainer');
+            const addFaqRowBtn = document.getElementById('addFaqRowBtn');
+
+            let currentTenants = [];
+            let activeTenantId = 'tenant_automotive_01';
+            let isCreatingNewTenant = false;
+
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3500);
+            }
+
+            // Load Tenants List from API
+            async function loadTenants() {
+                try {
+                    const res = await fetch('/api/v1/tenants');
+                    if (!res.ok) throw new Error('Gagal memuat tenant');
+                    currentTenants = await res.json();
+
+                    tenantSelect.innerHTML = '';
+                    currentTenants.forEach(t => {
+                        const opt = document.createElement('option');
+                        opt.value = t.tenant_id;
+                        opt.textContent = `${t.name} (${t.category})`;
+                        if (t.tenant_id === activeTenantId) opt.selected = true;
+                        tenantSelect.appendChild(opt);
+                    });
+
+                    updateActiveTenantBadge();
+                } catch (e) {
+                    console.error('Error loadTenants:', e);
+                }
+            }
+
+            function updateActiveTenantBadge() {
+                const found = currentTenants.find(t => t.tenant_id === activeTenantId);
+                const name = found ? found.name : activeTenantId;
+                activeTenantInfo.textContent = `Terhubung: ${name}`;
+                window.__PAKDE_TENANT_ID = activeTenantId;
+            }
+
+            tenantSelect.addEventListener('change', (e) => {
+                activeTenantId = e.target.value;
+                updateActiveTenantBadge();
+                showToast(`Beralih ke tenant: ${activeTenantId}. Widget kini terhubung.`);
+            });
+
+            // Modal Tab Navigation
+            document.querySelectorAll('.editor-tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.editor-tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.editor-pane').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    const targetPane = document.getElementById(btn.dataset.target);
+                    if (targetPane) targetPane.classList.add('active');
+                });
+            });
+
+            function switchTab(targetId) {
+                document.querySelectorAll('.editor-tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.editor-pane').forEach(p => p.classList.remove('active'));
+                const tabBtn = document.querySelector(`.editor-tab-btn[data-target="${targetId}"]`);
+                if (tabBtn) tabBtn.classList.add('active');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) targetPane.classList.add('active');
+            }
+
+            // Dynamic Service Row Generation
+            function addServiceRow(nama = '', harga = '', ket = '') {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-card-row">
+                        <input type="text" class="form-input service-name" placeholder="Nama Layanan / Menu" value="${escapeHtml(nama)}">
+                        <input type="text" class="form-input service-price" placeholder="Harga (contoh: Rp50.000)" style="max-width: 170px;" value="${escapeHtml(harga)}">
+                        <button type="button" class="item-remove-btn" title="Hapus">✕</button>
+                    </div>
+                    <input type="text" class="form-input service-desc" placeholder="Keterangan singkat / kelengkapan fasilitas" value="${escapeHtml(ket)}">
+                `;
+                card.querySelector('.item-remove-btn').addEventListener('click', () => card.remove());
+                servicesListContainer.appendChild(card);
+            }
+
+            addServiceRowBtn.addEventListener('click', () => addServiceRow());
+
+            // Dynamic FAQ Row Generation
+            function addFaqRow(tanya = '', jawab = '') {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-card-row">
+                        <input type="text" class="form-input faq-question" placeholder="Pertanyaan pelanggan..." value="${escapeHtml(tanya)}">
+                        <button type="button" class="item-remove-btn" title="Hapus">✕</button>
+                    </div>
+                    <textarea class="form-textarea faq-answer" rows="2" placeholder="Jawaban resmi...">${escapeHtml(jawab)}</textarea>
+                `;
+                card.querySelector('.item-remove-btn').addEventListener('click', () => card.remove());
+                faqListContainer.appendChild(card);
+            }
+
+            addFaqRowBtn.addEventListener('click', () => addFaqRow());
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str).replace(/"/g, '&quot;');
+            }
+
+            function selectDropdownCategory(catText) {
+                if (!catText) return;
+                const lower = catText.toLowerCase();
+                for (let i = 0; i < formKategori.options.length; i++) {
+                    const opt = formKategori.options[i];
+                    if (lower.includes(opt.value) || opt.text.toLowerCase().includes(lower)) {
+                        formKategori.selectedIndex = i;
+                        return;
+                    }
+                }
+            }
+
+            // Parse Existing Markdown into Form Fields
+            function parseMarkdownToForm(profilMd, layananMd, kebijakanMd, faqMd) {
+                const getVal = (regex, text) => {
+                    const m = text.match(regex);
+                    return m ? m[1].trim() : '';
+                };
+
+                const h1Match = profilMd.match(/^#\s+(.*?)(?:\s*-\s*Profil Bisnis)?$/m);
+                formNamaBisnis.value = getVal(/-\s+\*\*Nama Bisnis\*\*:\s*(.*)/, profilMd) || (h1Match ? h1Match[1].trim() : '');
+
+                const catRaw = getVal(/-\s+\*\*Kategori\*\*:\s*(.*)/, profilMd);
+                selectDropdownCategory(catRaw);
+
+                formTagline.value = getVal(/-\s+\*\*Tagline\*\*:\s*(.*)/, profilMd);
+                formAlamat.value = getVal(/-\s+\*\*Alamat\*\*:\s*(.*)/, profilMd);
+                formDeskripsi.value = getVal(/-\s+\*\*Deskripsi\*\*:\s*(.*)/, profilMd);
+                formWhatsapp.value = getVal(/-\s+\*\*WhatsApp.*?\*\*:\s*(.*)/, profilMd);
+                formInstagram.value = getVal(/-\s+\*\*Instagram.*?\*\*:\s*(.*)/, profilMd);
+
+                // Jam Operasional
+                const jamMatch = profilMd.match(/-\s+\*\*Jam Operasional\*\*:\s*\n((?:\s+-\s+.*\n?)*)/);
+                if (jamMatch && jamMatch[1].trim()) {
+                    formJamOperasional.value = jamMatch[1].trim().replace(/\n\s*-\s*/g, ' | ').replace(/^-\s*/, '');
+                } else {
+                    formJamOperasional.value = getVal(/-\s+\*\*Jam Operasional\*\*:\s*(.*)/, profilMd);
+                }
+
+                // Layanan
+                servicesListContainer.innerHTML = '';
+                const svcLines = layananMd.split('\n');
+                let foundServices = 0;
+                svcLines.forEach(l => {
+                    const m = l.match(/^-\s+\*\*(.*?)\*\*:\s*([^(\n\r]+)(?:\s*\((.*?)\))?/);
+                    if (m) {
+                        addServiceRow(m[1].trim(), m[2].trim().replace(/\.$/, ''), m[3] ? m[3].trim() : '');
+                        foundServices++;
+                    }
+                });
+                if (foundServices === 0) addServiceRow('', '', '');
+
+                // Kebijakan
+                formGaransi.value = getVal(/-\s+\*\*Garansi.*?\*\*:\s*(.*)/, kebijakanMd);
+                formPembayaran.value = getVal(/-\s+\*\*Metode Pembayaran\*\*:\s*(.*)/, kebijakanMd);
+                formKetentuan.value = getVal(/-\s+\*\*Ketentuan Layanan.*?\*\*:\s*(.*)/, kebijakanMd) || getVal(/-\s+\*\*Ketersediaan Sparepart.*?\*\*:\s*(.*)/, kebijakanMd);
+
+                // FAQ
+                faqListContainer.innerHTML = '';
+                const faqRegex = /-\s+\*\*Q:\s*(.*?)\*\*\s*\n\s+-\s+A:\s*(.*?)(?=\n-|\n##|$)/gs;
+                let match;
+                let foundFaq = 0;
+                while ((match = faqRegex.exec(faqMd)) !== null) {
+                    addFaqRow(match[1].trim(), match[2].trim());
+                    foundFaq++;
+                }
+                if (foundFaq === 0) addFaqRow('', '');
+            }
+
+            // Open Editor for Existing Tenant
+            async function openEditor(tenantId) {
+                isCreatingNewTenant = false;
+                activeTenantId = tenantId;
+                const found = currentTenants.find(t => t.tenant_id === tenantId);
+                modalTenantTitle.textContent = `Knowledge Editor: ${found ? found.name : tenantId}`;
+                modalTenantSubtitle.textContent = `Tenant ID: ${tenantId}`;
+                editorStatusText.textContent = 'Memuat data tenant...';
+
+                modal.classList.add('active');
+                switchTab('paneProfil');
+
+                try {
+                    const res = await fetch(`/api/v1/tenants/${tenantId}/knowledge`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        parseMarkdownToForm(data.profil || '', data.layanan || '', data.kebijakan || '', data.faq || '');
+                        editorStatusText.textContent = 'Data siap diedit.';
+                    } else {
+                        throw new Error('Tenant belum memiliki dokumen');
+                    }
+                } catch (e) {
+                    console.error(e);
+                    editorStatusText.textContent = 'Gagal memuat dari API.';
+                }
+            }
+
+            // Open Editor for Completely Blank New Tenant
+            function openEditorForNewTenant() {
+                isCreatingNewTenant = true;
+                modalTenantTitle.textContent = '+ Tambah Tenant Baru';
+                modalTenantSubtitle.textContent = 'Formulir Pendaftaran & Knowledge Base Tenant Baru';
+
+                // Reset all inputs to completely empty strings
+                formNamaBisnis.value = '';
+                formKategori.selectedIndex = 0;
+                formTagline.value = '';
+                formJamOperasional.value = '';
+                formWhatsapp.value = '';
+                formInstagram.value = '';
+                formAlamat.value = '';
+                formDeskripsi.value = '';
+
+                // Reset Layanan & FAQ to clean single blank rows
+                servicesListContainer.innerHTML = '';
+                addServiceRow('', '', '');
+
+                formGaransi.value = '';
+                formPembayaran.value = '';
+                formKetentuan.value = '';
+
+                faqListContainer.innerHTML = '';
+                addFaqRow('', '');
+
+                modal.classList.add('active');
+                switchTab('paneProfil');
+            }
+
+            openEditorBtn.addEventListener('click', () => {
+                openEditor(tenantSelect.value || activeTenantId);
+            });
+
+            formKategori.addEventListener('change', async () => {
+                if (isCreatingNewTenant && formKategori.value) {
+                    try {
+                        const idRes = await fetch(`/api/v1/tenants/next-id?category=${encodeURIComponent(formKategori.value)}`);
+                        if (idRes.ok) {
+                            const idData = await idRes.json();
+                            modalTenantSubtitle.textContent = `Auto ID Terdaftar: ${idData.next_id}`;
+                        }
+                    } catch (e) {}
+                }
+            });
+
+            openNewTenantBtn.addEventListener('click', () => {
+                openEditorForNewTenant();
+            });
+
+            function closeModal() {
+                modal.classList.remove('active');
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelModalBtn.addEventListener('click', closeModal);
+
+            // Compile Form to Clean Markdown
+            function compileFormToMarkdown() {
+                const nama = formNamaBisnis.value.trim() || 'Bisnis Kami';
+                const catOption = formKategori.options[formKategori.selectedIndex];
+                const kat = catOption && catOption.value ? catOption.text : 'General';
+                const tagline = formTagline.value.trim() || '-';
+                const jam = formJamOperasional.value.trim() || '-';
+                const alamat = formAlamat.value.trim() || '-';
+                const desc = formDeskripsi.value.trim() || '-';
+                const wa = formWhatsapp.value.trim() || '-';
+                const ig = formInstagram.value.trim() || '-';
+
+                // Profil
+                const profilMd = `# ${nama} - Profil Bisnis\n\n## Profil & Informasi Bisnis\n- **Nama Bisnis**: ${nama}\n- **Kategori**: ${kat}\n- **Tagline**: ${tagline}\n- **Alamat**: ${alamat}\n- **Jam Operasional**: ${jam}\n- **Deskripsi**: ${desc}\n\n## Kontak & Call to Action (CTA)\n- **WhatsApp Resmi**: ${wa}\n- **Instagram / Website**: ${ig}`;
+
+                // Layanan
+                const svcCards = servicesListContainer.querySelectorAll('.item-card');
+                const svcLines = [];
+                svcCards.forEach(c => {
+                    const sName = c.querySelector('.service-name').value.trim();
+                    const sPrice = c.querySelector('.service-price').value.trim();
+                    const sDesc = c.querySelector('.service-desc').value.trim();
+                    if (sName) {
+                        const pricePart = sPrice ? `: ${sPrice}` : '';
+                        const descPart = sDesc ? ` (${sDesc})` : '';
+                        svcLines.push(`- **${sName}**${pricePart}${descPart}.`);
+                    }
+                });
+                const layananMd = `# ${nama} - Layanan & Produk\n\n## Layanan & Biaya Resmi\n${svcLines.join('\n') || '- **Layanan Standar**: Hubungi CS.'}`;
+
+                // Kebijakan
+                const garansi = formGaransi.value.trim() || 'Garansi kepuasan pelanggan.';
+                const pembayaran = formPembayaran.value.trim() || 'Tunai, QRIS, dan Transfer Bank.';
+                const ketentuan = formKetentuan.value.trim() || 'Reservasi dan konfirmasi via WhatsApp.';
+                const kebijakanMd = `# ${nama} - Kebijakan & Garansi\n\n## Garansi & Kebijakan\n- **Garansi Servis**: ${garansi}\n- **Metode Pembayaran**: ${pembayaran}\n- **Ketentuan Layanan**: ${ketentuan}`;
+
+                // FAQ
+                const faqCards = faqListContainer.querySelectorAll('.item-card');
+                const faqLines = [];
+                faqCards.forEach(c => {
+                    const q = c.querySelector('.faq-question').value.trim();
+                    const a = c.querySelector('.faq-answer').value.trim();
+                    if (q) {
+                        faqLines.push(`- **Q: ${q}**\n  - A: ${a || 'Silakan hubungi customer service kami.'}`);
+                    }
+                });
+                const faqMd = `# ${nama} - Tanya Jawab (FAQ)\n\n## Tanya Jawab (FAQ)\n${faqLines.join('\n') || '- **Q: Apakah melayani pemesanan online?**\n  - A: Ya, silakan hubungi WhatsApp kami.'}`;
+
+                return { profilMd, layananMd, kebijakanMd, faqMd };
+            }
+
+            // Save Knowledge
+            saveKnowledgeBtn.addEventListener('click', async () => {
+                const nama = formNamaBisnis.value.trim();
+                const katVal = formKategori.value;
+
+                if (!nama) {
+                    alert('Mohon isi Nama Bisnis terlebih dahulu.');
+                    switchTab('paneProfil');
+                    formNamaBisnis.focus();
+                    return;
+                }
+
+                if (!katVal) {
+                    alert('Mohon pilih Kategori Usaha dari dropdown.');
+                    switchTab('paneProfil');
+                    formKategori.focus();
+                    return;
+                }
+
+                let targetTenantId = activeTenantId;
+                if (isCreatingNewTenant) {
+                    try {
+                        const idRes = await fetch(`/api/v1/tenants/next-id?category=${encodeURIComponent(katVal)}`);
+                        if (idRes.ok) {
+                            const idData = await idRes.json();
+                            targetTenantId = idData.next_id;
+                        } else {
+                            targetTenantId = `tenant_${katVal}_02`;
+                        }
+                    } catch (e) {
+                        targetTenantId = `tenant_${katVal}_02`;
+                    }
+                }
+
+                saveKnowledgeBtn.disabled = true;
+                saveKnowledgeBtn.textContent = 'Menyimpan & Indexing...';
+                editorStatusText.textContent = `Menyimpan ${targetTenantId} & mengindeks ulang vektor FAISS...`;
+
+                const { profilMd, layananMd, kebijakanMd, faqMd } = compileFormToMarkdown();
+
+                try {
+                    const res = await fetch(`/api/v1/tenants/${targetTenantId}/knowledge`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            profil: profilMd,
+                            layanan: layananMd,
+                            kebijakan: kebijakanMd,
+                            faq: faqMd
+                        })
+                    });
+
+                    if (!res.ok) throw new Error('Gagal menyimpan knowledge ke API');
+                    const result = await res.json();
+
+                    showToast(`✅ ${result.message}`);
+                    closeModal();
+                    activeTenantId = targetTenantId;
+                    await loadTenants();
+                    tenantSelect.value = activeTenantId;
+                    updateActiveTenantBadge();
+                } catch (e) {
+                    alert('Terjadi kesalahan: ' + e.message);
+                    editorStatusText.textContent = 'Gagal menyimpan.';
+                } finally {
+                    saveKnowledgeBtn.disabled = false;
+                    saveKnowledgeBtn.innerHTML = `
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        💾 Simpan & Re-Index AI
+                    `;
+                }
+            });
+
+            // Initial load
+            loadTenants();
+        });
+    </script>
+</body>
+
+</html>
