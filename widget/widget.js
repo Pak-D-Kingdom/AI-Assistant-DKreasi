@@ -438,21 +438,65 @@
         card.className = 'pakde-ai-action-card';
 
         if (routing.action === 'navigate' && routing.target_url) {
+            const cartBtnHtml = routing.cart_template_slug ? `
+                <button type="button" class="pakde-ai-action-btn pakde-ai-action-btn--cart" data-cart-slug="${routing.cart_template_slug}">
+                    🛒 Tambahkan Template ke Keranjang
+                </button>
+            ` : '';
             card.innerHTML = `
                 <span class="pakde-ai-action-label">✦ Rekomendasi Solusi</span>
                 <a href="${routing.target_url}" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
                     ${routing.button_text || 'Lihat Layanan →'}
                 </a>
+                ${cartBtnHtml}
             `;
+            const cartBtn = card.querySelector('.pakde-ai-action-btn--cart');
+            if (cartBtn) {
+                cartBtn.addEventListener('click', () => {
+                    const slug = cartBtn.dataset.cartSlug;
+                    // Trigger custom event untuk Webia Cart engine
+                    window.dispatchEvent(new CustomEvent('webia:add-to-cart', { detail: { slug: slug } }));
+                    if (window.WebiaCart && typeof window.WebiaCart.addItem === 'function') {
+                        window.WebiaCart.addItem(slug);
+                    }
+                    cartBtn.textContent = '✅ Template Masuk ke Keranjang!';
+                    cartBtn.style.background = '#059669';
+                    setTimeout(() => {
+                        cartBtn.textContent = '🛒 Tambahkan Template ke Keranjang';
+                        cartBtn.style.background = '';
+                    }, 3500);
+                });
+            }
             messages.insertBefore(card, typing);
         } else if (routing.action === 'brief') {
             card.innerHTML = `
                 <span class="pakde-ai-action-label">📝 AI Business Brief Generator</span>
                 ${routing.prompt_guide ? `<p style="font-size: 11.5px; color: var(--pakde-ai-muted); margin-bottom: 8px; line-height: 1.4;">${routing.prompt_guide}</p>` : ''}
-                <a href="${routing.target_url || 'https://wa.me/6281234567890'}" target="_blank" rel="noopener noreferrer" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
-                    ${routing.button_text || 'Konsultasi Brief via WhatsApp →'}
-                </a>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <a href="${routing.target_url || 'https://wa.me/6281234567890'}" target="_blank" rel="noopener noreferrer" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
+                        ${routing.button_text || 'Konsultasi Brief via WhatsApp →'}
+                    </a>
+                    <button type="button" class="pakde-ai-action-btn pakde-ai-action-btn--copy" id="pakdeCopyBriefBtn">
+                        📋 Salin Format Brief ke Clipboard
+                    </button>
+                </div>
             `;
+            const copyBtn = card.querySelector('#pakdeCopyBriefBtn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const textToCopy = routing.plain_text_copy || (routing.prompt_guide ? `Business Brief WEBIA:\n${routing.prompt_guide}` : 'Format Business Brief WEBIA');
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        copyBtn.textContent = '✅ Berhasil Disalin ke Clipboard!';
+                        copyBtn.style.background = '#059669';
+                        setTimeout(() => {
+                            copyBtn.textContent = '📋 Salin Format Brief ke Clipboard';
+                            copyBtn.style.background = '';
+                        }, 3000);
+                    }).catch(() => {
+                        copyBtn.textContent = 'Gagal menyalin otomatis.';
+                    });
+                });
+            }
             messages.insertBefore(card, typing);
         } else if (routing.action === 'handoff') {
             card.innerHTML = `

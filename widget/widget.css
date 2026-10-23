@@ -705,8 +705,35 @@
 }
 
 .pakde-ai-action-btn--primary:hover {
+    filter: brightness(1.1);
     transform: translateY(-2px);
-    opacity: 0.95;
+}
+
+.pakde-ai-action-btn--cart {
+    background: #0284c7;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-family: var(--th-font-family);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.pakde-ai-action-btn--cart:hover {
+    background: #0369a1;
+    transform: translateY(-2px);
+}
+
+.pakde-ai-action-btn--copy {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--th-text-body);
+    border: 1px dashed var(--th-primary);
+    cursor: pointer;
+    font-family: var(--th-font-family);
+}
+
+.pakde-ai-action-btn--copy:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
 }
 
 .pakde-ai-action-btn--whatsapp {

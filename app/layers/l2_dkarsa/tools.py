@@ -193,6 +193,86 @@ DKARSA_THEMES = [
 ]
 
 
+def calculate_guest_tier(guest_count: int) -> Dict[str, Any]:
+    """
+    Kalkulator Tamu & Rekomendasi Tier Otomatis D-Karsa:
+    - 1 link umum / tanpa nama personal: Paket Basic (Rp50.000)
+    - s.d 100 tamu personal: Paket Premium (Rp110.000)
+    - > 100 tamu personal / ribuan: Paket Eksklusif (Rp180.000 - Unlimited)
+    """
+    if guest_count > 100:
+        pkg = DKARSA_PACKAGES[2]  # Eksklusif
+        reason = f"Untuk perkiraan {guest_count} tamu undangan, Anda WAJIB memilih **Paket Eksklusif (Rp180.000)** karena Paket Premium dibatasi maksimal 100 nama tamu. Paket Eksklusif memberikan tautan personalisasi nama tamu **TANPA BATAS (Unlimited Guests)**, live streaming, dan video teaser prewedding sinematik."
+    elif guest_count > 1:
+        pkg = DKARSA_PACKAGES[1]  # Premium
+        reason = f"Untuk perkiraan {guest_count} tamu undangan, **Paket Premium (Rp110.000)** sangat ideal karena mencakup hingga 100 nama tamu personal pada cover, amplop digital QRIS/Bank, dan buku ucapan online."
+    else:
+        pkg = DKARSA_PACKAGES[0]  # Basic
+        reason = "Untuk undangan santai atau acara keluarga hemat dengan 1 tautan umum tanpa personalisasi nama tamu per orang, **Paket Basic (Rp50.000)** adalah pilihan paling ekonomis."
+
+    return {
+        "guest_count": guest_count,
+        "recommended_package": pkg["name"],
+        "price": pkg["price_formatted"],
+        "tier": pkg["tier"],
+        "reason": reason,
+        "features": pkg["features"],
+    }
+
+
+def get_builder_checklist() -> Dict[str, Any]:
+    """
+    Panduan Pengisian Data & Checklist Builder D-Karsa:
+    Daftar data dan berkas yang perlu disiapkan pemesan sebelum mengisi form atau kirim ke desainer.
+    """
+    return {
+        "title": "Checklist Persiapan Pembuatan Undangan D'Karsa",
+        "steps": [
+            {
+                "step": 1,
+                "name": "Data Acara Utama",
+                "items": [
+                    "Kategori & Judul Acara (Walimatul 'Ursy, Khitan, Aqiqah, dll.)",
+                    "Hari, Tanggal, dan Waktu Acara (Akad & Resepsi)",
+                    "Nama Gedung / Tempat & Alamat Lengkap",
+                    "Tautan Titik Google Maps Presisi",
+                ],
+            },
+            {
+                "step": 2,
+                "name": "Biodata Mempelai / Tokoh Acara",
+                "items": [
+                    "Nama Lengkap & Nama Panggilan Mempelai / Yang Dikhitan / Wisudawan",
+                    "Nama Ayah & Ibu (beserta gelar jika diinginkan)",
+                    "Urutan Anak (contoh: Putra Pertama, Putri Kedua)",
+                    "Akun Instagram (opsional)",
+                ],
+            },
+            {
+                "step": 3,
+                "name": "Media Galeri & Musik",
+                "items": [
+                    "Foto Cover Utama (resolusi tinggi)",
+                    "Foto Mempelai Pria & Wanita / Tokoh Acara",
+                    "2 s.d 20 Foto Galeri Prewedding / Momen Bahagia (sesuai paket)",
+                    "Judul Lagu atau File MP3 Pilihan",
+                ],
+            },
+            {
+                "step": 4,
+                "name": "Amplop Digital & Kado Fisik (Paket Premium ke atas)",
+                "items": [
+                    "Nama Bank & Nomor Rekening",
+                    "Nama Lengkap Pemilik Rekening",
+                    "Gambar QRIS (opsional)",
+                    "Alamat Pengiriman Kado Fisik via Kurir",
+                ],
+            },
+        ],
+        "reminder": "Jika memilih Layanan Terima Beres, seluruh checklist di atas cukup dikirimkan sekaligus ke WhatsApp CS D'Karsa agar langsung ditata oleh tim desainer.",
+    }
+
+
 def get_dkarsa_pricing_table() -> List[Dict[str, Any]]:
     """Mengembalikan daftar 4 paket resmi D'Karsa beserta harga dan fiturnya."""
     return DKARSA_PACKAGES
@@ -231,6 +311,34 @@ class L2IntentRouter:
     @classmethod
     def detect_and_route(cls, query: str) -> Dict[str, Any]:
         normalized = query.lower().strip()
+
+        # 0. Checklist Persiapan / Syarat Data
+        if any(w in normalized for w in ["checklist", "syarat data", "siapkan data", "apa saja yang disiapkan", "persiapan data", "berkas undangan", "data apa saja"]):
+            return {
+                "intent": "builder_checklist",
+                "confidence": 0.95,
+                "action": "inform",
+                "target_url": None,
+                "button_text": None,
+                "service_name": "Checklist Persiapan Undangan D'Karsa",
+                "data": get_builder_checklist(),
+            }
+
+        # 0b. Kalkulator Tamu Otomatis (Ekstraksi Angka Tamu)
+        import re
+        guest_match = re.search(r"(\d+)\s*(tamu|orang|undangan|keluarga)", normalized)
+        if guest_match and any(w in normalized for w in ["tamu", "orang", "undangan", "kapasitas", "rekomendasi paket", "paket apa"]):
+            count = int(guest_match.group(1))
+            rec = calculate_guest_tier(count)
+            return {
+                "intent": "guest_calculator",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#harga",
+                "button_text": f"Lihat {rec['recommended_package']} ({rec['price']}) →",
+                "service_name": f"Kalkulator Tamu ({count} Tamu)",
+                "calculation": rec,
+            }
 
         # 1. Custom / Request Khusus -> Handoff WA
         if any(w in normalized for w in ["custom", "kustom", "request khusus", "desain sendiri", "dari nol", "pinterest"]):
