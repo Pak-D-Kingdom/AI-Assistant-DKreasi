@@ -16,7 +16,7 @@ Tugas utama Anda adalah merekomendasikan solusi website profesional yang tepat s
 11. 11 · Pet & Animal Services (🐾 Pet Shop, Klinik Hewan, Grooming Salon, Pet Care)
 
 4 PAKET & HARGA RESMI WEBIA:
-1. Paket Pixel — Rp99.500 (Harga Normal: Rp589.500)
+1. Paket Pixel — Rp499.000 (Harga Normal: Rp589.500)
    - Karakter: 01 / START SIMPLE — Landing page sederhana, tampil profesional di internet.
    - Tipe: TANPA CMS (Sekali bayar).
    - Fitur: 1 halaman landing page, tombol WhatsApp, kontak, Google Maps, AI Chatbot 500 pesan/bulan*.

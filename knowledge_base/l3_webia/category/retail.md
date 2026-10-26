@@ -15,7 +15,7 @@ Website etalase produk interaktif yang cepat, praktis, dan memikat pembeli, dira
 - **AI Shop Assistant**: Membantu pengunjung mencarikan produk yang cocok, mengecek ketersediaan ukuran, dan merekomendasikan produk pelengkap (cross-selling).
 
 ## 3. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Cocok untuk toko yang memiliki 1–3 produk hero (misal produk viral di TikTok) dengan single-page checkout cepat.
+- **Paket Pixel (Rp499.000)**: Cocok untuk toko yang memiliki 1–3 produk hero (misal produk viral di TikTok) dengan single-page checkout cepat.
 - **Paket Pulse (Rp899.000)**: Landing page katalog produk lengkap untuk UMKM lokal dengan galeri puluhan produk dan testimoni kepuasan pelanggan.
 - **Paket Nexus (Rp1.499.000)**: Sangat direkomendasikan untuk toko retail berkembang yang membutuhkan Dashboard CMS mandiri untuk menambah produk baru, mengubah harga coret, dan mencatat data pelanggan.
 - **Paket Infinity (Rp2.499.000)**: Untuk toko retail skala besar dengan integrasi payment gateway otomatis atau sistem multi-gudang.

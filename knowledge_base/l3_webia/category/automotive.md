@@ -14,6 +14,6 @@ Website modern bernuansa dinamis, maskulin, dan terpercaya untuk industri otomot
 - **AI Triage Kendaraan**: Chatbot yang membantu menanyakan gejala kerusakan kendaraan pengunjung dan memberikan estimasi waktu pengerjaan.
 
 ## 3. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Tepat untuk bengkel spesialis atau auto detailing baru yang butuh profil simpel, peta Google Maps, dan tombol WhatsApp booking.
+- **Paket Pixel (Rp499.000)**: Tepat untuk bengkel spesialis atau auto detailing baru yang butuh profil simpel, peta Google Maps, dan tombol WhatsApp booking.
 - **Paket Pulse (Rp899.000)**: Landing page komprehensif dengan rincian paket poles, testimoni hasil kilap, dan daftar fasilitas ruang tunggu (AC, Wi-Fi, kopi).
 - **Paket Nexus (Rp1.499.000)**: Ideal untuk dealer mobil bekas atau bengkel besar yang ingin CMS mandiri untuk upload stok mobil masuk atau artikel edukasi rawat mesin.

@@ -31,6 +31,13 @@ def test_custom_scale_triggers_infinity():
     assert rec["price"] == "Rp2.499.000"
 
 
+def test_pixel_package_pricing():
+    from app.layers.l3_webia.tools import WEBIA_PACKAGES
+    pixel = next(p for p in WEBIA_PACKAGES if p["id"] == "pixel")
+    assert pixel["price"] == 499000
+    assert pixel["price_formatted"] == "Rp499.000"
+
+
 def test_l3_routes_to_fnb_solution():
     res = L3IntentRouter.detect_and_route("Saya butuh website untuk cafe kopi kekinian")
     assert res["intent"] == "recommend_fnb_website"

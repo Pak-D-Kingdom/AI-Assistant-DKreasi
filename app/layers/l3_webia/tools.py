@@ -8,8 +8,8 @@ WEBIA_PACKAGES = [
         "id": "pixel",
         "name": "Paket Pixel",
         "tagline": "01 / START SIMPLE",
-        "price": 99500,
-        "price_formatted": "Rp99.500",
+        "price": 499000,
+        "price_formatted": "Rp499.000",
         "original_price": "Rp589.500",
         "type": "TANPA CMS",
         "payment": "Sekali bayar",
@@ -153,9 +153,9 @@ RECOMMENDATION_MATRIX = {
         "entry_price": "Rp1.499.000",
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila butuh integrasi LMS, pembayaran SPP/kursus online otomatis, dan area member siswa.",
-        "template_id": "BrightPath Academy",
+        "template_id": "BrightPath Academy / E-learna / EduPlus / NovaLearn",
         "template_slug": "brightpath-academy",
-        "template_name": "BrightPath Academy (School & Online Course)",
+        "template_name": "BrightPath Academy (School) / E-learna (Bootcamp) / NovaLearn (Futuristic Dark)",
         "recommended_modules": ["Formulir Pendaftaran Siswa", "Jadwal Kelas & Biaya", "Profil Pengajar/Tutor", "Testimoni Alumni"],
     },
     "professional_service": {
@@ -172,7 +172,7 @@ RECOMMENDATION_MATRIX = {
     "personal_brand": {
         "category_name": "Personal Brand & Creator",
         "entry_package": "Pixel",
-        "entry_price": "Rp99.500",
+        "entry_price": "Rp499.000",
         "upgrade_package": "Pulse",
         "upgrade_trigger": "Upgrade ke Pulse bila butuh galeri portofolio lengkap & review klien, atau Nexus bila perlu blog tulisan mandiri.",
         "template_id": "The Creator Room",
@@ -242,7 +242,7 @@ def recommend_webia_solution(
         reason = f"Paket Nexus memberikan Dashboard CMS mandiri sehingga Anda dapat memperbarui data {cat_meta['category_name']} kapan saja tanpa koding."
     elif budget_range == "low" or cat_meta["entry_package"] == "Pixel":
         pkg = WEBIA_PACKAGES[0]  # Pixel
-        reason = f"Paket Pixel (Rp99.500) adalah opsi paling hemat untuk memulai kehadiran online bisnis {cat_meta['category_name']} Anda."
+        reason = f"Paket Pixel (Rp499.000) adalah opsi paling hemat untuk memulai kehadiran online bisnis {cat_meta['category_name']} Anda."
     else:
         pkg = WEBIA_PACKAGES[1]  # Pulse
         reason = f"Paket Pulse (Rp899.000) adalah pilihan ideal untuk landing page komprehensif, dilengkapi galeri, testimoni, FAQ, dan analitik SEO Google ready."
@@ -394,6 +394,32 @@ class L3IntentRouter:
                 "recommendation": sol,
             }
 
+        if any(w in normalized for w in ["edukasi", "education", "kursus", "bimbel", "sekolah", "les", "e-learning", "elearning", "bootcamp"]):
+            sol = recommend_webia_solution("education", needs_cms=True)
+            return {
+                "intent": "recommend_education_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Solusi E-Learning & Bimbel →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "brightpath-academy"),
+            }
+
+        if any(w in normalized for w in ["properti", "property", "rumah", "real estate", "villa", "cluster"]):
+            sol = recommend_webia_solution("property", needs_cms=True)
+            return {
+                "intent": "recommend_property_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Solusi Properti & Real Estate →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "casa-verde"),
+            }
+
         # 4. Paket & Harga Website Umum
         if any(w in normalized for w in ["paket", "harga", "biaya", "tarif", "berapa", "pixel", "pulse", "nexus", "infinity"]):
             return {
@@ -401,7 +427,7 @@ class L3IntentRouter:
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#paket-website",
-                "button_text": "Lihat 4 Paket Website WEBIA (Mulai Rp99.500) →",
+                "button_text": "Lihat 4 Paket Website WEBIA (Mulai Rp499.000) →",
                 "service_name": "Paket Website WEBIA",
             }
 

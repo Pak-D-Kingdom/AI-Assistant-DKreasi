@@ -18,6 +18,6 @@ Solusi website bisnis profesional untuk industri perawatan hewan peliharaan, pet
 2. **Furry & Co.** (`petshop-luxury-rosegold`): Konsep luxury boutique bernuansa Rose Gold & Blush Pink, koleksi fashion hewan, dan booking perawatan VIP.
 
 ## 4. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Kartu nama digital / landing page sederhana pet shop untuk info kontak, jam buka, dan alamat Maps.
+- **Paket Pixel (Rp499.000)**: Kartu nama digital / landing page sederhana pet shop untuk info kontak, jam buka, dan alamat Maps.
 - **Paket Pulse (Rp899.000)**: Cocok untuk pet shop / salon grooming yang membutuhkan katalog produk lengkap, galeri foto hewan, testimoni pelanggan, dan tombol booking WhatsApp.
 - **Paket Nexus (Rp1.499.000) ★ Rekomendasi**: Sangat pas untuk pet shop dengan banyak varian stok barang yang butuh Dashboard CMS Admin untuk update harga, diskon, dan produk pakan secara mandiri tanpa koding.
