@@ -6,7 +6,8 @@ def test_detects_website_intent():
     decision = L1IntentRouter.detect_and_route("Saya butuh website untuk mengembangkan usaha kafe saya")
     assert decision["intent"] == L1IntentRouter.INTENT_WEBSITE
     assert decision["action"] == "navigate"
-    assert decision["target_url"] == "/webia"
+    assert "/webia" in decision["target_url"]
+    assert "category=fnb" in decision["target_url"]
     assert "Website Bisnis" in decision["button_text"]
 
 
@@ -14,7 +15,8 @@ def test_detects_invitation_intent():
     decision = L1IntentRouter.detect_and_route("Bisa bantu buat undangan pernikahan online dengan fitur RSVP?")
     assert decision["intent"] == L1IntentRouter.INTENT_INVITATION
     assert decision["action"] == "navigate"
-    assert decision["target_url"] == "/undangan"
+    assert "/undangan" in decision["target_url"]
+    assert "event=pernikahan" in decision["target_url"]
     assert "Undangan Digital" in decision["button_text"]
 
 

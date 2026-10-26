@@ -69,6 +69,7 @@ class BusinessBriefService:
             "data": brief.model_dump(),
             "markdown_display": md_display,
             "whatsapp_url": wa_url,
+            "plain_text_copy": wa_text,
             "l4_tenant_seed": l4_seed,
         }
 

@@ -37,6 +37,39 @@ def test_l3_routes_to_fnb_solution():
     assert res["action"] == "navigate"
     assert "#koleksi-template" in res["target_url"]
     assert res["recommendation"]["recommended_package"] == "Paket Pulse"
+    assert "cart_template_slug" in res
+
+
+def test_l2_guest_calculator():
+    from app.layers.l2_dkarsa.tools import calculate_guest_tier
+    res_large = calculate_guest_tier(350)
+    assert res_large["tier"] == "eksklusif"
+    assert "Paket Eksklusif" in res_large["recommended_package"]
+
+    res_small = calculate_guest_tier(50)
+    assert res_small["tier"] == "premium"
+    assert "Paket Premium" in res_small["recommended_package"]
+
+
+def test_l2_builder_checklist():
+    from app.layers.l2_dkarsa.tools import get_builder_checklist
+    checklist = get_builder_checklist()
+    assert "Checklist" in checklist["title"]
+    assert len(checklist["steps"]) == 4
+
+
+def test_l2_intent_routes_to_guest_calculator():
+    from app.layers.l2_dkarsa.tools import L2IntentRouter
+    res = L2IntentRouter.detect_and_route("Tamu undangan saya sekitar 350 orang")
+    assert res["intent"] == "guest_calculator"
+    assert res["calculation"]["tier"] == "eksklusif"
+
+
+def test_l2_intent_routes_to_checklist():
+    from app.layers.l2_dkarsa.tools import L2IntentRouter
+    res = L2IntentRouter.detect_and_route("Data apa saja yang perlu disiapkan untuk buat undangan?")
+    assert res["intent"] == "builder_checklist"
+    assert "steps" in res["data"]
 
 
 def test_l3_routes_to_automotive_solution():
@@ -44,6 +77,20 @@ def test_l3_routes_to_automotive_solution():
     assert res["intent"] == "recommend_automotive_website"
     assert res["action"] == "navigate"
     assert "Pitstop" in res["recommendation"]["recommended_template"]
+
+
+def test_l3_routes_to_petshop_solution():
+    res = L3IntentRouter.detect_and_route("Saya mau buat website petshop toko makanan kucing")
+    assert res["intent"] == "recommend_petshop_website"
+    assert res["action"] == "navigate"
+    assert "PawMart" in res["recommendation"]["recommended_template"]
+
+
+def test_l3_routes_to_dental_solution():
+    res = L3IntentRouter.detect_and_route("Bisa bikin website untuk klinik dokter gigi?")
+    assert res["intent"] == "recommend_dental_website"
+    assert res["action"] == "navigate"
+    assert "Dental" in res["recommendation"]["recommended_template"]
 
 
 def test_l3_brief_creation():

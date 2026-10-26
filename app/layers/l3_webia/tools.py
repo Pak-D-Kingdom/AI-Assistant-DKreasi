@@ -87,6 +87,7 @@ WEBIA_CATEGORIES = [
     {"number": "08", "slug": "personal-brand", "name": "Personal Brand", "symbol": "✧", "desc": "Creator, influencer, portfolio"},
     {"number": "09", "slug": "retail", "name": "Retail", "symbol": "▣", "desc": "Store, distributor, supplier, fashion, gadget"},
     {"number": "10", "slug": "healthcare", "name": "Healthcare", "symbol": "✚", "desc": "Clinic, pharmacy, medical practice, dental"},
+    {"number": "11", "slug": "pet-animal-service", "name": "Pet & Animal Services", "symbol": "🐾", "desc": "Pet shop, pet care, grooming salon, veterinary clinic"},
 ]
 
 # PRD WEBIA §7.6: Category & Package Recommendation Matrix
@@ -98,6 +99,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Nexus",
         "upgrade_trigger": "Bila Anda perlu admin CMS untuk rutin ganti menu & promo berkala, atau Infinity bila butuh sistem e-commerce/pos pemesanan kompleks.",
         "template_id": "Little Corner / Daily Crumb",
+        "template_slug": "little-corner",
         "template_name": "Little Corner (Cafe) / Daily Crumb (Bakery) / F01 Cafe Earthtone",
         "recommended_modules": ["WhatsApp Direct Order", "Booking Meja / Reservasi", "Interactive FAQ Chips", "Google Maps Embed"],
     },
@@ -108,6 +110,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Nexus",
         "upgrade_trigger": "Bila perlu admin dashboard untuk jadwal appointment terapis atau manajemen katalog treatment klinik.",
         "template_id": "Maison Beauty / Blush Nail Studio",
+        "template_slug": "maison-beauty",
         "template_name": "Maison Beauty (Salon) / Blush Nail Studio (Nail Art) / Glow Society",
         "recommended_modules": ["Appointment Booking", "Galeri Portofolio & Before-After", "Daftar Terapis/Treatment", "AI CS 24/7"],
     },
@@ -118,6 +121,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Nexus",
         "upgrade_trigger": "Bila bengkel/dealer memerlukan admin service management untuk melacak riwayat servis berkala pelanggan.",
         "template_id": "Pitstop Garage",
+        "template_slug": "pitstop-garage",
         "template_name": "Pitstop Garage (Bengkel & Auto Detailing)",
         "recommended_modules": ["Booking Servis Berkala", "Emergency Call WhatsApp", "Peta Bengkel", "Daftar Paket Servis"],
     },
@@ -128,6 +132,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila membutuhkan portal rekanan khusus, multi-admin approval, atau integrasi CRM/ERP perusahaan.",
         "template_id": "Northstar Studio",
+        "template_slug": "northstar-studio",
         "template_name": "Northstar Studio (Company Profile & Contractor)",
         "recommended_modules": ["Showcase Proyek/Portofolio", "Formulir RFQ (Permintaan Penawaran)", "Profil Direksi & Legalitas ISO", "Blog & Berita"],
     },
@@ -138,6 +143,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila perlu portal listing unit dinamis, kalkulator KPR interaktif, dan integrasi CRM sales properti.",
         "template_id": "Casa Verde",
+        "template_slug": "casa-verde",
         "template_name": "Casa Verde (Property & Real Estate)",
         "recommended_modules": ["Listing Unit Properti", "Jadwal Survey Lokasi", "Virtual Tour / Video Embed", "Brosur Download"],
     },
@@ -148,6 +154,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila butuh integrasi LMS, pembayaran SPP/kursus online otomatis, dan area member siswa.",
         "template_id": "BrightPath Academy",
+        "template_slug": "brightpath-academy",
         "template_name": "BrightPath Academy (School & Online Course)",
         "recommended_modules": ["Formulir Pendaftaran Siswa", "Jadwal Kelas & Biaya", "Profil Pengajar/Tutor", "Testimoni Alumni"],
     },
@@ -158,6 +165,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Nexus",
         "upgrade_trigger": "Bila konsultan memerlukan CMS artikel edukasi reguler, lead capture terintegrasi, atau portal dokumen klien.",
         "template_id": "Nexa Consulting",
+        "template_slug": "nexa-consulting",
         "template_name": "Nexa Consulting (Legal & Business Consultant)",
         "recommended_modules": ["Booking Konsultasi", "Artikel & Legal Insight", "Profil Partner/Konsultan", "WhatsApp Confidential"],
     },
@@ -168,6 +176,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Pulse",
         "upgrade_trigger": "Upgrade ke Pulse bila butuh galeri portofolio lengkap & review klien, atau Nexus bila perlu blog tulisan mandiri.",
         "template_id": "The Creator Room",
+        "template_slug": "the-creator-room",
         "template_name": "The Creator Room (Creator & Influencer Portfolio)",
         "recommended_modules": ["Social Media Hub", "Portofolio Showreel", "Media Kit Download", "Direct Endorsement Contact"],
     },
@@ -178,6 +187,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila membutuhkan payment gateway otomatis, manajemen stok multi-gudang, atau integrasi kurir pengiriman.",
         "template_id": "Urban Supply",
+        "template_slug": "urban-supply",
         "template_name": "Urban Supply (Modern Store & Fashion)",
         "recommended_modules": ["Etalase Katalog Produk", "Admin CMS Produk", "WhatsApp Quick Checkout", "Kategori & Search Produk"],
     },
@@ -187,9 +197,21 @@ RECOMMENDATION_MATRIX = {
         "entry_price": "Rp1.499.000",
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila butuh integrasi rekam medis, portal pasien, atau sistem antrean dokter spesifik.",
-        "template_id": "Medika Care",
-        "template_name": "Medika Care (Medical & Dental Clinic)",
-        "recommended_modules": ["Jadwal Dokter Praktek", "Pendaftaran Pasien Online", "Informasi Fasilitas & Tarif", "Lokasi & Call Center Darurat"],
+        "template_id": "Medika Care / Sunset Dental / Azure Smile / Mint Dental",
+        "template_slug": "healthcare-dental-sunset",
+        "template_name": "Sunset Dental Care (Dental Clinic) / Azure Smile / Medika Care",
+        "recommended_modules": ["Jadwal Dokter Praktek", "Pendaftaran Pasien Online", "Kalkulator Estimasi Biaya/Cicilan", "Lokasi & Call Center Darurat"],
+    },
+    "pet_animal_service": {
+        "category_name": "Pet & Animal Services",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila pet shop memiliki ratusan stok pakan & aksesoris yang perlu dikelola mandiri via Dashboard CMS.",
+        "template_id": "PawMart / Furry & Co.",
+        "template_slug": "petshop-minimalist-glacierblue",
+        "template_name": "PawMart (Pet Shop Minimalist) / Furry & Co. (Pet Boutique Luxury)",
+        "recommended_modules": ["Katalog Makanan & Perlengkapan Hewan", "Online Booking Grooming", "Direct WhatsApp Order", "AI Nutrisi & Perawatan Hewan"],
     },
 }
 
@@ -235,6 +257,7 @@ def recommend_webia_solution(
         "recommended_modules": cat_meta["recommended_modules"],
         "upgrade_info": cat_meta["upgrade_trigger"],
         "action_url": "#paket-website",
+        "cart_template_slug": cat_meta.get("template_slug", "little-corner"),
     }
 
 
@@ -269,6 +292,16 @@ class L3IntentRouter:
                 "button_text": "Mulai Susun Business Brief ✍️",
                 "service_name": "AI Business Brief Generator",
                 "prompt_guide": "Beri tahu saya: 1) Nama bisnis, 2) Bidang usaha, 3) Fitur utama yang diinginkan, dan 4) Kontak WhatsApp Anda.",
+                "plain_text_copy": (
+                    "FORMAT PENGAJUAN BUSINESS BRIEF WEBIA:\n"
+                    "- Nama Bisnis: \n"
+                    "- Bidang/Kategori: \n"
+                    "- Deskripsi Usaha: \n"
+                    "- Target Pelanggan: \n"
+                    "- Fitur yang Dibutuhkan: \n"
+                    "- Lokasi/Kota: \n"
+                    "- Nomor WhatsApp: "
+                ),
             }
 
         # 3. Rekomendasi Spesifik Berdasarkan Kategori Industri (Recommendation Matrix PRD §7.6)
@@ -282,9 +315,10 @@ class L3IntentRouter:
                 "button_text": f"Lihat Template {sol['recommended_template'][:25]}... →",
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "little-corner"),
             }
 
-        if any(w in normalized for w in ["beauty", "salon", "barber", "barbershop", "klinik kecantikan", "skincare", "mua", "spa"]):
+        if any(w in normalized for w in ["beauty", "salon", "barber", "barbershop", "klinik kecantikan", "skincare", "mua", "spa", "nailart", "nail art"]):
             sol = recommend_webia_solution("beauty")
             return {
                 "intent": "recommend_beauty_website",
@@ -294,6 +328,7 @@ class L3IntentRouter:
                 "button_text": f"Lihat Template Beauty & Salon →",
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "maison-beauty"),
             }
 
         if any(w in normalized for w in ["bengkel", "otomotif", "automotive", "car wash", "cuci mobil", "dealer", "motor"]):
@@ -306,6 +341,7 @@ class L3IntentRouter:
                 "button_text": f"Lihat Template Bengkel & Otomotif →",
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "pitstop-garage"),
             }
 
         if any(w in normalized for w in ["company", "pt", "cv", "perusahaan", "kontraktor", "distributor", "pabrik", "manufaktur"]):
@@ -318,6 +354,32 @@ class L3IntentRouter:
                 "button_text": f"Lihat Solusi Company Profile (Nexus) →",
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
+            }
+
+        if any(w in normalized for w in ["petshop", "pet shop", "hewan", "kucing", "anjing", "grooming", "peliharaan"]):
+            sol = recommend_webia_solution("pet_animal_service")
+            return {
+                "intent": "recommend_petshop_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Template Pet Shop & Animal Services →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "petshop-minimalist-glacierblue"),
+            }
+
+        if any(w in normalized for w in ["gigi", "dental", "dokter gigi", "orthodontic", "klinik gigi", "behel", "veneer"]):
+            sol = recommend_webia_solution("healthcare", needs_cms=True)
+            return {
+                "intent": "recommend_dental_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Template Dental Clinic (Sunset / Azure) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "healthcare-dental-sunset"),
             }
 
         if any(w in normalized for w in ["toko", "toko online", "retail", "jual baju", "olshop", "fashion"]):

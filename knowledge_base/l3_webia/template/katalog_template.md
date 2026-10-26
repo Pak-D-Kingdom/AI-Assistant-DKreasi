@@ -50,6 +50,11 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *DRIVE WITH CONFIDENCE — Built to perform.*
   - Target: Bengkel mobil & motor, auto detailing, salon mobil, cuci mobil, toko suku cadang, body repair.
   - Fitur: Booking servis berkala, tombol emergency call montir panggilan, rute peta bengkel, paket servis transparan.
+- **Heritage Motors** (`automotive-dealer-vintage` · Style: *Vintage* · Tone: *Forest Green, Cream & Burgundy*):
+  - Konsep: *CURATED AUTOMOBILES · EST. 1998 — Some things never go out of style.*
+  - Target: Showroom mobil bekas/klasik, dealer kendaraan, kurasi otomotif premium.
+  - Fitur: Katalog mobil kurasi, detail spesifikasi & jarak tempuh, jadwal booking test drive, konsultasi WhatsApp.
+  - Demo / Live: `/webia/template/automotive-dealer-vintage`
 
 ---
 
@@ -104,5 +109,34 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
 ## 10. Seri Healthcare & Medis
 - **Medika Care** (`medika-care` · Style: *Modern* · Tone: *Clean Blue*):
   - Konsep: *CARE THAT MATTERS — Your health comes first.*
-  - Target: Klinik pratama, praktek dokter spesialis, klinik gigi & ortodonti, apotek, konseling psikologi.
-  - Fitur: Jadwal praktek dokter, form pendaftaran antrean berobat, daftar fasilitas medis, kontak darurat.
+  - Target: Klinik umum/pratama, praktek dokter keluarga, apotek, konseling psikologi.
+  - Fitur: Jadwal dokter, pendaftaran antrean berobat online, fasilitas medis, kontak darurat.
+- **Mint Dental House** (`healthcare-dental-mint` · Style: *Classic* · Tone: *Mint Green & Ivory*):
+  - Konsep: *GENTLE CARE · HEALTHY SMILES — Your Smile, Our Gentle Care.*
+  - Target: Klinik gigi keluarga, ortodonti, pembersihan karang gigi (scaling), dental treatment.
+  - Fitur: Informasi perawatan dental lengkap, profil dokter gigi, daftar tarif transparan, booking via WhatsApp.
+  - Demo / Live: `/webia/template/healthcare-dental-mint`
+- **Azure Smile Clinic** (`healthcare-dental-azure` · Style: *Elegant* · Tone: *Ocean Blue & Champagne Gold*):
+  - Konsep: *EXCEPTIONAL CARE · TIMELESS SMILES — The Art of Beautiful Smiles.*
+  - Target: Klinik gigi premium & estetika (veneer, bleaching/whitening, implan gigi).
+  - Fitur: Signature treatments, smile gallery before-after, kualifikasi dokter spesialis, appointment booking online.
+  - Demo / Live: `/webia/template/healthcare-dental-azure`
+- **Sunset Dental Care** (`healthcare-dental-sunset` · Style: *Professional* · Tone: *Sunset Coral & Cream*):
+  - Konsep: *A BRIGHTER KIND OF DENTAL CARE — A healthier smile, a happier you.*
+  - Target: Klinik gigi modern, ortodonti remaja/dewasa, perawatan gigi estetik.
+  - Fitur: Hero countdown promo perawatan, kalkulator estimasi biaya & simulasi cicilan, detail treatment berbasis tab, booking appointment, chatbot FAQ interaktif.
+  - Demo / Live: `/webia/template/healthcare-dental-sunset`
+
+---
+
+## 11. Seri Pet & Animal Services
+- **PawMart** (`petshop-minimalist-glacierblue` · Style: *Minimalist* · Tone: *Glacier Blue*):
+  - Konsep: *EVERY PET DESERVES THE BEST — Everything your pet needs, all in one place.*
+  - Target: Toko perlengkapan hewan, pet shop, makanan kucing & anjing, aksesoris hewan peliharaan.
+  - Fitur: Banner promo, katalog produk hewan berbasis filter kategori, showcase produk unggulan, WhatsApp quick order, jam operasional, lokasi toko, dan antarmuka AI bot rekomendasi makanan hewan.
+  - Demo / Live: `/webia/template/petshop-minimalist-glacierblue`
+- **Furry & Co.** (`petshop-luxury-rosegold` · Style: *Luxury* · Tone: *Rose Gold & Blush Pink*):
+  - Konsep: *A LITTLE LUXURY FOR YOUR BELOVED PET — Because they deserve a little extra love.*
+  - Target: Pet boutique eksklusif, salon grooming hewan premium, pakaian & nutrisi hewan impor.
+  - Fitur: Editorial hero, koleksi busana hewan peliharaan, katalog produk boutique, brand showcase, konsultasi grooming WhatsApp, AI bot panduan perawatan hewan.
+  - Demo / Live: `/webia/template/petshop-luxury-rosegold`
