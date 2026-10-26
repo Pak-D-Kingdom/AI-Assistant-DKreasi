@@ -230,6 +230,40 @@
     color: #f63854;
 }
 
+.pakde-ai-launcher--client {
+    background: var(--th-launcher-bg);
+    box-shadow: var(--th-launcher-shadow);
+}
+
+/* Icon-Only Circular Floating Launcher Button */
+.pakde-ai-launcher--icon-only {
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+    padding: 0;
+    border-radius: 50%;
+    gap: 0;
+}
+
+.pakde-ai-launcher--icon-only .pakde-ai-icon {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pakde-ai-launcher--icon-only .pakde-ai-icon svg {
+    width: 25px;
+    height: 25px;
+}
+
+.pakde-ai-launcher--icon-only .pakde-ai-pulse {
+    top: 2px;
+    right: 2px;
+}
+
 @keyframes pakdeGradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -922,8 +956,6 @@
     font-size: 9.5px;
     line-height: 1.35;
     color: #94A3B8;
-    text-transform: none !important;
-    letter-spacing: normal;
     flex-shrink: 0;
 }
 

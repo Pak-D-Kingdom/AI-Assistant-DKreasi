@@ -55,7 +55,7 @@
     // ------------------------------------------------------------------
     // Multi-Tier Configuration Catalog
     // ------------------------------------------------------------------
-    const CLIENT_ICON_LAUNCHER = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`;
+    const CLIENT_ICON_LAUNCHER = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h8M8 14h5" stroke-width="1.8" stroke-linecap="round"></path></svg>`;
     const CLIENT_ICON_AVATAR = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
 
     const CONFIGS = {
@@ -107,14 +107,14 @@
         'site_webia_tenant_public': {
             theme: 'client',
             layer: 'l4',
-            title: 'Asisten Bisnis Tenant',
-            subtitle: 'Online · AI Customer Support Resmi',
-            eyebrow: 'AI BUSINESS CHATBOT · TIER L4',
-            launcherLabel: 'Tanya CS Bisnis',
+            title: 'Asisten Layanan Bisnis',
+            subtitle: 'Online · AI Customer Support',
+            eyebrow: 'AI CUSTOMER ASSISTANT',
+            launcherLabel: '',
             launcherIcon: CLIENT_ICON_LAUNCHER,
             avatarIcon: CLIENT_ICON_AVATAR,
             welcomeTitle: 'Selamat Datang di Bisnis Kami! ✨',
-            welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar produk, jam buka, layanan, dan promo kami.',
+            welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar layanan, produk, jam buka, dan promo kami.',
             initialMsg: 'Halo! Ada yang bisa saya bantu terkait produk, reservasi, atau layanan kami hari ini?',
             chips: [
                 { label: '⏰ Jam Buka & Lokasi', prompt: 'Buka jam berapa dan di mana alamat lokasi bisnis ini?' },
@@ -122,7 +122,7 @@
                 { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
                 { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
             ],
-            footer: 'Asisten AI otomatis. Verifikasi info penting ke CS resmi · by PakDe Group'
+            footer: 'Asisten AI otomatis. Verifikasi info penting ke CS · by PakDe Group'
         }
     };
     // Alias (sebelumnya duplikat penuh)
@@ -186,9 +186,9 @@
     container.className = `pakde-ai-widget pakde-ai-theme--${activeConfig.theme}`;
     container.id = 'pakde-ai-root';
     container.innerHTML = `
-        <button class="pakde-ai-launcher pakde-ai-launcher--${activeConfig.theme}" id="pakde-ai-launcher" aria-label="Buka AI Assistant">
+        <button class="pakde-ai-launcher pakde-ai-launcher--${activeConfig.theme}${!activeConfig.launcherLabel ? ' pakde-ai-launcher--icon-only' : ''}" id="pakde-ai-launcher" aria-label="Buka AI Assistant">
             <span class="pakde-ai-icon">${activeConfig.launcherIcon}</span>
-            <span class="pakde-ai-label">${activeConfig.launcherLabel}</span>
+            ${activeConfig.launcherLabel ? `<span class="pakde-ai-label">${activeConfig.launcherLabel}</span>` : ''}
             <span class="pakde-ai-pulse"></span>
         </button>
 
@@ -213,7 +213,7 @@
                 <div class="pakde-ai-welcome">
                     <span class="pakde-ai-eyebrow">${activeConfig.eyebrow}</span>
                     <h3 id="pakde-ai-welcome-title">${activeConfig.welcomeTitle}</h3>
-                    <p>${activeConfig.welcomeDesc}</p>
+                    <p id="pakde-ai-welcome-desc">${activeConfig.welcomeDesc}</p>
                 </div>
 
                 <div class="pakde-ai-msg-group pakde-ai-msg-group--assistant" id="pakde-ai-initial">
@@ -278,10 +278,23 @@
     const applyTenantUi = () => {
         if (!isTenantLayer) return;
 
-        // Sambutan personal bila nama tenant diketahui
-        welcomeTitleEl.textContent = tenantMeta.name
-            ? `Selamat Datang di ${tenantMeta.name}! ✨`
-            : activeConfig.welcomeTitle;
+        const titleEl = container.querySelector('#pakde-ai-title');
+        const eyebrowEl = container.querySelector('.pakde-ai-eyebrow');
+        const welcomeDescEl = container.querySelector('#pakde-ai-welcome-desc');
+
+        if (tenantMeta.name) {
+            if (titleEl) titleEl.textContent = tenantMeta.name;
+            if (eyebrowEl) eyebrowEl.textContent = `${tenantMeta.name.toUpperCase()} · AI ASSISTANT`;
+            welcomeTitleEl.textContent = `Selamat Datang di ${tenantMeta.name}! ✨`;
+            if (welcomeDescEl) {
+                welcomeDescEl.textContent = `Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar layanan, produk, jam operasional, dan promo ${tenantMeta.name}.`;
+            }
+        } else {
+            if (titleEl) titleEl.textContent = activeConfig.title;
+            if (eyebrowEl) eyebrowEl.textContent = activeConfig.eyebrow;
+            welcomeTitleEl.textContent = activeConfig.welcomeTitle;
+            if (welcomeDescEl) welcomeDescEl.textContent = activeConfig.welcomeDesc;
+        }
 
         // WhatsApp: pakai milik tenant, sembunyikan bila belum diketahui
         if (tenantMeta.whatsappUrl) {
