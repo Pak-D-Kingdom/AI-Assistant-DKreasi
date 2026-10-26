@@ -349,6 +349,14 @@
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editor-tab-btn svg {
+            flex-shrink: 0;
+            transition: color 0.2s;
         }
 
         .editor-tab-btn:hover {
@@ -610,7 +618,7 @@
     </header>
 
     <main class="main">
-        <div class="eyebrow">CLIENT WEBSITE · TIER L4 MULTI-TENANT</div>
+        <div class="eyebrow">CLIENT WEBSITE · TIER L4</div>
         <h1>WEBIA TENANT</h1>
         <p class="subtitle">AI Business Chatbot & Dedicated Knowledge Engine</p>
 
@@ -652,10 +660,46 @@
             </div>
 
             <div class="modal-tabs">
-                <button type="button" class="editor-tab-btn active" data-target="paneProfil">🏢 Profil & Kontak</button>
-                <button type="button" class="editor-tab-btn" data-target="paneLayanan">📋 Layanan & Harga</button>
-                <button type="button" class="editor-tab-btn" data-target="paneKebijakan">🛡️ Kebijakan & Garansi</button>
-                <button type="button" class="editor-tab-btn" data-target="paneFaq">❓ Tanya Jawab (FAQ)</button>
+                <button type="button" class="editor-tab-btn active" data-target="paneProfil">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                        <path d="M9 22v-4h6v4"></path>
+                        <path d="M8 6h.01"></path>
+                        <path d="M16 6h.01"></path>
+                        <path d="M12 6h.01"></path>
+                        <path d="M12 10h.01"></path>
+                        <path d="M12 14h.01"></path>
+                        <path d="M16 10h.01"></path>
+                        <path d="M16 14h.01"></path>
+                        <path d="M8 10h.01"></path>
+                        <path d="M8 14h.01"></path>
+                    </svg>
+                    Profil & Kontak
+                </button>
+                <button type="button" class="editor-tab-btn" data-target="paneLayanan">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        <path d="M9 12h6"></path>
+                        <path d="M9 16h6"></path>
+                    </svg>
+                    Layanan & Harga
+                </button>
+                <button type="button" class="editor-tab-btn" data-target="paneKebijakan">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="M9 12l2 2 4-4"></path>
+                    </svg>
+                    Kebijakan & Garansi
+                </button>
+                <button type="button" class="editor-tab-btn" data-target="paneFaq">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Tanya Jawab (FAQ)
+                </button>
             </div>
 
             <div class="modal-body">
@@ -776,7 +820,7 @@
                             <polyline points="17 21 17 13 7 13 7 21"></polyline>
                             <polyline points="7 3 7 8 15 8"></polyline>
                         </svg>
-                        💾 Simpan & Re-Index AI
+                        Simpan & Re-Index AI
                     </button>
                 </div>
             </div>
