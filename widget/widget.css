@@ -915,12 +915,15 @@
 }
 
 .pakde-ai-footer {
-    padding: 7px 14px;
+    padding: 6px 12px;
     background: var(--th-header-bg);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     text-align: center;
-    font-size: 10.5px;
+    font-size: 9.5px;
+    line-height: 1.35;
     color: #94A3B8;
+    text-transform: none !important;
+    letter-spacing: normal;
     flex-shrink: 0;
 }
 

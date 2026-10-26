@@ -122,7 +122,7 @@
                 { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
                 { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
             ],
-            footer: 'AI Business Chatbot · Powered by WEBIA Ekosistem PakDe Group'
+            footer: 'Asisten AI otomatis. Verifikasi info penting ke CS resmi · by PakDe Group'
         }
     };
     // Alias (sebelumnya duplikat penuh)
