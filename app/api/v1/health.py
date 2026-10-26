@@ -11,5 +11,6 @@ async def health_check():
         "status": "healthy",
         "app_name": settings.APP_NAME,
         "env": settings.APP_ENV,
-        "provider": settings.AI_PROVIDER,
+        "gateway": "9router",
+        "model": settings.LLM_MODEL,
     }

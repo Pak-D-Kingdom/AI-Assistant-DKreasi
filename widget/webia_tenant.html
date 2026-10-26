@@ -178,12 +178,19 @@
             white-space: nowrap;
         }
 
+        .btn-action:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         .btn-action--primary {
             background: #10B981;
             color: #042F2E;
         }
 
-        .btn-action--primary:hover {
+        .btn-action--primary:hover:not(:disabled) {
             background: #34D399;
             box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
             transform: translateY(-1px);
@@ -195,7 +202,7 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        .btn-action--secondary:hover {
+        .btn-action--secondary:hover:not(:disabled) {
             background: rgba(255, 255, 255, 0.12);
             color: #FFFFFF;
         }
@@ -212,12 +219,23 @@
             gap: 6px;
         }
 
+        .tenant-status-chip.is-error {
+            color: #F87171;
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.25);
+        }
+
         .status-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: #34D399;
             box-shadow: 0 0 6px #34D399;
+        }
+
+        .tenant-status-chip.is-error .status-dot {
+            background: #F87171;
+            box-shadow: 0 0 6px #F87171;
         }
 
         /* Glassmorphic Modal */
@@ -599,11 +617,11 @@
         <!-- Minimalist Tenant Control Bar -->
         <div class="tenant-panel">
             <div class="tenant-select-row">
-                <span class="tenant-select-label">Pilih Tenant:</span>
+                <label for="tenantSelect" class="tenant-select-label">Pilih Tenant:</label>
                 <select id="tenantSelect" class="tenant-dropdown">
                     <option value="" disabled selected>Memuat daftar tenant...</option>
                 </select>
-                <button id="openEditorBtn" class="btn-action btn-action--primary">
+                <button id="openEditorBtn" class="btn-action btn-action--primary" disabled>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2.2">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -615,29 +633,29 @@
                     + Tambah Tenant Baru
                 </button>
             </div>
-            <div class="tenant-status-chip">
+            <div class="tenant-status-chip" id="tenantStatusChip">
                 <span class="status-dot"></span>
-                <span id="activeTenantInfo">Terhubung: Bengkel PakDe Motor Jaya</span>
+                <span id="activeTenantInfo">Memuat tenant...</span>
             </div>
         </div>
     </main>
 
     <!-- Unified Knowledge Base & Tenant Editor Modal -->
-    <div id="knowledgeModal" class="modal-overlay">
+    <div id="knowledgeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTenantTitle">
         <div class="modal-card">
             <div class="modal-header">
                 <div class="modal-title-group">
                     <h2 id="modalTenantTitle">Knowledge Base Editor</h2>
                     <span id="modalTenantSubtitle">Form Pengaturan Knowledge Bisnis</span>
                 </div>
-                <button id="closeModalBtn" class="modal-close-btn" title="Tutup">✕</button>
+                <button id="closeModalBtn" class="modal-close-btn" title="Tutup" aria-label="Tutup">✕</button>
             </div>
 
             <div class="modal-tabs">
-                <button class="editor-tab-btn active" data-target="paneProfil">🏢 Profil & Kontak</button>
-                <button class="editor-tab-btn" data-target="paneLayanan">📋 Layanan & Harga</button>
-                <button class="editor-tab-btn" data-target="paneKebijakan">🛡️ Kebijakan & Garansi</button>
-                <button class="editor-tab-btn" data-target="paneFaq">❓ Tanya Jawab (FAQ)</button>
+                <button type="button" class="editor-tab-btn active" data-target="paneProfil">🏢 Profil & Kontak</button>
+                <button type="button" class="editor-tab-btn" data-target="paneLayanan">📋 Layanan & Harga</button>
+                <button type="button" class="editor-tab-btn" data-target="paneKebijakan">🛡️ Kebijakan & Garansi</button>
+                <button type="button" class="editor-tab-btn" data-target="paneFaq">❓ Tanya Jawab (FAQ)</button>
             </div>
 
             <div class="modal-body">
@@ -647,12 +665,12 @@
                         buka, dan kontak WhatsApp dari data ini.</p>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label class="form-label">Nama Bisnis / Brand:</label>
+                            <label class="form-label" for="formNamaBisnis">Nama Bisnis / Brand:</label>
                             <input type="text" id="formNamaBisnis" class="form-input"
                                 placeholder="Masukkan nama bisnis...">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Kategori Usaha:</label>
+                            <label class="form-label" for="formKategori">Kategori Usaha:</label>
                             <select id="formKategori" class="form-select">
                                 <option value="" disabled selected>Pilih Kategori Usaha...</option>
                                 <option value="automotive">🚗 Automotive (Bengkel, Servis & Aksesoris)</option>
@@ -669,32 +687,32 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Tagline / Slogan:</label>
+                            <label class="form-label" for="formTagline">Tagline / Slogan:</label>
                             <input type="text" id="formTagline" class="form-input"
                                 placeholder="Contoh: Kualitas Terbaik & Terpercaya">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Jam Layanan / Operasional:</label>
+                            <label class="form-label" for="formJamOperasional">Jam Layanan / Operasional:</label>
                             <input type="text" id="formJamOperasional" class="form-input"
                                 placeholder="Contoh: Senin - Sabtu: 08.00 - 17.00 WIB">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">WhatsApp Booking / CS Resmi:</label>
+                            <label class="form-label" for="formWhatsapp">WhatsApp Booking / CS Resmi:</label>
                             <input type="text" id="formWhatsapp" class="form-input"
                                 placeholder="Contoh: 0812-3456-7890">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Instagram / Website:</label>
+                            <label class="form-label" for="formInstagram">Instagram / Website:</label>
                             <input type="text" id="formInstagram" class="form-input"
                                 placeholder="Contoh: @bisnis.official / www.bisnis.com">
                         </div>
                         <div class="form-group form-group--full">
-                            <label class="form-label">Alamat Lengkap Fisik:</label>
+                            <label class="form-label" for="formAlamat">Alamat Lengkap Fisik:</label>
                             <textarea id="formAlamat" class="form-textarea" rows="2"
                                 placeholder="Contoh: Jl. Pemuda No. 45, Surabaya"></textarea>
                         </div>
                         <div class="form-group form-group--full">
-                            <label class="form-label">Deskripsi Singkat Usaha:</label>
+                            <label class="form-label" for="formDeskripsi">Deskripsi Singkat Usaha:</label>
                             <textarea id="formDeskripsi" class="form-textarea" rows="3"
                                 placeholder="Jelaskan ringkas bidang usaha, keahlian khusus, atau spesialisasi bisnis Anda..."></textarea>
                         </div>
@@ -718,17 +736,17 @@
                     <p class="pane-desc">Ketentuan jaminan garansi servis/produk, metode pembayaran, dan syarat
                         reservasi.</p>
                     <div class="form-group" style="margin-bottom: 14px;">
-                        <label class="form-label">Jaminan / Garansi:</label>
+                        <label class="form-label" for="formGaransi">Jaminan / Garansi:</label>
                         <textarea id="formGaransi" class="form-textarea" rows="2"
                             placeholder="Contoh: Garansi servis 7 hari kerja atau jaminan retur bila cacat..."></textarea>
                     </div>
                     <div class="form-group" style="margin-bottom: 14px;">
-                        <label class="form-label">Metode Pembayaran:</label>
+                        <label class="form-label" for="formPembayaran">Metode Pembayaran:</label>
                         <input type="text" id="formPembayaran" class="form-input"
                             placeholder="Contoh: Tunai, QRIS (BCA, Mandiri, GoPay, OVO), dan Transfer Bank">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Ketentuan Layanan / Reservasi:</label>
+                        <label class="form-label" for="formKetentuan">Ketentuan Layanan / Reservasi:</label>
                         <textarea id="formKetentuan" class="form-textarea" rows="2"
                             placeholder="Contoh: Reservasi disarankan H-1 melalui WhatsApp resmi..."></textarea>
                     </div>
@@ -750,8 +768,8 @@
                 <span id="editorStatusText" class="modal-status">Form terstruktur tanpa simbol markdown. AI menyusun
                     otomatis.</span>
                 <div class="footer-buttons">
-                    <button id="cancelModalBtn" class="btn-action btn-action--secondary">Batal</button>
-                    <button id="saveKnowledgeBtn" class="btn-action btn-action--primary">
+                    <button type="button" id="cancelModalBtn" class="btn-action btn-action--secondary">Batal</button>
+                    <button type="button" id="saveKnowledgeBtn" class="btn-action btn-action--primary">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
@@ -766,182 +784,326 @@
     </div>
 
     <!-- Notification Toast -->
-    <div id="toastNotification" class="toast">
+    <div id="toastNotification" class="toast" role="status" aria-live="polite">
         Knowledge base berhasil disimpan & AI FAISS Index telah diperbarui!
     </div>
 
     <footer>PakDe AI Assistant · Integration Engine</footer>
 
-    <!-- Universal AI Widget -->
+    <!-- Universal AI Widget (dimuat lebih dulu; script di bawah baru jalan setelah DOMContentLoaded) -->
     <script src="./widget.js" data-site-key="site_webia_tenant_public" data-layer="l4" defer></script>
 
-    <!-- Interactive Human-Friendly Tenant Manager Script -->
+    <!-- Tenant Manager Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const tenantSelect = document.getElementById('tenantSelect');
-            const openEditorBtn = document.getElementById('openEditorBtn');
-            const openNewTenantBtn = document.getElementById('openNewTenantBtn');
-            const activeTenantInfo = document.getElementById('activeTenantInfo');
+            const API = '/api/v1';
+            const STORAGE_KEY = 'webia_active_tenant';
 
-            // Modal Elements
-            const modal = document.getElementById('knowledgeModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const cancelModalBtn = document.getElementById('cancelModalBtn');
-            const saveKnowledgeBtn = document.getElementById('saveKnowledgeBtn');
-            const modalTenantTitle = document.getElementById('modalTenantTitle');
-            const modalTenantSubtitle = document.getElementById('modalTenantSubtitle');
-            const editorStatusText = document.getElementById('editorStatusText');
-            const toast = document.getElementById('toastNotification');
+            const $ = (id) => document.getElementById(id);
+
+            const tenantSelect = $('tenantSelect');
+            const openEditorBtn = $('openEditorBtn');
+            const openNewTenantBtn = $('openNewTenantBtn');
+            const activeTenantInfo = $('activeTenantInfo');
+            const tenantStatusChip = $('tenantStatusChip');
+
+            // Modal elements
+            const modal = $('knowledgeModal');
+            const closeModalBtn = $('closeModalBtn');
+            const cancelModalBtn = $('cancelModalBtn');
+            const saveKnowledgeBtn = $('saveKnowledgeBtn');
+            const modalTenantTitle = $('modalTenantTitle');
+            const modalTenantSubtitle = $('modalTenantSubtitle');
+            const editorStatusText = $('editorStatusText');
+            const toast = $('toastNotification');
+            const saveBtnHtml = saveKnowledgeBtn.innerHTML;
 
             // Form inputs
-            const formNamaBisnis = document.getElementById('formNamaBisnis');
-            const formKategori = document.getElementById('formKategori');
-            const formTagline = document.getElementById('formTagline');
-            const formJamOperasional = document.getElementById('formJamOperasional');
-            const formWhatsapp = document.getElementById('formWhatsapp');
-            const formInstagram = document.getElementById('formInstagram');
-            const formAlamat = document.getElementById('formAlamat');
-            const formDeskripsi = document.getElementById('formDeskripsi');
+            const formNamaBisnis = $('formNamaBisnis');
+            const formKategori = $('formKategori');
+            const formTagline = $('formTagline');
+            const formJamOperasional = $('formJamOperasional');
+            const formWhatsapp = $('formWhatsapp');
+            const formInstagram = $('formInstagram');
+            const formAlamat = $('formAlamat');
+            const formDeskripsi = $('formDeskripsi');
 
-            const servicesListContainer = document.getElementById('servicesListContainer');
-            const addServiceRowBtn = document.getElementById('addServiceRowBtn');
+            const servicesListContainer = $('servicesListContainer');
+            const addServiceRowBtn = $('addServiceRowBtn');
 
-            const formGaransi = document.getElementById('formGaransi');
-            const formPembayaran = document.getElementById('formPembayaran');
-            const formKetentuan = document.getElementById('formKetentuan');
+            const formGaransi = $('formGaransi');
+            const formPembayaran = $('formPembayaran');
+            const formKetentuan = $('formKetentuan');
 
-            const faqListContainer = document.getElementById('faqListContainer');
-            const addFaqRowBtn = document.getElementById('addFaqRowBtn');
+            const faqListContainer = $('faqListContainer');
+            const addFaqRowBtn = $('addFaqRowBtn');
 
+            // State
             let currentTenants = [];
-            let activeTenantId = 'tenant_automotive_01';
+            let activeTenantId = '';        // tenant yang terhubung ke widget chat
+            let widgetTenantId = null;      // tenant yang terakhir dikirim ke widget
+            let editingTenantId = '';       // tenant yang sedang diedit di modal
             let isCreatingNewTenant = false;
+            let editorLoadToken = 0;        // mencegah balapan saat memuat editor
+            let switchToken = 0;            // mencegah balapan saat ganti tenant
+            const waCache = new Map();      // tenant_id -> nomor WhatsApp
+
+            // ---------------------------------------------------------
+            // Util
+            // ---------------------------------------------------------
+            const isBlank = (v) => !v || v.trim() === '' || v.trim() === '-';
+            const cleanVal = (v) => (isBlank(v) ? '' : v.trim());
+            // Field satu baris: newline diratakan agar tidak merusak format markdown
+            const oneLine = (s) => String(s || '').replace(/\s*[\r\n]+\s*/g, ' ').trim();
+
+            const readStored = () => { try { return sessionStorage.getItem(STORAGE_KEY); } catch (e) { return null; } };
+            const writeStored = (v) => { try { sessionStorage.setItem(STORAGE_KEY, v); } catch (e) { } };
 
             function showToast(msg) {
                 toast.textContent = msg;
                 toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3500);
+                clearTimeout(showToast._t);
+                showToast._t = setTimeout(() => toast.classList.remove('show'), 3500);
             }
 
-            // Load Tenants List from API
-            async function loadTenants() {
+            function setBadge(text, isError = false) {
+                activeTenantInfo.textContent = text;
+                tenantStatusChip.classList.toggle('is-error', isError);
+            }
+
+            const findTenant = (id) => currentTenants.find(t => t.tenant_id === id);
+
+            // ---------------------------------------------------------
+            // Widget bridge
+            // ---------------------------------------------------------
+            function applyTenantToWidget(id, meta) {
+                if (window.PakdeAI && typeof window.PakdeAI.setTenant === 'function') {
+                    window.PakdeAI.setTenant(id, meta || {});
+                } else {
+                    // Fallback bila widget belum siap: setter di widget (jika ada) tetap mereset chat
+                    window.__PAKDE_TENANT_ID = id;
+                }
+                widgetTenantId = id;
+            }
+
+            // Ambil nomor WhatsApp tenant dari knowledge (profil) agar tombol CS di widget benar
+            async function getTenantWhatsapp(id) {
+                if (waCache.has(id)) return waCache.get(id);
                 try {
-                    const res = await fetch('/api/v1/tenants');
-                    if (!res.ok) throw new Error('Gagal memuat tenant');
-                    currentTenants = await res.json();
+                    const res = await fetch(`${API}/tenants/${encodeURIComponent(id)}/knowledge`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        const m = (data.profil || '').match(/-\s+\*\*WhatsApp.*?\*\*:\s*(.*)/);
+                        const wa = m ? cleanVal(m[1]) : '';
+                        waCache.set(id, wa);
+                        return wa;
+                    }
+                } catch (e) { /* abaikan, widget tetap jalan tanpa tombol CS */ }
+                return '';
+            }
 
-                    tenantSelect.innerHTML = '';
-                    currentTenants.forEach(t => {
-                        const opt = document.createElement('option');
-                        opt.value = t.tenant_id;
-                        opt.textContent = `${t.name} (${t.category})`;
-                        if (t.tenant_id === activeTenantId) opt.selected = true;
-                        tenantSelect.appendChild(opt);
-                    });
+            // Aktifkan tenant: perbarui badge, simpan pilihan, dan reset widget bila berganti
+            async function activateTenant(id, { force = false } = {}) {
+                if (!id) return;
+                activeTenantId = id;
+                writeStored(id);
+                if (tenantSelect.value !== id) tenantSelect.value = id;
 
-                    updateActiveTenantBadge();
-                } catch (e) {
-                    console.error('Error loadTenants:', e);
+                const tenant = findTenant(id);
+                const name = tenant ? tenant.name : id;
+                setBadge(`Terhubung: ${name}`);
+
+                const token = ++switchToken;
+                const wa = await getTenantWhatsapp(id);
+                if (token !== switchToken) return; // user sudah pindah lagi
+
+                if (force || widgetTenantId !== id) {
+                    applyTenantToWidget(id, { name, whatsapp: wa });
                 }
             }
 
-            function updateActiveTenantBadge() {
-                const found = currentTenants.find(t => t.tenant_id === activeTenantId);
-                const name = found ? found.name : activeTenantId;
-                activeTenantInfo.textContent = `Terhubung: ${name}`;
-                window.__PAKDE_TENANT_ID = activeTenantId;
-            }
+            // ---------------------------------------------------------
+            // Daftar tenant
+            // ---------------------------------------------------------
+            function renderTenantOptions() {
+                tenantSelect.innerHTML = '';
 
-            tenantSelect.addEventListener('change', (e) => {
-                activeTenantId = e.target.value;
-                updateActiveTenantBadge();
-                showToast(`Beralih ke tenant: ${activeTenantId}. Widget kini terhubung.`);
-            });
+                if (!currentTenants.length) {
+                    const opt = document.createElement('option');
+                    opt.value = '';
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.textContent = 'Belum ada tenant';
+                    tenantSelect.appendChild(opt);
+                    activeTenantId = '';
+                    openEditorBtn.disabled = true;
+                    setBadge('Belum ada tenant. Klik "+ Tambah Tenant Baru".', true);
+                    return;
+                }
 
-            // Modal Tab Navigation
-            document.querySelectorAll('.editor-tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.editor-tab-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.editor-pane').forEach(p => p.classList.remove('active'));
-                    btn.classList.add('active');
-                    const targetPane = document.getElementById(btn.dataset.target);
-                    if (targetPane) targetPane.classList.add('active');
+                // Pastikan tenant aktif benar-benar ada di daftar (sinkron dengan dropdown)
+                if (!findTenant(activeTenantId)) activeTenantId = currentTenants[0].tenant_id;
+
+                currentTenants.forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = t.tenant_id;
+                    opt.textContent = `${t.name} (${t.category})`;
+                    if (t.tenant_id === activeTenantId) opt.selected = true;
+                    tenantSelect.appendChild(opt);
                 });
-            });
-
-            function switchTab(targetId) {
-                document.querySelectorAll('.editor-tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.editor-pane').forEach(p => p.classList.remove('active'));
-                const tabBtn = document.querySelector(`.editor-tab-btn[data-target="${targetId}"]`);
-                if (tabBtn) tabBtn.classList.add('active');
-                const targetPane = document.getElementById(targetId);
-                if (targetPane) targetPane.classList.add('active');
+                openEditorBtn.disabled = false;
             }
 
-            // Dynamic Service Row Generation
+            async function loadTenants() {
+                try {
+                    const res = await fetch(`${API}/tenants`);
+                    if (!res.ok) throw new Error('Gagal memuat tenant');
+                    currentTenants = await res.json();
+                    renderTenantOptions();
+                    return true;
+                } catch (e) {
+                    console.error('Error loadTenants:', e);
+                    tenantSelect.innerHTML = '<option value="" disabled selected>Gagal memuat tenant</option>';
+                    openEditorBtn.disabled = true;
+                    setBadge('Gagal memuat daftar tenant. Periksa server API.', true);
+                    return false;
+                }
+            }
+
+            tenantSelect.addEventListener('change', async (e) => {
+                const id = e.target.value;
+                await activateTenant(id);
+                const t = findTenant(id);
+                showToast(`Beralih ke: ${t ? t.name : id}. Chat dimulai ulang.`);
+            });
+
+            // ---------------------------------------------------------
+            // Tab navigasi modal
+            // ---------------------------------------------------------
+            function switchTab(targetId) {
+                document.querySelectorAll('.editor-tab-btn').forEach(b =>
+                    b.classList.toggle('active', b.dataset.target === targetId));
+                document.querySelectorAll('.editor-pane').forEach(p =>
+                    p.classList.toggle('active', p.id === targetId));
+            }
+
+            document.querySelectorAll('.editor-tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => switchTab(btn.dataset.target));
+            });
+
+            // ---------------------------------------------------------
+            // Baris dinamis (dibuat via DOM, bukan innerHTML -> aman dari injeksi)
+            // ---------------------------------------------------------
+            function makeInput(cls, placeholder, value, extraStyle) {
+                const el = document.createElement('input');
+                el.type = 'text';
+                el.className = `form-input ${cls}`;
+                el.placeholder = placeholder;
+                el.value = value || '';
+                if (extraStyle) el.style.cssText = extraStyle;
+                return el;
+            }
+
+            function makeRemoveBtn(card) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'item-remove-btn';
+                btn.title = 'Hapus';
+                btn.textContent = '✕';
+                btn.addEventListener('click', () => card.remove());
+                return btn;
+            }
+
             function addServiceRow(nama = '', harga = '', ket = '') {
                 const card = document.createElement('div');
                 card.className = 'item-card';
-                card.innerHTML = `
-                    <div class="item-card-row">
-                        <input type="text" class="form-input service-name" placeholder="Nama Layanan / Menu" value="${escapeHtml(nama)}">
-                        <input type="text" class="form-input service-price" placeholder="Harga (contoh: Rp50.000)" style="max-width: 170px;" value="${escapeHtml(harga)}">
-                        <button type="button" class="item-remove-btn" title="Hapus">✕</button>
-                    </div>
-                    <input type="text" class="form-input service-desc" placeholder="Keterangan singkat / kelengkapan fasilitas" value="${escapeHtml(ket)}">
-                `;
-                card.querySelector('.item-remove-btn').addEventListener('click', () => card.remove());
+
+                const row = document.createElement('div');
+                row.className = 'item-card-row';
+                row.appendChild(makeInput('service-name', 'Nama Layanan / Menu', nama));
+                row.appendChild(makeInput('service-price', 'Harga (contoh: Rp50.000)', harga, 'max-width: 170px;'));
+                row.appendChild(makeRemoveBtn(card));
+
+                card.appendChild(row);
+                card.appendChild(makeInput('service-desc', 'Keterangan singkat / kelengkapan fasilitas', ket));
                 servicesListContainer.appendChild(card);
             }
 
-            addServiceRowBtn.addEventListener('click', () => addServiceRow());
-
-            // Dynamic FAQ Row Generation
             function addFaqRow(tanya = '', jawab = '') {
                 const card = document.createElement('div');
                 card.className = 'item-card';
-                card.innerHTML = `
-                    <div class="item-card-row">
-                        <input type="text" class="form-input faq-question" placeholder="Pertanyaan pelanggan..." value="${escapeHtml(tanya)}">
-                        <button type="button" class="item-remove-btn" title="Hapus">✕</button>
-                    </div>
-                    <textarea class="form-textarea faq-answer" rows="2" placeholder="Jawaban resmi...">${escapeHtml(jawab)}</textarea>
-                `;
-                card.querySelector('.item-remove-btn').addEventListener('click', () => card.remove());
+
+                const row = document.createElement('div');
+                row.className = 'item-card-row';
+                row.appendChild(makeInput('faq-question', 'Pertanyaan pelanggan...', tanya));
+                row.appendChild(makeRemoveBtn(card));
+
+                const ta = document.createElement('textarea');
+                ta.className = 'form-textarea faq-answer';
+                ta.rows = 2;
+                ta.placeholder = 'Jawaban resmi...';
+                ta.value = jawab || '';
+
+                card.appendChild(row);
+                card.appendChild(ta);
                 faqListContainer.appendChild(card);
             }
 
+            addServiceRowBtn.addEventListener('click', () => addServiceRow());
             addFaqRowBtn.addEventListener('click', () => addFaqRow());
 
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str).replace(/"/g, '&quot;');
+            // ---------------------------------------------------------
+            // Form helpers
+            // ---------------------------------------------------------
+            function resetForm() {
+                formNamaBisnis.value = '';
+                formKategori.selectedIndex = 0;
+                formTagline.value = '';
+                formJamOperasional.value = '';
+                formWhatsapp.value = '';
+                formInstagram.value = '';
+                formAlamat.value = '';
+                formDeskripsi.value = '';
+                formGaransi.value = '';
+                formPembayaran.value = '';
+                formKetentuan.value = '';
+                servicesListContainer.innerHTML = '';
+                faqListContainer.innerHTML = '';
+                addServiceRow();
+                addFaqRow();
             }
 
-            function selectDropdownCategory(catText) {
-                if (!catText) return;
-                const lower = catText.toLowerCase();
-                for (let i = 0; i < formKategori.options.length; i++) {
-                    const opt = formKategori.options[i];
-                    if (lower.includes(opt.value) || opt.text.toLowerCase().includes(lower)) {
-                        formKategori.selectedIndex = i;
-                        return;
-                    }
+            function setCategory(catText, tenantId) {
+                const opts = Array.from(formKategori.options).filter(o => o.value); // lewati placeholder
+                const lower = (catText || '').trim().toLowerCase();
+                let found = null;
+
+                if (lower) {
+                    found = opts.find(o => o.text.trim().toLowerCase() === lower)
+                        || opts.find(o => lower.includes(o.value))
+                        || opts.find(o => o.text.toLowerCase().includes(lower));
                 }
+                if (!found && tenantId) {
+                    const m = tenantId.match(/^tenant_(.+)_\d+$/);
+                    if (m) found = opts.find(o => o.value === m[1]);
+                }
+                if (found) formKategori.value = found.value;
+                else formKategori.selectedIndex = 0;
             }
 
-            // Parse Existing Markdown into Form Fields
-            function parseMarkdownToForm(profilMd, layananMd, kebijakanMd, faqMd) {
+            // ---------------------------------------------------------
+            // Markdown -> Form
+            // ---------------------------------------------------------
+            function parseMarkdownToForm(tenantId, profilMd, layananMd, kebijakanMd, faqMd) {
                 const getVal = (regex, text) => {
                     const m = text.match(regex);
-                    return m ? m[1].trim() : '';
+                    return m ? cleanVal(m[1]) : '';
                 };
 
                 const h1Match = profilMd.match(/^#\s+(.*?)(?:\s*-\s*Profil Bisnis)?$/m);
                 formNamaBisnis.value = getVal(/-\s+\*\*Nama Bisnis\*\*:\s*(.*)/, profilMd) || (h1Match ? h1Match[1].trim() : '');
 
-                const catRaw = getVal(/-\s+\*\*Kategori\*\*:\s*(.*)/, profilMd);
-                selectDropdownCategory(catRaw);
+                setCategory(getVal(/-\s+\*\*Kategori\*\*:\s*(.*)/, profilMd), tenantId);
 
                 formTagline.value = getVal(/-\s+\*\*Tagline\*\*:\s*(.*)/, profilMd);
                 formAlamat.value = getVal(/-\s+\*\*Alamat\*\*:\s*(.*)/, profilMd);
@@ -949,7 +1111,7 @@
                 formWhatsapp.value = getVal(/-\s+\*\*WhatsApp.*?\*\*:\s*(.*)/, profilMd);
                 formInstagram.value = getVal(/-\s+\*\*Instagram.*?\*\*:\s*(.*)/, profilMd);
 
-                // Jam Operasional
+                // Jam operasional (mendukung format satu baris maupun daftar bertingkat)
                 const jamMatch = profilMd.match(/-\s+\*\*Jam Operasional\*\*:\s*\n((?:\s+-\s+.*\n?)*)/);
                 if (jamMatch && jamMatch[1].trim()) {
                     formJamOperasional.value = jamMatch[1].trim().replace(/\n\s*-\s*/g, ' | ').replace(/^-\s*/, '');
@@ -957,23 +1119,27 @@
                     formJamOperasional.value = getVal(/-\s+\*\*Jam Operasional\*\*:\s*(.*)/, profilMd);
                 }
 
-                // Layanan
+                // Layanan: "- **Nama**: Harga (Keterangan)."
                 servicesListContainer.innerHTML = '';
-                const svcLines = layananMd.split('\n');
                 let foundServices = 0;
-                svcLines.forEach(l => {
-                    const m = l.match(/^-\s+\*\*(.*?)\*\*:\s*([^(\n\r]+)(?:\s*\((.*?)\))?/);
-                    if (m) {
-                        addServiceRow(m[1].trim(), m[2].trim().replace(/\.$/, ''), m[3] ? m[3].trim() : '');
-                        foundServices++;
-                    }
+                layananMd.split('\n').forEach(line => {
+                    const m = line.trim().match(/^-\s+\*\*(.+?)\*\*\s*(.*)$/);
+                    if (!m) return;
+                    let rest = m[2].trim().replace(/^:\s*/, '').replace(/\.$/, '').trim();
+                    let price = rest;
+                    let desc = '';
+                    const dm = rest.match(/^(.*?)\s*\((.*)\)$/s);
+                    if (dm) { price = dm[1].trim(); desc = dm[2].trim(); }
+                    addServiceRow(m[1].trim(), price, desc);
+                    foundServices++;
                 });
-                if (foundServices === 0) addServiceRow('', '', '');
+                if (foundServices === 0) addServiceRow();
 
                 // Kebijakan
                 formGaransi.value = getVal(/-\s+\*\*Garansi.*?\*\*:\s*(.*)/, kebijakanMd);
                 formPembayaran.value = getVal(/-\s+\*\*Metode Pembayaran\*\*:\s*(.*)/, kebijakanMd);
-                formKetentuan.value = getVal(/-\s+\*\*Ketentuan Layanan.*?\*\*:\s*(.*)/, kebijakanMd) || getVal(/-\s+\*\*Ketersediaan Sparepart.*?\*\*:\s*(.*)/, kebijakanMd);
+                formKetentuan.value = getVal(/-\s+\*\*Ketentuan Layanan.*?\*\*:\s*(.*)/, kebijakanMd)
+                    || getVal(/-\s+\*\*Ketersediaan Sparepart.*?\*\*:\s*(.*)/, kebijakanMd);
 
                 // FAQ
                 faqListContainer.innerHTML = '';
@@ -984,63 +1150,67 @@
                     addFaqRow(match[1].trim(), match[2].trim());
                     foundFaq++;
                 }
-                if (foundFaq === 0) addFaqRow('', '');
+                if (foundFaq === 0) addFaqRow();
             }
 
-            // Open Editor for Existing Tenant
+            // ---------------------------------------------------------
+            // Buka editor
+            // ---------------------------------------------------------
             async function openEditor(tenantId) {
+                if (!tenantId) return;
                 isCreatingNewTenant = false;
-                activeTenantId = tenantId;
-                const found = currentTenants.find(t => t.tenant_id === tenantId);
+                editingTenantId = tenantId;
+                const token = ++editorLoadToken;
+
+                const found = findTenant(tenantId);
                 modalTenantTitle.textContent = `Knowledge Editor: ${found ? found.name : tenantId}`;
                 modalTenantSubtitle.textContent = `Tenant ID: ${tenantId}`;
                 editorStatusText.textContent = 'Memuat data tenant...';
+
+                // Kosongkan form dulu agar data tenant sebelumnya tidak ikut tersimpan
+                resetForm();
+                if (found) formNamaBisnis.value = found.name;
+                setCategory('', tenantId);
+                saveKnowledgeBtn.disabled = true;
 
                 modal.classList.add('active');
                 switchTab('paneProfil');
 
                 try {
-                    const res = await fetch(`/api/v1/tenants/${tenantId}/knowledge`);
+                    const res = await fetch(`${API}/tenants/${encodeURIComponent(tenantId)}/knowledge`);
+                    if (token !== editorLoadToken) return;
+
                     if (res.ok) {
                         const data = await res.json();
-                        parseMarkdownToForm(data.profil || '', data.layanan || '', data.kebijakan || '', data.faq || '');
+                        if (token !== editorLoadToken) return;
+                        parseMarkdownToForm(tenantId, data.profil || '', data.layanan || '', data.kebijakan || '', data.faq || '');
                         editorStatusText.textContent = 'Data siap diedit.';
+                        saveKnowledgeBtn.disabled = false;
+                    } else if (res.status === 404) {
+                        editorStatusText.textContent = 'Tenant ini belum punya dokumen knowledge. Silakan isi form.';
+                        saveKnowledgeBtn.disabled = false;
                     } else {
-                        throw new Error('Tenant belum memiliki dokumen');
+                        throw new Error(`HTTP ${res.status}`);
                     }
                 } catch (e) {
+                    if (token !== editorLoadToken) return;
                     console.error(e);
-                    editorStatusText.textContent = 'Gagal memuat dari API.';
+                    editorStatusText.textContent = 'Gagal memuat dari API. Penyimpanan dinonaktifkan agar data tidak tertimpa.';
+                    saveKnowledgeBtn.disabled = true;
                 }
             }
 
-            // Open Editor for Completely Blank New Tenant
             function openEditorForNewTenant() {
                 isCreatingNewTenant = true;
+                editingTenantId = '';
+                editorLoadToken++; // batalkan pemuatan editor yang masih berjalan
+
                 modalTenantTitle.textContent = '+ Tambah Tenant Baru';
                 modalTenantSubtitle.textContent = 'Formulir Pendaftaran & Knowledge Base Tenant Baru';
+                editorStatusText.textContent = 'Isi data tenant baru lalu simpan.';
 
-                // Reset all inputs to completely empty strings
-                formNamaBisnis.value = '';
-                formKategori.selectedIndex = 0;
-                formTagline.value = '';
-                formJamOperasional.value = '';
-                formWhatsapp.value = '';
-                formInstagram.value = '';
-                formAlamat.value = '';
-                formDeskripsi.value = '';
-
-                // Reset Layanan & FAQ to clean single blank rows
-                servicesListContainer.innerHTML = '';
-                addServiceRow('', '', '');
-
-                formGaransi.value = '';
-                formPembayaran.value = '';
-                formKetentuan.value = '';
-
-                faqListContainer.innerHTML = '';
-                addFaqRow('', '');
-
+                resetForm();
+                saveKnowledgeBtn.disabled = false;
                 modal.classList.add('active');
                 switchTab('paneProfil');
             }
@@ -1049,81 +1219,115 @@
                 openEditor(tenantSelect.value || activeTenantId);
             });
 
+            openNewTenantBtn.addEventListener('click', openEditorForNewTenant);
+
             formKategori.addEventListener('change', async () => {
                 if (isCreatingNewTenant && formKategori.value) {
-                    try {
-                        const idRes = await fetch(`/api/v1/tenants/next-id?category=${encodeURIComponent(formKategori.value)}`);
-                        if (idRes.ok) {
-                            const idData = await idRes.json();
-                            modalTenantSubtitle.textContent = `Auto ID Terdaftar: ${idData.next_id}`;
-                        }
-                    } catch (e) {}
+                    const nextId = await resolveNewTenantId(formKategori.value);
+                    modalTenantSubtitle.textContent = `Auto ID Terdaftar: ${nextId}`;
                 }
             });
 
-            openNewTenantBtn.addEventListener('click', () => {
-                openEditorForNewTenant();
-            });
-
             function closeModal() {
+                editorLoadToken++;
                 modal.classList.remove('active');
             }
 
             closeModalBtn.addEventListener('click', closeModal);
             cancelModalBtn.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+            });
 
-            // Compile Form to Clean Markdown
+            // ---------------------------------------------------------
+            // ID tenant baru (tanpa risiko menimpa tenant lama)
+            // ---------------------------------------------------------
+            async function resolveNewTenantId(category) {
+                try {
+                    const res = await fetch(`${API}/tenants/next-id?category=${encodeURIComponent(category)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && data.next_id) return data.next_id;
+                    }
+                } catch (e) { /* lanjut ke fallback lokal */ }
+
+                const prefix = `tenant_${category}_`;
+                const maxNum = currentTenants
+                    .map(t => t.tenant_id)
+                    .filter(id => id.startsWith(prefix))
+                    .map(id => parseInt(id.slice(prefix.length), 10))
+                    .filter(n => !isNaN(n))
+                    .reduce((a, b) => Math.max(a, b), 0);
+                return `${prefix}${String(maxNum + 1).padStart(2, '0')}`;
+            }
+
+            // ---------------------------------------------------------
+            // Form -> Markdown
+            // Field kosong DIABAIKAN (tidak diisi teks karangan), agar AI tidak
+            // menyampaikan garansi/kebijakan/FAQ yang sebenarnya tidak ada.
+            // ---------------------------------------------------------
             function compileFormToMarkdown() {
-                const nama = formNamaBisnis.value.trim() || 'Bisnis Kami';
+                const nama = oneLine(formNamaBisnis.value) || 'Bisnis Kami';
                 const catOption = formKategori.options[formKategori.selectedIndex];
-                const kat = catOption && catOption.value ? catOption.text : 'General';
-                const tagline = formTagline.value.trim() || '-';
-                const jam = formJamOperasional.value.trim() || '-';
-                const alamat = formAlamat.value.trim() || '-';
-                const desc = formDeskripsi.value.trim() || '-';
-                const wa = formWhatsapp.value.trim() || '-';
-                const ig = formInstagram.value.trim() || '-';
+                const kat = catOption && catOption.value ? catOption.text : '';
+
+                const kv = (label, value) => {
+                    const v = oneLine(value);
+                    return v ? `- **${label}**: ${v}` : '';
+                };
 
                 // Profil
-                const profilMd = `# ${nama} - Profil Bisnis\n\n## Profil & Informasi Bisnis\n- **Nama Bisnis**: ${nama}\n- **Kategori**: ${kat}\n- **Tagline**: ${tagline}\n- **Alamat**: ${alamat}\n- **Jam Operasional**: ${jam}\n- **Deskripsi**: ${desc}\n\n## Kontak & Call to Action (CTA)\n- **WhatsApp Resmi**: ${wa}\n- **Instagram / Website**: ${ig}`;
+                const profilLines = [
+                    kv('Nama Bisnis', nama),
+                    kv('Kategori', kat),
+                    kv('Tagline', formTagline.value),
+                    kv('Alamat', formAlamat.value),
+                    kv('Jam Operasional', formJamOperasional.value),
+                    kv('Deskripsi', formDeskripsi.value),
+                ].filter(Boolean).join('\n');
+                const kontakLines = [
+                    kv('WhatsApp Resmi', formWhatsapp.value),
+                    kv('Instagram / Website', formInstagram.value),
+                ].filter(Boolean).join('\n');
+                const profilMd = `# ${nama} - Profil Bisnis\n\n## Profil & Informasi Bisnis\n${profilLines}\n\n## Kontak & Call to Action (CTA)\n${kontakLines || 'Kontak belum dicantumkan.'}`;
 
                 // Layanan
-                const svcCards = servicesListContainer.querySelectorAll('.item-card');
                 const svcLines = [];
-                svcCards.forEach(c => {
-                    const sName = c.querySelector('.service-name').value.trim();
-                    const sPrice = c.querySelector('.service-price').value.trim();
-                    const sDesc = c.querySelector('.service-desc').value.trim();
+                servicesListContainer.querySelectorAll('.item-card').forEach(c => {
+                    const sName = oneLine(c.querySelector('.service-name').value);
+                    const sPrice = oneLine(c.querySelector('.service-price').value);
+                    const sDesc = oneLine(c.querySelector('.service-desc').value);
                     if (sName) {
                         const pricePart = sPrice ? `: ${sPrice}` : '';
                         const descPart = sDesc ? ` (${sDesc})` : '';
                         svcLines.push(`- **${sName}**${pricePart}${descPart}.`);
                     }
                 });
-                const layananMd = `# ${nama} - Layanan & Produk\n\n## Layanan & Biaya Resmi\n${svcLines.join('\n') || '- **Layanan Standar**: Hubungi CS.'}`;
+                const layananMd = `# ${nama} - Layanan & Produk\n\n## Layanan & Biaya Resmi\n${svcLines.join('\n') || 'Daftar layanan belum dicatat. Arahkan pelanggan menghubungi CS resmi.'}`;
 
                 // Kebijakan
-                const garansi = formGaransi.value.trim() || 'Garansi kepuasan pelanggan.';
-                const pembayaran = formPembayaran.value.trim() || 'Tunai, QRIS, dan Transfer Bank.';
-                const ketentuan = formKetentuan.value.trim() || 'Reservasi dan konfirmasi via WhatsApp.';
-                const kebijakanMd = `# ${nama} - Kebijakan & Garansi\n\n## Garansi & Kebijakan\n- **Garansi Servis**: ${garansi}\n- **Metode Pembayaran**: ${pembayaran}\n- **Ketentuan Layanan**: ${ketentuan}`;
+                const kebijakanLines = [
+                    kv('Garansi Servis', formGaransi.value),
+                    kv('Metode Pembayaran', formPembayaran.value),
+                    kv('Ketentuan Layanan', formKetentuan.value),
+                ].filter(Boolean).join('\n');
+                const kebijakanMd = `# ${nama} - Kebijakan & Garansi\n\n## Garansi & Kebijakan\n${kebijakanLines || 'Kebijakan belum dicatat. Arahkan pelanggan menghubungi CS resmi.'}`;
 
                 // FAQ
-                const faqCards = faqListContainer.querySelectorAll('.item-card');
                 const faqLines = [];
-                faqCards.forEach(c => {
-                    const q = c.querySelector('.faq-question').value.trim();
-                    const a = c.querySelector('.faq-answer').value.trim();
-                    if (q) {
-                        faqLines.push(`- **Q: ${q}**\n  - A: ${a || 'Silakan hubungi customer service kami.'}`);
-                    }
+                faqListContainer.querySelectorAll('.item-card').forEach(c => {
+                    const q = oneLine(c.querySelector('.faq-question').value);
+                    const a = oneLine(c.querySelector('.faq-answer').value);
+                    if (q && a) faqLines.push(`- **Q: ${q}**\n  - A: ${a}`);
                 });
-                const faqMd = `# ${nama} - Tanya Jawab (FAQ)\n\n## Tanya Jawab (FAQ)\n${faqLines.join('\n') || '- **Q: Apakah melayani pemesanan online?**\n  - A: Ya, silakan hubungi WhatsApp kami.'}`;
+                const faqMd = `# ${nama} - Tanya Jawab (FAQ)\n\n## Tanya Jawab (FAQ)\n${faqLines.join('\n') || 'FAQ belum dicatat.'}`;
 
                 return { profilMd, layananMd, kebijakanMd, faqMd };
             }
 
-            // Save Knowledge
+            // ---------------------------------------------------------
+            // Simpan knowledge
+            // ---------------------------------------------------------
             saveKnowledgeBtn.addEventListener('click', async () => {
                 const nama = formNamaBisnis.value.trim();
                 const katVal = formKategori.value;
@@ -1134,7 +1338,6 @@
                     formNamaBisnis.focus();
                     return;
                 }
-
                 if (!katVal) {
                     alert('Mohon pilih Kategori Usaha dari dropdown.');
                     switchTab('paneProfil');
@@ -1142,29 +1345,28 @@
                     return;
                 }
 
-                let targetTenantId = activeTenantId;
-                if (isCreatingNewTenant) {
-                    try {
-                        const idRes = await fetch(`/api/v1/tenants/next-id?category=${encodeURIComponent(katVal)}`);
-                        if (idRes.ok) {
-                            const idData = await idRes.json();
-                            targetTenantId = idData.next_id;
-                        } else {
-                            targetTenantId = `tenant_${katVal}_02`;
-                        }
-                    } catch (e) {
-                        targetTenantId = `tenant_${katVal}_02`;
-                    }
+                // Peringatan bila ada pertanyaan FAQ tanpa jawaban (tidak akan disimpan)
+                const incompleteFaq = Array.from(faqListContainer.querySelectorAll('.item-card')).some(c =>
+                    c.querySelector('.faq-question').value.trim() && !c.querySelector('.faq-answer').value.trim());
+                if (incompleteFaq && !confirm('Ada FAQ yang punya pertanyaan tetapi belum ada jawaban. FAQ tersebut tidak akan disimpan. Lanjutkan?')) {
+                    switchTab('paneFaq');
+                    return;
                 }
 
                 saveKnowledgeBtn.disabled = true;
                 saveKnowledgeBtn.textContent = 'Menyimpan & Indexing...';
-                editorStatusText.textContent = `Menyimpan ${targetTenantId} & mengindeks ulang vektor FAISS...`;
-
-                const { profilMd, layananMd, kebijakanMd, faqMd } = compileFormToMarkdown();
 
                 try {
-                    const res = await fetch(`/api/v1/tenants/${targetTenantId}/knowledge`, {
+                    const targetTenantId = isCreatingNewTenant
+                        ? await resolveNewTenantId(katVal)
+                        : editingTenantId;
+
+                    if (!targetTenantId) throw new Error('Tenant tujuan tidak ditemukan.');
+
+                    editorStatusText.textContent = `Menyimpan ${targetTenantId} & mengindeks ulang vektor FAISS...`;
+                    const { profilMd, layananMd, kebijakanMd, faqMd } = compileFormToMarkdown();
+
+                    const res = await fetch(`${API}/tenants/${encodeURIComponent(targetTenantId)}/knowledge`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -1178,26 +1380,36 @@
                     if (!res.ok) throw new Error('Gagal menyimpan knowledge ke API');
                     const result = await res.json();
 
-                    showToast(`✅ ${result.message}`);
+                    waCache.delete(targetTenantId); // nomor WA mungkin berubah
                     closeModal();
+                    showToast(`✅ ${result.message || 'Knowledge berhasil disimpan & di-index.'}`);
+
                     activeTenantId = targetTenantId;
                     await loadTenants();
-                    tenantSelect.value = activeTenantId;
-                    updateActiveTenantBadge();
+                    // force: chat direset agar percakapan lama tidak memakai knowledge yang sudah usang
+                    await activateTenant(targetTenantId, { force: true });
                 } catch (e) {
                     alert('Terjadi kesalahan: ' + e.message);
                     editorStatusText.textContent = 'Gagal menyimpan.';
                 } finally {
                     saveKnowledgeBtn.disabled = false;
-                    saveKnowledgeBtn.innerHTML = `
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                        💾 Simpan & Re-Index AI
-                    `;
+                    saveKnowledgeBtn.innerHTML = saveBtnHtml;
                 }
             });
 
-            // Initial load
-            loadTenants();
+            // ---------------------------------------------------------
+            // Inisialisasi
+            // ---------------------------------------------------------
+            (async function init() {
+                // Prioritas tenant awal: ?tenant=... di URL -> pilihan terakhir -> tenant pertama
+                const urlTenant = new URLSearchParams(window.location.search).get('tenant');
+                activeTenantId = urlTenant || readStored() || '';
+
+                const ok = await loadTenants();
+                if (ok && activeTenantId) {
+                    await activateTenant(activeTenantId, { force: true });
+                }
+            })();
         });
     </script>
 </body>

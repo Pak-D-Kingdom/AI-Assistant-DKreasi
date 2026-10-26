@@ -8,7 +8,7 @@ def test_fnb_recommendation_matrix():
     rec = recommend_webia_solution("fnb")
     assert rec["category"] == "F&B (Food & Beverages)"
     assert rec["recommended_package"] == "Paket Pulse"
-    assert "F01" in rec["recommended_template"]
+    assert "Little Corner" in rec["recommended_template"] or "F01" in rec["recommended_template"]
     assert "Booking Meja / Reservasi" in rec["recommended_modules"]
 
     # F&B with CMS request -> Nexus
@@ -22,7 +22,7 @@ def test_company_recommendation_matrix():
     rec = recommend_webia_solution("company")
     assert "Company" in rec["category"]
     assert rec["recommended_package"] == "Paket Nexus"
-    assert "C01" in rec["recommended_template"]
+    assert "Northstar" in rec["recommended_template"]
 
 
 def test_custom_scale_triggers_infinity():
@@ -43,7 +43,7 @@ def test_l3_routes_to_automotive_solution():
     res = L3IntentRouter.detect_and_route("Saya punya bengkel mobil dan butuh landing page")
     assert res["intent"] == "recommend_automotive_website"
     assert res["action"] == "navigate"
-    assert "A01" in res["recommendation"]["recommended_template"]
+    assert "Pitstop" in res["recommendation"]["recommended_template"]
 
 
 def test_l3_brief_creation():

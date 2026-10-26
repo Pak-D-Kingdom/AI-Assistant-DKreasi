@@ -7,20 +7,21 @@ settings = get_settings()
 
 
 class EmbeddingService:
+    _shared_model = None
+
     def __init__(self):
         self.model_name = settings.EMBEDDING_MODEL
-        self._model = None
 
     def _get_model(self):
-        if self._model is None:
+        if EmbeddingService._shared_model is None:
             try:
                 from sentence_transformers import SentenceTransformer
                 logger.info(f"Loading embedding model: {self.model_name}")
-                self._model = SentenceTransformer(self.model_name)
+                EmbeddingService._shared_model = SentenceTransformer(self.model_name)
             except Exception as e:
                 logger.warning(f"SentenceTransformer not loaded ({e}). Using lightweight fallback.")
-                self._model = "fallback"
-        return self._model
+                EmbeddingService._shared_model = "fallback"
+        return EmbeddingService._shared_model
 
     def embed_texts(self, texts: List[str]) -> np.ndarray:
         model = self._get_model()

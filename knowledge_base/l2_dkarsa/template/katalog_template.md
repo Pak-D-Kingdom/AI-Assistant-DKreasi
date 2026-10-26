@@ -1,113 +1,107 @@
 # Katalog Desain & Tema Undangan Digital D'Karsa
 
-Koleksi desain undangan D'Karsa terbagi menjadi 6 Bab Kategori Acara resmi dan 4 Tier Paket Harga (mulai dari Rp50.000 hingga Rp280.000). Calon pemesan dapat melihat katalog di bagian `#desain` atau berkonsultasi langsung melalui **Layanan Terima Beres** via WhatsApp CS D'Karsa.
+D'Karsa menyediakan koleksi 24 tema desain resmi siap pakai (turnkey templates) + 1 opsi Custom Request yang terbagi ke dalam 6 Kategori Acara dan 4 Tier Paket Harga (mulai dari Rp50.000 hingga Rp280.000). Calon pemesan dapat melihat live demo setiap tema di `/demo/{key}` atau berkonsultasi via Layanan Terima Beres WhatsApp CS D'Karsa.
 
 ---
 
-## 6 Bab Kategori Undangan & Sub-Kategori
-
-1. **Undangan Pernikahan (Wedding) — Prioritas Utama**
-   - Sub-kategori:
-     - Pernikahan adat Jawa, Sunda, Minang, dan lainnya
-     - Minimalis modern
-     - Elegan, floral, dan islami
-     - Akad nikah dan resepsi
-     - Undangan pernikahan internasional
-2. **Undangan Ulang Tahun (Birthday / Milad)**
-   - Sub-kategori:
-     - Ulang tahun anak
-     - Ulang tahun remaja
-     - Sweet seventeen
-     - Ulang tahun dewasa
-     - Ulang tahun dengan tema kartun atau karakter original
-3. **Undangan Aqiqah dan Kelahiran**
-   - Sub-kategori:
-     - Aqiqah anak
-     - Tasyakuran kelahiran bayi
-     - Pemberian nama bayi
-     - Tasyakuran khitanan
-4. **Undangan Keagamaan**
-   - Sub-kategori:
-     - Pengajian
-     - Tasyakuran
-     - Maulid Nabi
-     - Buka puasa bersama
-     - Walimatus safar dan syukuran haji
-     - Halal bihalal
-     - Doa bersama & tahlilan
-5. **Undangan Wisuda dan Kelulusan**
-   - Sub-kategori:
-     - Wisuda kuliah
-     - Kelulusan sekolah
-     - Perayaan kelulusan bersama keluarga
-6. **Undangan Acara Formal**
-   - Sub-kategori:
-     - Seminar dan workshop
-     - Rapat dan gathering perusahaan
-     - Grand opening bisnis
-     - Peluncuran produk
-     - Acara komunitas
+## 1. Kategori Pernikahan (Wedding)
+- **3D Javanese Royal Keraton** (`javanese-royal` · *Eksklusif - Rp180.000* ★ Best Seller):
+  - Animasi 3D gunungan wayang kulit, ornamen batik parang emas, atmosfer gending halus, tautan nama tamu tanpa batas, dan live streaming.
+  - Demo: `/demo/javanese-royal`
+- **Batak Istimewa Heritage** (`batak-heritage` · *Eksklusif - Rp180.000*):
+  - Ornamen Gorga Batak marun & emas sakral, tenun ulos ragi hotang, tata ulaon unjuk, dan gondang sabangunan.
+  - Demo: `/demo/batak-heritage`
+- **SnowFall Minimalist White** (`snowfall-white` · *Eksklusif - Rp180.000*):
+  - Editorial modern serba putih, efek partikel salju jatuh lembut (snowfall), tipografi haute couture Cormorant Garamond, video cover sinematik.
+  - Demo: `/demo/snowfall-white`
+- **Chibi Red Oriental** (`chibi-red` · *Premium - Rp110.000*):
+  - Kaligrafi merah emas, Song Hỷ badge (囍), kalender tanggal interaktif, galeri silinder 3D, amplop digital angpao.
+  - Demo: `/demo/chibi-red`
+- **Wildflower Pink / Rose Romance** (`wildflower-pink` · *Premium - Rp110.000*):
+  - Bingkai kubah lengkung (arched frame), wax seal berdenyut, kelopak mawar berguguran, amplop digital QRIS & Bank.
+  - Demo: `/demo/wildflower-pink`
+- **Simple Minimalist Floral** (`minimalist-floral` · *Basic - Rp50.000*):
+  - Desain bersih modern bergaya majalah editorial dengan garis sage botanical, sangat ringan dan harga paling hemat.
+  - Demo: `/demo/minimalist-floral`
+- **Custom Request Desain Bebas Impianmu** (`custom-request` · *Kustom - Rp280.000*):
+  - Desain khusus dari nol, 1-on-1 dengan desainer D'Karsa, gratis custom domain sendiri (misal: bima-laras.com), dan revisi fleksibel.
 
 ---
 
-## 8 Tema Desain Preset Resmi & Tier Paket
-
-### 1. Simple Minimalist Floral
-- **Tier**: Basic — Rp50.000
-- **Theme CSS / Skin**: `theme-floral-wreath` / `skin-minimalist-floral`
-- **Kategori Cocok**: Pernikahan, Syukuran
-- **Karakteristik**: Desain bersih, minimalis & rapi dengan lingkaran fine-line botanical floral, layout teratur, hemat & sangat ringan dibuka di smartphone mana pun.
-
-### 2. Elegant Rose Romance (ChungDoi Wildflower)
-- **Tier**: Premium — Rp110.000
-- **Theme CSS / Skin**: `theme-rose-romance` / `skin-wildflower`
-- **Kategori Cocok**: Pernikahan, Sweet Seventeen
-- **Karakteristik**: Desain pernikahan modern ChungDoi Wildflower Pink dengan bingkai kubah lengkung (arched frame), wax seal berdenyut, kaligrafi anggun, amplop digital QRIS & bank, serta efek kelopak bunga jatuh.
-
-### 3. 3D Javanese Royal Keraton
-- **Tier**: Eksklusif — Rp180.000 ★ Best Seller
-- **Theme CSS / Skin**: `theme-javanese-royal` / `skin-javanese-royal`
-- **Kategori Cocok**: Pernikahan Adat Jawa / Tradisional
-- **Karakteristik**: Kemegahan keraton Jawa klasik dengan latar charcoal gelap, ornamen siluet Gunungan Wayang emas 3D, motif batik parang, alunan gending halus, link tamu tanpa batas, dan live streaming.
-
-### 4. Batak Istimewa Heritage
-- **Tier**: Eksklusif — Rp180.000
-- **Theme CSS / Skin**: `theme-batak-heritage` / `skin-batak-heritage`
-- **Kategori Cocok**: Pernikahan Adat Batak (Pamasu-masuon & Unjuk)
-- **Karakteristik**: Nuansa adat Batak megah berwibawa dengan ornamen Gorga zigzag merah marun & emas, motif kain Ulos sakral, tipografi berkarakter kuat, dan galeri sinematik.
-
-### 5. Green Mosque Harmony
-- **Tier**: Premium — Rp110.000
-- **Theme CSS / Skin**: `theme-green-mosque` / `skin-islamic-dome`
-- **Kategori Cocok**: Keagamaan (Halal Bihalal, Pengajian, Walimatul Khitan Berkah)
-- **Karakteristik**: Bingkai lengkung kubah masjid islami dengan ornamen geometri arabesque, kaligrafi bismillah, nuansa hijau sage & emas anggun, kutipan ayat suci & amplop digital hadiah.
-
-### 6. SnowFall Minimalist White
-- **Tier**: Eksklusif — Rp180.000
-- **Theme CSS / Skin**: `theme-snow-white` / `skin-snow-white`
-- **Kategori Cocok**: Pernikahan Modern Editorial, Acara Formal / Corporate Grand Opening
-- **Karakteristik**: Kemewahan editorial modern serba putih dengan efek partikel salju jatuh lembut (snowfall), tipografi haute couture, tata letak sinematik, dan video cover.
-
-### 7. Golden Luxury Birthday / Wisuda Prestasi Emas
-- **Tier**: Eksklusif / Premium (Tergantung Kategori)
-- **Theme CSS / Skin**: `theme-golden-birthday` / `skin-golden-luxury`
-- **Kategori Cocok**: Ulang Tahun (Sweet 17th - Eksklusif Rp180.000), Wisuda Sarjana (Premium Rp110.000)
-- **Karakteristik**: Latar obsidian gelap dengan kilau konfeti emas berkilau, foto toga/dress code resmi, countdown timer, rute maps, dan buku tamu ucapan.
-
-### 8. Little Prince Safari
-- **Tier**: Basic — Rp50.000
-- **Theme CSS / Skin**: `theme-little-prince` / `skin-baby-pastel`
-- **Kategori Cocok**: Aqiqah Anak, Walimatul Khitan Ceria, Ulang Tahun Anak
-- **Karakteristik**: Desain imut, ceria, dan ramah anak dengan ornamen mahkota bintang, warna pastel hangat, doa anak sholeh, dan hitung mundur acara.
-
-### 9. Custom Request Desain Bebas Impianmu
-- **Tier**: Kustom — Rp280.000 (VIP Request)
-- **Theme CSS / Skin**: `theme-custom-vip` / `skin-custom-vip`
-- **Kategori Cocok**: Semua Kategori (Full Custom)
-- **Karakteristik**: Dibuatkan tema khusus dari nol sesuai request (1-on-1 dengan desainer D'Karsa), gratis Custom Domain sendiri, efek visual kustom, dan revisi fleksibel.
+## 2. Kategori Ulang Tahun (Birthday & Sweet 17th)
+- **Golden Luxury Birthday / Milad** (`golden-birthday` · *Eksklusif - Rp180.000*):
+  - Pesta malam bernuansa obsidian hitam & kilau konfeti emas, countdown timer, buku tamu VIP, dan dress code party.
+  - Demo: `/demo/golden-birthday`
+- **Kids Birthday Party Balon Ceria** (`kids-birthday` · *Premium - Rp110.000*):
+  - Konfeti balon warna-warni ceria untuk ulang tahun anak, rundown games seru, tiup lilin bersama sahabat, kado celengan ceria.
+  - Demo: `/demo/kids-birthday`
+- **Fun Minimalist & Cheerful Birthday** (`cheerful-birthday` · *Basic - Rp50.000*):
+  - Pesta ulang tahun ceria bernuansa pastel & konfeti sederhana, kue ulang tahun, galeri momen seru, dan kado digital.
+  - Demo: `/demo/cheerful-birthday`
 
 ---
 
-## Alur Pemesanan & Konsultasi
+## 3. Kategori Aqiqah & Khitanan (Buah Hati)
+- **Royal Sultan Baby & Tasmiyah Gold** (`royal-tasmiyah` · *Eksklusif - Rp180.000*):
+  - Mahkota emas & hijau zamrud kesultanan, kaligrafi doa Arab agung, lentera gantung berdenyut, jamuan santap & tali asih sultan.
+  - Demo: `/demo/royal-tasmiyah`
+- **Sweet Baby Pastel Aqiqah & Khitan** (`baby-aqiqah` · *Premium - Rp110.000*):
+  - Nuansa pastel lembut untuk tasyakuran kelahiran, jadwal tasmiyah cukur rambut, doa anak sholeh & tali asih.
+  - Demo: `/demo/baby-aqiqah`
+- **Walimatul Khitan Berkah Sholeh** (`walimatul-khitan` · *Premium - Rp110.000*):
+  - Nuansa sapphire blue & emas, profil jagoan cilik berbaju koko & peci, doa selamat walimah, amplop hadiah digital.
+  - Demo: `/demo/walimatul-khitan`
+- **Nordic Little Prince Baby Aqiqah** (`little-prince` · *Basic - Rp50.000*):
+  - Tasyakuran aqiqah bernuansa Nordic minimalis, bingkai lengkung lembut, detail kelahiran bayi & Google Maps rute rumah.
+  - Demo: `/demo/little-prince`
 
-Calon customer dapat melihat katalog desain di beranda website (`#desain`) atau langsung menghubungi WhatsApp CS D'Karsa untuk memesan (Layanan Terima Beres oleh tim desainer). Formulir pemesanan dan pengisian data disiapkan dan dikelola langsung oleh tim website.
+---
+
+## 4. Kategori Keagamaan (Halal Bihalal, Pengajian, Haji/Umrah)
+- **Walimatus Safar Haji & Umrah Mubarok** (`walimatus-safar` · *Eksklusif - Rp180.000*):
+  - Kaligrafi emas Kiswah Ka'bah, talbiyah agung, doa musafir safar, titipan doa di Tanah Suci, dan jadwal manasik.
+  - Demo: `/demo/walimatus-safar`
+- **Green Mosque Harmony Syiar & Pengajian** (`green-mosque` · *Premium - Rp110.000*):
+  - Kubah masjid hijau zamrud & emas, arabesque, kutipan ayat suci, jadwal tausiyah & tabligh akbar, infaq jariyah QRIS.
+  - Demo: `/demo/green-mosque`
+- **Ketupat Raya Silaturahmi & Halal Bihalal** (`halal-bihalal` · *Basic - Rp50.000*):
+  - Nuansa hijau zamrud Idul Fitri ceria, pita anyaman ketupat, salam maaf lahir batin keluarga/kantor & lokasi silaturahmi.
+  - Demo: `/demo/halal-bihalal`
+- **Tasyakuran & Doa Rumah Baru** (`syukuran-rumah` · *Basic - Rp50.000*):
+  - Tasyakuran rumah/kantor baru bernuansa terracotta hangat, doa Baitii Jannatii, potong tumpeng, Google Maps alamat baru.
+  - Demo: `/demo/syukuran-rumah`
+- **Doa Bersama & Tahlilan Khusyuk** (`tahlilan-khusyuk` · *Basic - Rp50.000*):
+  - Tampilan teduh, khusyuk & santun untuk peringatan haul / tahlilan almarhum/almarhumah, teks doa jelas, sedekah jariyah.
+  - Demo: `/demo/tahlilan-khusyuk`
+
+---
+
+## 5. Kategori Wisuda & Kelulusan
+- **Grand Valedictorian & Ivy Honor Eksklusif** (`scholar-luxury` · *Eksklusif - Rp180.000*):
+  - Kemewahan prestisius Ivy League, midnight navy & stempel medali emas kehormatan Summa Cum Laude, commencement gala, countdown.
+  - Demo: `/demo/scholar-luxury`
+- **Wisuda Sarjana Prestasi Emas** (`wisuda-sarjana` · *Premium - Rp110.000*):
+  - Foto toga resmi, gelar sarjana berprestasi, jadwal sidang terbuka, amplop digital kado wisuda cashless.
+  - Demo: `/demo/wisuda-sarjana`
+- **Modern Minimalist Graduation & Syukuran** (`modern-graduate` · *Basic - Rp50.000*):
+  - Desain bersih editorial monokrom, emblem toga, profil wisudawan, jadwal syukuran wisuda keluarga & sahabat.
+  - Demo: `/demo/modern-graduate`
+
+---
+
+## 6. Kategori Acara Formal & Bisnis
+- **Executive Corporate & Grand Opening** (`formal-corporate` · *Eksklusif - Rp180.000*):
+  - Layout eksekutif arsitektural untuk peresmian bisnis, gala dinner korporat, seminar VIP & peluncuran produk dengan RSVP mitra.
+  - Demo: `/demo/formal-corporate`
+- **Gala Reuni Akbar & Alumni Gathering** (`reuni-akbar` · *Premium - Rp110.000*):
+  - Sapphire navy & silver, nostalgia dinding foto polaroid angkatan, panduan dress code, countdown jam reuni & konfirmasi kehadiran.
+  - Demo: `/demo/reuni-akbar`
+- **Clean Workshop & Seminar Profesional** (`clean-seminar` · *Basic - Rp50.000*):
+  - Desain fungsional untuk workshop & simposium, profil pembicara ahli, rundown sesi terstruktur, dan delegasi pass RSVP.
+  - Demo: `/demo/clean-seminar`
+
+---
+
+## Alur Pemesanan & Live Demo
+- Klien dapat melihat langsung tampilan undangan di link demo resmi: `/demo/{template-key}`.
+- Pemesanan resmi diproses via WhatsApp Customer Service D'Karsa dengan layanan **Terima Beres** (dibuatkan oleh tim desainer D'Karsa hingga siap sebar).
