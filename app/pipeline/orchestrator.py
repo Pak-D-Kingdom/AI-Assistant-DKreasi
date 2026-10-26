@@ -66,7 +66,8 @@ class PipelineOrchestrator:
 
     @classmethod
     def _is_tenant_layer(cls, layer: Any) -> bool:
-        return cls._layer_str(layer) in ("l4", "l4_business")
+        return cls._layer_str(layer) in ("l4", "l4_tenant", "l4_business")
+
 
     @staticmethod
     def _latest_user_message(messages: List[Dict[str, str]]) -> str:

@@ -77,9 +77,10 @@ def collect_chunks(base_dir: str) -> List[Dict[str, Any]]:
 
 
 def rebuild_layer_index(layer: str = "l1_dkreasi", rag_service: Optional[RagService] = None):
-    if layer in ["l4", "l4_tenant"]:
+    if layer in ["l4", "l4_tenant", "l4_business"]:
         rebuild_all_tenants(rag_service=rag_service)
         return
+
 
     rag = rag_service or RagService()
     kb_base = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "knowledge_base", layer)

@@ -1,12 +1,12 @@
 from app.layers.base import BaseLayer
-from app.layers.l4_business.prompts import get_l4_system_prompt
-from app.layers.l4_business.tools import L4IntentRouter
+from app.layers.l4_tenant.prompts import get_l4_system_prompt
+from app.layers.l4_tenant.tools import L4IntentRouter
 
 
-class L4BusinessLayer(BaseLayer):
+class L4TenantLayer(BaseLayer):
     @property
     def layer_name(self) -> str:
-        return "l4_business"
+        return "l4_tenant"
 
     def get_system_prompt(self, context=None) -> str:
         business_name = "Bisnis Klien WEBIA"
@@ -20,3 +20,8 @@ class L4BusinessLayer(BaseLayer):
 
     def route_intent(self, query: str):
         return L4IntentRouter.detect_and_route(query)
+
+
+# Backward compatibility alias
+L4BusinessLayer = L4TenantLayer
+
