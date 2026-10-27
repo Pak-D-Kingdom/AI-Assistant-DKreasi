@@ -1,19 +1,63 @@
 /**
- * Universal PakDe AI Widget (Multi-Tier: D-KREASI, WEBIA, D-KARSA)
+ * Universal PakDe AI Widget (Multi-Tier: D-KREASI, WEBIA, D-KARSA, L4 Tenant)
  * Automatically adapts title, persona, theme styling, and suggestion chips
  * based on data-site-key or data-layer.
+ *
+ * v2 - Perbaikan multi-tenant:
+ *  - Sesi & riwayat chat terikat ke tenant (ganti tenant = chat mulai ulang)
+ *  - Request yang masih berjalan dibatalkan saat tenant diganti
+ *  - Nomor WhatsApp dinamis per tenant (tidak lagi hardcoded untuk L4)
+ *  - Proteksi XSS pada URL/teks dari server
+ *  - Riwayat dibatasi & dibersihkan saat error
+ *
+ * API publik:
+ *   window.PakdeAI.setTenant('tenant_id', { name: 'Nama Bisnis', whatsapp: '0812...' })
+ *   window.PakdeAI.reset()
+ *   window.__PAKDE_TENANT_ID = 'tenant_id'   // otomatis memicu reset bila nilainya berubah
  */
 (() => {
     'use strict';
 
-    // Locate script tag
+    // ------------------------------------------------------------------
+    // Konstanta & util
+    // ------------------------------------------------------------------
+    const MAX_HISTORY = 10; // jumlah pesan terakhir yang dikirim ke backend
+    const DEFAULT_WA_URL = 'https://wa.me/6281234567890';
+
+    const esc = (s) => String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+    const safeUrl = (url) => (/^https?:\/\//i.test(String(url || '').trim()) ? String(url).trim() : '');
+
+    const toWaUrl = (number) => {
+        if (!number) return '';
+        const raw = String(number).trim();
+        if (/^https?:\/\//i.test(raw)) return safeUrl(raw);
+        let digits = raw.replace(/\D/g, '');
+        if (!digits) return '';
+        if (digits.startsWith('0')) digits = '62' + digits.slice(1);
+        return `https://wa.me/${digits}`;
+    };
+
+    // ------------------------------------------------------------------
+    // Locate script tag & endpoint
+    // ------------------------------------------------------------------
     const currentScript = document.currentScript || Array.from(document.querySelectorAll('script')).find(s => s.src.includes('widget.js'));
     const siteKey = currentScript?.dataset?.siteKey || 'site_dkreasi_public';
     const layerParam = currentScript?.dataset?.layer;
     const baseUrl = (currentScript?.dataset?.apiUrl || window.location.origin || 'http://localhost:8001').replace(/\/$/, '');
     const chatEndpoint = `${baseUrl}/api/v1/chat`;
 
+    // ------------------------------------------------------------------
     // Multi-Tier Configuration Catalog
+    // ------------------------------------------------------------------
+    const CLIENT_ICON_LAUNCHER = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`;
+    const CLIENT_ICON_AVATAR = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
+
     const CONFIGS = {
         'site_dkreasi_public': {
             theme: 'dkreasi',
@@ -70,28 +114,8 @@
             subtitle: 'Online · AI Customer Support Resmi',
             eyebrow: 'AI BUSINESS CHATBOT · TIER L4',
             launcherLabel: 'Tanya CS Bisnis',
-            launcherIcon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`,
-            avatarIcon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
-            welcomeTitle: 'Selamat Datang di Bisnis Kami! ✨',
-            welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar produk, jam buka, layanan, dan promo kami.',
-            initialMsg: 'Halo! Ada yang bisa saya bantu terkait produk, reservasi, atau layanan kami hari ini?',
-            chips: [
-                { label: '⏰ Jam Buka & Lokasi', prompt: 'Buka jam berapa dan di mana alamat lokasi bisnis ini?' },
-                { label: '📋 Layanan & Harga', prompt: 'Apa saja layanan atau produk yang tersedia beserta harganya?' },
-                { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
-                { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
-            ],
-            footer: 'AI Business Chatbot · Powered by WEBIA Ekosistem PakDe Group'
-        },
-        'site_client_webia_public': {
-            theme: 'client',
-            layer: 'l4',
-            title: 'Asisten Bisnis Tenant',
-            subtitle: 'Online · AI Customer Support Resmi',
-            eyebrow: 'AI BUSINESS CHATBOT · TIER L4',
-            launcherLabel: 'Tanya CS Bisnis',
-            launcherIcon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`,
-            avatarIcon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+            launcherIcon: CLIENT_ICON_LAUNCHER,
+            avatarIcon: CLIENT_ICON_AVATAR,
             welcomeTitle: 'Selamat Datang di Bisnis Kami! ✨',
             welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar produk, jam buka, layanan, dan promo kami.',
             initialMsg: 'Halo! Ada yang bisa saya bantu terkait produk, reservasi, atau layanan kami hari ini?',
@@ -104,12 +128,16 @@
             footer: 'AI Business Chatbot · Powered by WEBIA Ekosistem PakDe Group'
         }
     };
+    // Alias (sebelumnya duplikat penuh)
+    CONFIGS['site_client_webia_public'] = CONFIGS['site_webia_tenant_public'];
 
     // Determine active profile
     let activeConfig = CONFIGS[siteKey] || CONFIGS['site_dkreasi_public'];
     if (layerParam === 'l2' || siteKey.includes('dkarsa')) activeConfig = CONFIGS['site_dkarsa_public'];
     if (layerParam === 'l3' || siteKey === 'site_webia_public') activeConfig = CONFIGS['site_webia_public'];
     if (layerParam === 'l4' || siteKey.includes('tenant') || siteKey.includes('client')) activeConfig = CONFIGS['site_webia_tenant_public'];
+
+    const isTenantLayer = activeConfig.layer === 'l4';
 
     // Inject CSS
     if (!document.querySelector('link[href*="widget.css"]')) {
@@ -119,22 +147,44 @@
         document.head.appendChild(link);
     }
 
-    // Session Management
-    const SESSION_KEY = `pakde_ai_session_${activeConfig.layer}`;
-    let sessionId = sessionStorage.getItem(SESSION_KEY);
-    if (!sessionId) {
-        sessionId = `sess_${activeConfig.layer}_` + Math.random().toString(36).substring(2, 10);
-        sessionStorage.setItem(SESSION_KEY, sessionId);
-    }
+    // ------------------------------------------------------------------
+    // State: tenant, sesi, riwayat
+    // ------------------------------------------------------------------
+    let tenantId = window.__PAKDE_TENANT_ID ? String(window.__PAKDE_TENANT_ID) : '';
+    let tenantMeta = {};              // { name, whatsapp }
+    let history = [];                 // riwayat percakapan (dikosongkan saat ganti tenant)
+    let requestCounter = 0;           // penanda request aktif
+    let abortController = null;       // untuk membatalkan request yang sedang jalan
 
-    const history = [];
+    const sessionKeyFor = (tid) => `pakde_ai_session_${activeConfig.layer}_${tid || 'default'}`;
+    const newSessionId = () => `sess_${activeConfig.layer}_` + (
+        (window.crypto && crypto.randomUUID)
+            ? crypto.randomUUID().replace(/-/g, '').slice(0, 12)
+            : Math.random().toString(36).substring(2, 14)
+    );
 
-    // Render Chips HTML
-    const chipsHtml = activeConfig.chips.map(c => 
-        `<button type="button" class="pakde-ai-chip" data-prompt="${c.prompt}">${c.label}</button>`
+    const loadOrCreateSession = (tid) => {
+        let id = null;
+        try { id = sessionStorage.getItem(sessionKeyFor(tid)); } catch (e) {}
+        if (!id) {
+            id = newSessionId();
+            try { sessionStorage.setItem(sessionKeyFor(tid), id); } catch (e) {}
+        }
+        return id;
+    };
+
+    let sessionId = loadOrCreateSession(tenantId);
+
+    // ------------------------------------------------------------------
+    // Render widget
+    // ------------------------------------------------------------------
+    const chipsHtml = activeConfig.chips.map(c =>
+        `<button type="button" class="pakde-ai-chip" data-prompt="${esc(c.prompt)}">${esc(c.label)}</button>`
     ).join('');
 
-    // Create Widget Container with dedicated theme class
+    // Tombol CS: untuk layer tenant (L4) nomor harus berasal dari tenant, bukan hardcoded.
+    const initialWaHref = isTenantLayer ? '' : DEFAULT_WA_URL;
+
     const container = document.createElement('div');
     container.className = `pakde-ai-widget pakde-ai-theme--${activeConfig.theme}`;
     container.id = 'pakde-ai-root';
@@ -165,7 +215,7 @@
                     <button class="pakde-ai-reset-btn" id="pakde-ai-reset" title="Mulai Obrolan Baru" aria-label="Mulai Obrolan Baru">
                         ${activeConfig.resetIcon || `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`}
                     </button>
-                    <a href="https://wa.me/6289603056349" target="_blank" rel="noopener noreferrer" class="pakde-ai-wa-btn" id="pakde-ai-header-wa">
+                    <a href="${initialWaHref || 'https://wa.me/6289603056349'}" target="_blank" rel="noopener noreferrer" class="pakde-ai-wa-btn" id="pakde-ai-header-wa">
                         💬 CS
                     </a>
                     <button class="pakde-ai-close" id="pakde-ai-close" aria-label="Tutup">×</button>
@@ -175,11 +225,11 @@
             <div class="pakde-ai-messages" id="pakde-ai-messages">
                 <div class="pakde-ai-welcome">
                     <span class="pakde-ai-eyebrow">${activeConfig.eyebrow}</span>
-                    <h3>${activeConfig.welcomeTitle}</h3>
+                    <h3 id="pakde-ai-welcome-title">${activeConfig.welcomeTitle}</h3>
                     <p>${activeConfig.welcomeDesc}</p>
                 </div>
 
-                <div class="pakde-ai-msg-group pakde-ai-msg-group--assistant">
+                <div class="pakde-ai-msg-group pakde-ai-msg-group--assistant" id="pakde-ai-initial">
                     <div class="pakde-ai-bubble">${activeConfig.initialMsg}</div>
                 </div>
 
@@ -228,6 +278,8 @@
     const sendBtn = container.querySelector('#pakde-ai-send');
     const typing = container.querySelector('#pakde-ai-typing');
     const chipsContainer = container.querySelector('#pakde-ai-chips');
+    const waBtn = container.querySelector('#pakde-ai-header-wa');
+    const welcomeTitleEl = container.querySelector('#pakde-ai-welcome-title');
 
     const extractConversationSummary = () => {
         const fullChat = history.map(m => m.content).join(' ');
@@ -304,6 +356,11 @@
 
     const updateHeaderWaLink = () => {
         if (!headerWa) return;
+        if (isTenantLayer && tenantMeta.whatsappUrl) {
+            headerWa.href = tenantMeta.whatsappUrl;
+            headerWa.style.display = '';
+            return;
+        }
         const phone = "6289603056349";
         if (history.length === 0) {
             headerWa.href = `https://wa.me/${phone}`;
@@ -314,15 +371,146 @@
         headerWa.href = `https://wa.me/${phone}?text=${encodeURIComponent(formattedSummary)}`;
     };
 
-    const togglePanel = (open) => {
+    // ------------------------------------------------------------------
+    // UI tenant: WhatsApp & sambutan
+    // ------------------------------------------------------------------
+    const setWhatsApp = (value) => {
+        const url = toWaUrl(value);
+        if (!url) return false;
+        waBtn.href = url;
+        waBtn.style.display = '';
+        tenantMeta.whatsappUrl = url;
+        return true;
+    };
+
+    const applyTenantUi = () => {
+        if (!isTenantLayer) return;
+
+        // Sambutan personal bila nama tenant diketahui
+        welcomeTitleEl.textContent = tenantMeta.name
+            ? `Selamat Datang di ${tenantMeta.name}! ✨`
+            : activeConfig.welcomeTitle;
+
+        // WhatsApp: pakai milik tenant, sembunyikan bila belum diketahui
+        if (tenantMeta.whatsappUrl) {
+            waBtn.href = tenantMeta.whatsappUrl;
+            waBtn.style.display = '';
+        } else {
+            waBtn.href = '#';
+            waBtn.style.display = 'none';
+        }
+    };
+
+    // ------------------------------------------------------------------
+    // Reset chat penuh (dipanggil saat ganti tenant)
+    // ------------------------------------------------------------------
+    const resetChat = () => {
+        // 1. Batalkan request yang masih berjalan agar jawaban lama tidak masuk ke chat baru
+        requestCounter++;
+        if (abortController) {
+            try { abortController.abort(); } catch (e) {}
+            abortController = null;
+        }
+
+        // 2. Sesi baru untuk tenant ini + kosongkan riwayat
+        sessionId = newSessionId();
+        try { sessionStorage.setItem(sessionKeyFor(tenantId), sessionId); } catch (e) {}
+        history = [];
+
+        // 3. Bersihkan UI: hapus semua bubble & kartu kecuali pesan pembuka
+        messages.querySelectorAll('.pakde-ai-msg-group, .pakde-ai-action-card').forEach(el => {
+            if (el.id !== 'pakde-ai-initial') el.remove();
+        });
+
+        // 4. Tampilkan chips lagi, reset input & typing
+        if (chipsContainer) chipsContainer.style.display = '';
+        typing.style.display = 'none';
+        input.value = '';
+        input.style.height = 'auto';
+        sendBtn.disabled = true;
+        messages.scrollTop = 0;
+
+        // 5. Perbarui sambutan & WhatsApp sesuai tenant
+        applyTenantUi();
+        updateHeaderWaLink();
+    };
+
+    // Deteksi otomatis: setiap kali halaman mengubah window.__PAKDE_TENANT_ID
+    // (misal dari dropdown), chat langsung dimulai ulang.
+    try {
+        Object.defineProperty(window, '__PAKDE_TENANT_ID', {
+            configurable: true,
+            enumerable: true,
+            get: () => tenantId,
+            set: (val) => {
+                const next = val ? String(val) : '';
+                if (next === tenantId) return;
+                tenantId = next;
+                tenantMeta = {}; // metadata tenant lama tidak boleh terbawa
+                resetChat();
+            }
+        });
+    } catch (e) { /* abaikan bila browser menolak */ }
+
+    // API publik
+    window.PakdeAI = {
+        setTenant: (id, opts = {}) => {
+            tenantId = id ? String(id) : '';
+            tenantMeta = {};
+            if (opts.name) tenantMeta.name = String(opts.name);
+            if (opts.whatsapp) {
+                const url = toWaUrl(opts.whatsapp);
+                if (url) tenantMeta.whatsappUrl = url;
+            }
+            resetChat();
+        },
+        reset: () => resetChat(),
+        getTenant: () => tenantId,
+        open: () => togglePanel(true),
+        close: () => togglePanel(false),
+    };
+
+    try { console.info('[PakdeAI] widget v2.2 aktif'); } catch (e) {}
+
+    window.addEventListener('pakde:tenant-change', (e) => {
+        const d = (e && e.detail) || {};
+        const id = d.id || d.tenantId || d.tenant_id || '';
+        if (String(id) === tenantId) return;
+        window.PakdeAI.setTenant(id, { name: d.name, whatsapp: d.whatsapp });
+    });
+
+    const bindTenantSelect = (sel) => {
+        if (!sel || sel.dataset.pakdeBound) return;
+        sel.dataset.pakdeBound = '1';
+        sel.addEventListener('change', () => {
+            const opt = sel.options[sel.selectedIndex];
+            if (String(sel.value) === tenantId) return;
+            window.PakdeAI.setTenant(sel.value, {
+                name: opt?.dataset?.name || '',
+                whatsapp: opt?.dataset?.whatsapp || '',
+            });
+        });
+    };
+    document.querySelectorAll('select[data-pakde-tenant]').forEach(bindTenantSelect);
+
+    // ------------------------------------------------------------------
+    // Interaksi panel
+    // ------------------------------------------------------------------
+    function togglePanel(open) {
+        const wasOpen = panel.classList.contains('is-open');
         panel.classList.toggle('is-open', open);
         panel.setAttribute('aria-hidden', String(!open));
         panel.inert = !open;
-        if (proactive) proactive.style.display = 'none';
+
+        // Chat ditutup pada tenant layer -> riwayat direset
+        if (wasOpen && !open && isTenantLayer) {
+            resetChat();
+        }
+
         if (open) {
             setTimeout(() => { input.focus(); messages.scrollTop = messages.scrollHeight; }, 150);
         }
-    };
+    }
 
     // Auto-Trigger Proaktif (Smart Greeting)
     const initProactiveGreeting = () => {
@@ -414,10 +602,16 @@
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            if (!sendBtn.disabled) form.dispatchEvent(new Event('submit', { cancelable: true }));
+            if (!sendBtn.disabled) {
+                if (form.requestSubmit) form.requestSubmit();
+                else form.dispatchEvent(new Event('submit', { cancelable: true }));
+            }
         }
     });
 
+    // ------------------------------------------------------------------
+    // Markdown renderer (input di-escape terlebih dahulu)
+    // ------------------------------------------------------------------
     const renderMarkdown = (rawText) => {
         if (!rawText) return '';
         let text = rawText
@@ -442,8 +636,8 @@
         text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         text = text.replace(/`([^`\n]+)`/g, '<code>$1</code>');
 
-        // Markdown Links
-        text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        // Markdown Links (hanya http/https)
+        text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
         // Raw URLs
         text = text.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>');
@@ -512,6 +706,9 @@
         }).filter(Boolean).join('');
     };
 
+    // ------------------------------------------------------------------
+    // Pesan & kartu aksi
+    // ------------------------------------------------------------------
     const appendMessage = (role, text) => {
         const group = document.createElement('div');
         group.className = `pakde-ai-msg-group pakde-ai-msg-group--${role}`;
@@ -631,7 +828,12 @@
         const card = document.createElement('div');
         card.className = 'pakde-ai-action-card';
 
-        if (routing.action === 'navigate' && routing.target_url) {
+        // Fallback WhatsApp: milik tenant (L4) atau default PakDe (layer lain)
+        const waFallback = isTenantLayer ? (tenantMeta.whatsappUrl || '') : DEFAULT_WA_URL;
+
+        if (routing.action === 'navigate') {
+            const url = safeUrl(routing.target_url);
+            if (!url) return;
             const cartBtnHtml = routing.cart_template_slug ? `
                 <button type="button" class="pakde-ai-action-btn pakde-ai-action-btn--cart" data-cart-slug="${routing.cart_template_slug}">
                     🛒 Tambahkan Template ke Keranjang
@@ -639,8 +841,8 @@
             ` : '';
             card.innerHTML = `
                 <span class="pakde-ai-action-label">✦ Rekomendasi Solusi</span>
-                <a href="${routing.target_url}" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
-                    ${routing.button_text || 'Lihat Layanan →'}
+                <a href="${esc(url)}" class="pakde-ai-action-btn pakde-ai-action-btn--primary">
+                    ${esc(routing.button_text || 'Lihat Layanan →')}
                 </a>
                 ${cartBtnHtml}
             `;
@@ -672,10 +874,10 @@
 
             card.innerHTML = `
                 <span class="pakde-ai-action-label">📝 AI Business Brief Generator</span>
-                ${routing.prompt_guide ? `<p style="font-size: 11.5px; color: var(--pakde-ai-muted); margin-bottom: 8px; line-height: 1.4;">${routing.prompt_guide}</p>` : ''}
+                ${routing.prompt_guide ? `<p style="font-size: 11.5px; color: var(--pakde-ai-muted); margin-bottom: 8px; line-height: 1.4;">${esc(routing.prompt_guide)}</p>` : ''}
                 <div style="display: flex; flex-direction: column; gap: 6px;">
                     <a href="${waTargetUrl}" target="_blank" rel="noopener noreferrer" class="pakde-ai-action-btn pakde-ai-action-btn--primary" id="pakdeSendBriefWaBtn">
-                        ${routing.button_text || 'Konsultasi Brief via WhatsApp →'}
+                        ${esc(routing.button_text || 'Konsultasi Brief via WhatsApp →')}
                     </a>
                     <button type="button" class="pakde-ai-action-btn pakde-ai-action-btn--copy" id="pakdeCopyBriefBtn">
                         📋 Salin Format Brief ke Clipboard
@@ -700,10 +902,12 @@
             }
             messages.insertBefore(card, typing);
         } else if (routing.action === 'handoff') {
+            const url = safeUrl(routing.target_url) || waFallback;
+            if (!url) return;
             card.innerHTML = `
                 <span class="pakde-ai-action-label">💬 Customer Support Resmi</span>
-                <a href="${routing.target_url || 'https://wa.me/6289603056349'}" target="_blank" rel="noopener noreferrer" class="pakde-ai-action-btn pakde-ai-action-btn--whatsapp">
-                    ${routing.button_text || 'Hubungi CS via WhatsApp →'}
+                <a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="pakde-ai-action-btn pakde-ai-action-btn--whatsapp">
+                    ${esc(routing.button_text || 'Hubungi CS via WhatsApp →')}
                 </a>
             `;
             messages.insertBefore(card, typing);
@@ -711,9 +915,33 @@
         messages.scrollTop = messages.scrollHeight;
     };
 
+    // Meta dari server (routing, nomor WA tenant, nama tenant)
+    const handleMeta = (payload) => {
+        if (isTenantLayer) {
+            const waValue = payload.whatsapp || payload.tenant_whatsapp;
+            if (waValue) setWhatsApp(waValue);
+            if (payload.tenant_name && !tenantMeta.name) {
+                tenantMeta.name = String(payload.tenant_name);
+                applyTenantUi();
+            }
+        }
+        if (payload.routing) renderActionCard(payload.routing);
+    };
+
+    // ------------------------------------------------------------------
+    // Kirim pesan
+    // ------------------------------------------------------------------
     const sendMessage = async (text) => {
         const query = text ? text.trim() : input.value.trim();
         if (!query) return;
+
+        // Pengaman: bila tenant berubah tanpa melewati setter, reset dulu
+        const liveTenant = window.__PAKDE_TENANT_ID ? String(window.__PAKDE_TENANT_ID) : '';
+        if (liveTenant !== tenantId) {
+            tenantId = liveTenant;
+            tenantMeta = {};
+            resetChat();
+        }
 
         if (chipsContainer) chipsContainer.style.display = 'none';
 
@@ -727,22 +955,43 @@
         messages.appendChild(typing);
         messages.scrollTop = messages.scrollHeight;
 
+        // Tangkap konteks request ini
+        const myRequest = ++requestCounter;
+        const isCurrent = () => myRequest === requestCounter;
+        if (abortController) { try { abortController.abort(); } catch (e) {} }
+        abortController = new AbortController();
+        const signal = abortController.signal;
+        const payloadHistory = history.slice(-MAX_HISTORY);
+        const tenantAtSend = tenantId;
+        const sessionAtSend = sessionId;
+
+        // Menghapus pesan user terakhir dari riwayat bila request gagal
+        const rollbackUserMessage = () => {
+            if (isCurrent() && history.length && history[history.length - 1].role === 'user') {
+                history.pop();
+            }
+        };
+
         try {
             const res = await fetch(chatEndpoint, {
                 method: 'POST',
+                signal,
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'text/event-stream, application/json',
                     'X-Site-Key': siteKey,
-                    ...(window.__PAKDE_TENANT_ID ? { 'X-Tenant-Id': window.__PAKDE_TENANT_ID } : {}),
+                    ...(tenantAtSend ? { 'X-Tenant-Id': tenantAtSend } : {}),
                 },
                 body: JSON.stringify({
                     layer: activeConfig.layer,
-                    session_id: sessionId,
-                    messages: history,
+                    tenant_id: tenantAtSend || null,
+                    session_id: sessionAtSend,
+                    messages: payloadHistory,
                     stream: true,
                 }),
             });
+
+            if (!isCurrent()) return;
 
             const contentType = res.headers.get('content-type') || '';
             if (res.ok && contentType.includes('text/event-stream')) {
@@ -751,64 +1000,92 @@
                 let fullText = '';
                 let bubbleController = null;
                 let buffer = '';
+                let streamFailed = false;
 
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-                    buffer += decoder.decode(value, { stream: true });
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop();
+                try {
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        if (!isCurrent()) { try { reader.cancel(); } catch (e) {} return; }
 
-                    for (const line of lines) {
-                        const trimmed = line.trim();
-                        if (trimmed.startsWith('data:')) {
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        buffer = lines.pop();
+
+                        for (const line of lines) {
+                            const trimmed = line.trim();
+                            if (!trimmed.startsWith('data:')) continue;
                             try {
                                 const payload = JSON.parse(trimmed.slice(5).trim());
                                 if (payload.type === 'meta') {
-                                    // Sembunyikan typing indicator hanya saat token pertama keluar
-                                    if (payload.routing) renderActionCard(payload.routing);
+                                    typing.style.display = 'none';
+                                    handleMeta(payload);
                                 } else if (payload.type === 'token') {
                                     typing.style.display = 'none';
-                                    if (!bubbleController) {
-                                        bubbleController = createStreamingBubble();
-                                    }
+                                    if (!bubbleController) bubbleController = createStreamingBubble();
                                     fullText += payload.content;
                                     bubbleController.update(fullText);
                                 } else if (payload.type === 'done') {
                                     typing.style.display = 'none';
                                 }
-                            } catch (e) {}
+                            } catch (e) { /* baris SSE tidak valid, lewati */ }
                         }
                     }
+                } catch (streamErr) {
+                    if (streamErr.name === 'AbortError') return;
+                    streamFailed = true;
                 }
+
+                if (!isCurrent()) return;
                 typing.style.display = 'none';
-                if (fullText) {
+
+                if (fullText && !streamFailed) {
                     history.push({ role: 'assistant', content: fullText });
                     renderFollowupSuggestion(query, fullText);
                     updateHeaderWaLink();
+                } else if (streamFailed) {
+                    if (!fullText) appendMessage('assistant', 'Terjadi gangguan koneksi ke server AI.');
+                    rollbackUserMessage();
+                } else if (!fullText) {
+                    rollbackUserMessage();
                 }
             } else if (res.ok) {
                 const data = await res.json();
+                if (!isCurrent()) return;
                 typing.style.display = 'none';
                 if (data.success && data.message) {
                     const reply = data.message.content || 'Terima kasih atas pesan Anda.';
                     appendMessage('assistant', reply);
                     history.push({ role: 'assistant', content: reply });
                     if (data.routing) renderActionCard(data.routing);
+                    handleMeta({
+                        routing: data.routing,
+                        whatsapp: data.whatsapp,
+                        tenant_name: data.tenant_name,
+                    });
                     renderFollowupSuggestion(query, reply);
                     updateHeaderWaLink();
                 } else {
                     appendMessage('assistant', 'Mohon maaf, asisten sedang mengalami kendala teknis.');
+                    rollbackUserMessage();
                 }
             } else {
                 typing.style.display = 'none';
                 appendMessage('assistant', 'Mohon maaf, asisten sedang mengalami kendala teknis.');
+                rollbackUserMessage();
             }
         } catch (err) {
+            if (err && err.name === 'AbortError') return; // dibatalkan karena reset / pesan baru
+            if (!isCurrent()) return;
             typing.style.display = 'none';
             appendMessage('assistant', 'Terjadi gangguan koneksi ke server AI.');
+            rollbackUserMessage();
+        } finally {
+            if (isCurrent()) {
+                abortController = null;
+                input.focus();
+            }
         }
-        input.focus();
     };
 
     form.addEventListener('submit', (e) => {
@@ -821,4 +1098,7 @@
             if (chip.dataset.prompt) sendMessage(chip.dataset.prompt);
         });
     });
+
+    // Terapkan UI awal (bila tenant sudah ditentukan sebelum widget dimuat)
+    applyTenantUi();
 })();

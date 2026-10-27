@@ -394,7 +394,7 @@ class L3IntentRouter:
                 "recommendation": sol,
             }
 
-        if any(w in normalized for w in ["edukasi", "education", "kursus", "bimbel", "sekolah", "les", "e-learning", "elearning", "bootcamp"]):
+        if any(w in normalized for w in ["edukasi", "education", "kursus", "bimbel", "sekolah", "les privat", "e-learning", "elearning", "bootcamp"]):
             sol = recommend_webia_solution("education", needs_cms=True)
             return {
                 "intent": "recommend_education_website",
