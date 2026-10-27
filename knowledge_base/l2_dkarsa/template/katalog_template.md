@@ -51,6 +51,9 @@ D'Karsa menyediakan koleksi 24 tema desain resmi siap pakai (turnkey templates) 
 - **Walimatul Khitan Berkah Sholeh** (`walimatul-khitan` · *Premium - Rp110.000*):
   - Nuansa sapphire blue & emas, profil jagoan cilik berbaju koko & peci, doa selamat walimah, amplop hadiah digital.
   - Demo: `/demo/walimatul-khitan`
+- **Walimatul Khitan Sahaja Berkah** (`walimatul-khitan-sahaja` · *Basic - Rp50.000*):
+  - Desain tasyakuran walimatul khitan bersih, hangat & islami bernuansa Sage Green & Emas Lembut: doa anak sholeh, jadwal walimah, Google Maps dan amplop tali asih hemat.
+  - Demo: `/demo/walimatul-khitan-sahaja`
 - **Nordic Little Prince Baby Aqiqah** (`little-prince` · *Basic - Rp50.000*):
   - Tasyakuran aqiqah bernuansa Nordic minimalis, bingkai lengkung lembut, detail kelahiran bayi & Google Maps rute rumah.
   - Demo: `/demo/little-prince`

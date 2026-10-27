@@ -59,71 +59,71 @@
     --th-title-font: 'Inter', sans-serif;
 }
 
-/* WEBIA Theme */
+/* WEBIA Theme (Refined to match Webia Web: #29234f, #a78bfa, #f9a8d4) */
 .pakde-ai-theme--webia {
-    --th-primary: #7042ec;
-    --th-secondary: #a83ce5;
-    --th-accent: #3879ed;
-    --th-launcher-bg: linear-gradient(120deg, #7042ec, #a83ce5, #3879ed);
-    --th-launcher-shadow: 0 10px 35px rgba(113, 66, 236, 0.45);
-    --th-panel-bg: radial-gradient(ellipse at top right, rgba(123, 63, 228, 0.22), transparent 50%), #17102f;
-    --th-panel-border: rgba(190, 157, 255, 0.3);
-    --th-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(168, 60, 229, 0.22);
-    --th-header-bg: #100b27;
-    --th-header-border: rgba(190, 157, 255, 0.2);
-    --th-text-title: #f7f3ff;
-    --th-text-body: #ede8fc;
-    --th-text-muted: #b8aecf;
-    --th-bubble-bot-bg: rgba(255, 255, 255, 0.06);
-    --th-bubble-bot-border: rgba(190, 157, 255, 0.18);
-    --th-bubble-bot-text: #f7f3ff;
-    --th-bubble-user-bg: linear-gradient(135deg, #7042ec, #a83ce5);
+    --th-primary: #7c3aed;
+    --th-secondary: #a855f7;
+    --th-accent: #f472b6;
+    --th-launcher-bg: linear-gradient(115deg, #7c3aed, #a855f7 45%, #f472b6);
+    --th-launcher-shadow: 0 10px 32px rgba(124, 58, 237, 0.42);
+    --th-panel-bg: radial-gradient(ellipse at top right, rgba(167, 139, 250, 0.22), transparent 50%), #140f26;
+    --th-panel-border: rgba(167, 139, 250, 0.35);
+    --th-panel-shadow: 0 24px 70px rgba(41, 35, 79, 0.55), 0 0 40px rgba(168, 85, 247, 0.22);
+    --th-header-bg: #110c22;
+    --th-header-border: rgba(167, 139, 250, 0.25);
+    --th-text-title: #ffffff;
+    --th-text-body: #f5f3ff;
+    --th-text-muted: #c4b5fd;
+    --th-bubble-bot-bg: #211938;
+    --th-bubble-bot-border: rgba(167, 139, 250, 0.28);
+    --th-bubble-bot-text: #ffffff;
+    --th-bubble-user-bg: linear-gradient(135deg, #7c3aed, #a855f7);
     --th-bubble-user-text: #FFFFFF;
-    --th-input-bg: rgba(255, 255, 255, 0.05);
-    --th-input-border: rgba(190, 157, 255, 0.25);
+    --th-input-bg: #1b1430;
+    --th-input-border: rgba(167, 139, 250, 0.35);
     --th-input-text: #FFFFFF;
     --th-card-bg: rgba(255, 255, 255, 0.04);
-    --th-card-border: rgba(190, 157, 255, 0.2);
-    --th-chip-bg: rgba(123, 63, 228, 0.12);
-    --th-chip-border: rgba(190, 157, 255, 0.3);
-    --th-chip-text: #ede8fc;
-    --th-chip-hover-bg: rgba(168, 60, 229, 0.25);
-    --th-chip-hover-border: #a83ce5;
+    --th-card-border: rgba(167, 139, 250, 0.25);
+    --th-chip-bg: rgba(124, 58, 237, 0.16);
+    --th-chip-border: rgba(167, 139, 250, 0.4);
+    --th-chip-text: #ede9fe;
+    --th-chip-hover-bg: rgba(168, 85, 247, 0.32);
+    --th-chip-hover-border: #a855f7;
     --th-font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     --th-title-font: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* D-KARSA ("Tanya D'Karsa" Romantic Wedding Luxury Theme) */
+/* D-KARSA ("Tanya D'Karsa" Light Elegant Theme: Cream, Blush, Warm Orange Sunset & Ink) */
 .pakde-ai-theme--dkarsa {
-    --th-primary: #f63854;
-    --th-secondary: #cf2445;
-    --th-accent: #e02a49;
-    --th-accent-soft: rgba(246, 56, 84, 0.15);
-    --th-launcher-bg: linear-gradient(135deg, #1b1416, #3b1722, #f63854);
-    --th-launcher-shadow: 0 10px 30px rgba(246, 56, 84, 0.4);
-    --th-panel-bg: radial-gradient(ellipse at top right, rgba(246, 56, 84, 0.18), transparent 50%), #181014;
-    --th-panel-border: rgba(246, 56, 84, 0.3);
-    --th-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 40px rgba(246, 56, 84, 0.2);
-    --th-header-bg: #140b0f;
-    --th-header-border: rgba(246, 56, 84, 0.2);
-    --th-text-title: #ffffff;
-    --th-text-body: #f8fafc;
-    --th-text-muted: #fda4af;
-    --th-bubble-bot-bg: #27161c;
-    --th-bubble-bot-border: rgba(246, 56, 84, 0.35);
-    --th-bubble-bot-text: #ffffff;
-    --th-bubble-user-bg: linear-gradient(135deg, #f63854, #cf2445);
+    --th-primary: #f97316;
+    --th-secondary: #ea580c;
+    --th-accent: #c2410c;
+    --th-accent-soft: #ffedd5;
+    --th-launcher-bg: linear-gradient(135deg, #f97316 0%, #ea580c 60%, #c2410c 100%);
+    --th-launcher-shadow: 0 12px 30px rgba(234, 88, 12, 0.32);
+    --th-panel-bg: radial-gradient(ellipse at top right, rgba(254, 243, 236, 0.9), transparent 60%), #fffcfc;
+    --th-panel-border: rgba(234, 88, 12, 0.2);
+    --th-panel-shadow: 0 24px 60px -20px rgba(234, 88, 12, 0.22), 0 12px 35px -10px rgba(27, 20, 22, 0.15);
+    --th-header-bg: linear-gradient(135deg, #fff8f3 0%, #fef3ec 100%);
+    --th-header-border: rgba(234, 88, 12, 0.16);
+    --th-text-title: #1b1416;
+    --th-text-body: #1b1416;
+    --th-text-muted: #75686c;
+    --th-bubble-bot-bg: #ffffff;
+    --th-bubble-bot-border: rgba(234, 88, 12, 0.18);
+    --th-bubble-bot-text: #1b1416;
+    --th-bubble-user-bg: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
     --th-bubble-user-text: #ffffff;
-    --th-input-bg: #24141a;
-    --th-input-border: rgba(246, 56, 84, 0.4);
-    --th-input-text: #ffffff;
-    --th-card-bg: rgba(255, 255, 255, 0.04);
-    --th-card-border: rgba(246, 56, 84, 0.22);
-    --th-chip-bg: rgba(246, 56, 84, 0.15);
-    --th-chip-border: rgba(246, 56, 84, 0.4);
-    --th-chip-text: #ffe4e8;
-    --th-chip-hover-bg: rgba(246, 56, 84, 0.3);
-    --th-chip-hover-border: #f63854;
+    --th-input-bg: #ffffff;
+    --th-input-border: rgba(234, 88, 12, 0.25);
+    --th-input-text: #1b1416;
+    --th-card-bg: #ffffff;
+    --th-card-border: rgba(234, 88, 12, 0.16);
+    --th-chip-bg: #fff8f3;
+    --th-chip-border: rgba(234, 88, 12, 0.28);
+    --th-chip-text: #ea580c;
+    --th-chip-hover-bg: #ffedd5;
+    --th-chip-hover-border: #f97316;
     --th-font-family: 'Plus Jakarta Sans', sans-serif;
     --th-title-font: 'Playfair Display', Georgia, serif;
 }
@@ -163,8 +163,57 @@
 }
 
 /* ========================================================
-   2. LAUNCHER BUTTONS
+   2. LAUNCHER BUTTONS & PROACTIVE POPUP
 ======================================================== */
+
+.pakde-ai-proactive {
+    position: absolute;
+    right: 0;
+    bottom: 64px;
+    width: 250px;
+    background: var(--th-card-bg);
+    border: 1px solid var(--th-primary);
+    border-radius: 16px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    padding: 12px 14px;
+    cursor: pointer;
+    font-family: var(--th-font-family);
+    animation: pakdeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+}
+
+.pakde-ai-proactive-body {
+    position: relative;
+    padding-right: 18px;
+}
+
+.pakde-ai-proactive-close {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--th-text-muted);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.pakde-ai-proactive-close:hover {
+    color: var(--th-primary);
+}
+
+.pakde-ai-proactive p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--th-text-body);
+}
 
 .pakde-ai-launcher {
     position: relative;
@@ -203,31 +252,32 @@
 .pakde-ai-launcher--dkarsa {
     min-height: 48px;
     padding: 0 1.25rem 0 0.75rem;
-    background: #1b1416;
-    border: 1px solid rgba(246, 56, 84, 0.4);
-    box-shadow: 0 18px 34px -12px rgba(27, 20, 22, 0.55), 0 0 18px rgba(246, 56, 84, 0.2);
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 14px 28px -6px rgba(234, 88, 12, 0.45);
+    color: #ffffff;
     gap: 0.65rem;
 }
 
 .pakde-ai-launcher--dkarsa:hover {
     transform: translateY(-2px);
-    background: #f63854;
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
     color: #ffffff;
-    border-color: #f63854;
-    box-shadow: 0 20px 38px -10px rgba(246, 56, 84, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 18px 34px -6px rgba(234, 88, 12, 0.55);
 }
 
 .pakde-ai-launcher--dkarsa .pakde-ai-icon {
     width: 32px;
     height: 32px;
-    background: #f63854;
+    background: rgba(255, 255, 255, 0.22);
     color: #ffffff;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .pakde-ai-launcher--dkarsa:hover .pakde-ai-icon {
     background: #ffffff;
-    color: #f63854;
+    color: #ea580c;
 }
 
 .pakde-ai-launcher--client {
@@ -352,17 +402,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
+    padding: 14px 16px;
     background: var(--th-header-bg);
     border-bottom: 1px solid var(--th-header-border);
     flex-shrink: 0;
     color: #ffffff;
+    gap: 10px;
 }
 
 .pakde-ai-identity {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
 }
 
 .pakde-ai-avatar {
@@ -380,20 +433,26 @@
 
 .pakde-ai-identity h2 {
     font-family: var(--th-title-font);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--th-text-title);
     margin: 0;
     letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pakde-ai-identity p {
-    font-size: 11.5px;
-    color: #94A3B8;
+    font-size: 11px;
+    color: var(--th-text-muted);
     margin: 2px 0 0 0;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pakde-ai-dot {
@@ -406,24 +465,50 @@
 }
 
 .pakde-ai-header-actions {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.pakde-ai-reset-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--th-header-border);
+    color: var(--th-text-muted);
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.pakde-ai-reset-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--th-primary);
+    transform: translateY(-1px) scale(1.08);
 }
 
 .pakde-ai-wa-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
-    padding: 5px 10px;
+    height: 28px;
+    padding: 0 10px;
     border-radius: 999px;
     background: rgba(16, 185, 129, 0.16);
     border: 1px solid rgba(16, 185, 129, 0.35);
-    color: #34D399;
-    font-size: 11.5px;
+    color: #10B981;
+    font-size: 11px;
     font-weight: 700;
     text-decoration: none;
+    white-space: nowrap;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .pakde-ai-wa-btn:hover {
@@ -432,28 +517,63 @@
 }
 
 .pakde-ai-close {
-    background: none;
-    border: none;
-    color: #94A3B8;
-    font-size: 22px;
-    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--th-header-border);
+    color: var(--th-text-muted);
+    font-size: 18px;
     line-height: 1;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    cursor: pointer;
     display: grid;
     place-items: center;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .pakde-ai-close:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--th-text-title);
 }
 
 /* ========================================================
    5. MESSAGES BODY
 ======================================================== */
+
+.pakde-ai-theme--dkarsa .pakde-ai-reset-btn {
+    background: #ffffff;
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    color: #75686c;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-reset-btn:hover {
+    background: #ffedd5;
+    color: #ea580c;
+    transform: translateY(-1px) scale(1.08);
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-close {
+    background: #ffffff;
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    color: #75686c;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-close:hover {
+    background: #ffedd5;
+    color: #1b1416;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-wa-btn {
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    color: #047857;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-wa-btn:hover {
+    background: #10b981;
+    color: #ffffff;
+}
 
 .pakde-ai-messages {
     flex: 1;
@@ -478,7 +598,7 @@
     border-radius: 16px;
     padding: 16px 18px;
     margin-bottom: 4px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.06);
 }
 
 .pakde-ai-eyebrow {
@@ -492,8 +612,8 @@
 }
 
 .pakde-ai-theme--dkarsa .pakde-ai-eyebrow {
-    color: #f63854;
-    background: #fde4e8;
+    color: #ea580c;
+    background: #ffedd5;
     padding: 3px 8px;
     border-radius: 999px;
 }
@@ -548,7 +668,7 @@
     border: 1px solid var(--th-bubble-bot-border);
     color: var(--th-bubble-bot-text) !important;
     border-top-left-radius: 4px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 14px rgba(27, 20, 22, 0.05);
 }
 
 .pakde-ai-msg-group--user .pakde-ai-bubble {
@@ -611,12 +731,52 @@
     opacity: 0.8;
 }
 
+ol.pakde-ai-list {
+    list-style-type: decimal !important;
+}
+
+ul.pakde-ai-list {
+    list-style-type: disc !important;
+}
+
+/* Numbered List Card Style */
+.pakde-ai-num-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0 12px 0;
+}
+
+.pakde-ai-num-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.pakde-ai-num-badge {
+    font-weight: 800;
+    color: var(--th-primary);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.pakde-ai-num-content {
+    flex: 1;
+}
+
+.pakde-ai-num-desc {
+    margin-left: 20px;
+    margin-top: -2px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    opacity: 0.88;
+    line-height: 1.5;
+}
+
 .pakde-ai-bubble .pakde-ai-list {
     margin: 8px 0 12px 0;
     padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    display: block !important;
 }
 
 .pakde-ai-bubble .pakde-ai-list:last-child {
@@ -709,7 +869,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 14px rgba(27, 20, 22, 0.06);
     animation: pakdeFadeIn 0.3s ease;
 }
 
@@ -758,16 +918,44 @@
 }
 
 .pakde-ai-action-btn--copy {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--th-text-body);
-    border: 1px dashed var(--th-primary);
+    background: var(--th-card-bg);
+    color: var(--th-primary) !important;
+    border: 1.5px dashed var(--th-primary);
     cursor: pointer;
     font-family: var(--th-font-family);
+    font-size: 12.5px;
+    font-weight: 700;
+    transition: all 0.2s ease;
 }
 
 .pakde-ai-action-btn--copy:hover {
-    background: rgba(255, 255, 255, 0.16);
-    transform: translateY(-1px);
+    background: var(--th-primary);
+    color: #ffffff !important;
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-action-btn--copy {
+    background: #fff8f3;
+    color: #ea580c !important;
+    border: 1.5px dashed #f97316;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-action-btn--copy:hover {
+    background: #f97316;
+    color: #ffffff !important;
+}
+
+.pakde-ai-theme--webia .pakde-ai-action-btn--copy {
+    background: rgba(124, 58, 237, 0.12);
+    color: #c4b5fd !important;
+    border: 1.5px dashed #a855f7;
+}
+
+.pakde-ai-theme--webia .pakde-ai-action-btn--copy:hover {
+    background: #7c3aed;
+    color: #ffffff !important;
 }
 
 .pakde-ai-action-btn--whatsapp {
@@ -816,7 +1004,7 @@
     align-items: center;
     gap: 8px;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(27, 20, 22, 0.05);
 }
 
 .pakde-ai-followup-btn:hover {
@@ -848,7 +1036,7 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(27, 20, 22, 0.06);
 }
 
 .pakde-ai-typing-dot {
@@ -890,8 +1078,14 @@
 }
 
 .pakde-ai-theme--dkarsa .pakde-ai-form {
-    background: #181014;
-    border-top: 1px solid rgba(246, 56, 84, 0.25);
+    background: #fff8f3;
+    border-top: 1px solid rgba(234, 88, 12, 0.16);
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-footer {
+    background: #fef3ec;
+    border-top: 1px solid rgba(234, 88, 12, 0.14);
+    color: #75686c;
 }
 
 .pakde-ai-form textarea {
@@ -957,12 +1151,6 @@
     line-height: 1.35;
     color: #94A3B8;
     flex-shrink: 0;
-}
-
-.pakde-ai-theme--dkarsa .pakde-ai-footer {
-    background: #140b0f;
-    border-top: 1px solid rgba(246, 56, 84, 0.2);
-    color: #fda4af;
 }
 
 /* ========================================================

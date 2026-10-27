@@ -14,7 +14,7 @@ Website estetika dan perawatan diri berpenampilan mewah, bersih, dan menenangkan
 - **AI Consultation Chatbot**: Asisten virtual yang bisa merekomendasikan jenis treatment berdasarkan keluhan kulit atau gaya rambut yang diinginkan sebelum konsultasi langsung.
 
 ## 3. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Cocok untuk barbershop atau MUA independen yang ingin kartu nama digital elegan dengan price list ringkas dan nomor booking.
+- **Paket Pixel (Rp499.000)**: Cocok untuk barbershop atau MUA independen yang ingin kartu nama digital elegan dengan price list ringkas dan nomor booking.
 - **Paket Pulse (Rp899.000)**: Landing page lengkap berisi galeri before-after, ulasan pelanggan Google, daftar lengkap layanan, dan FAQ treatment.
 - **Paket Nexus (Rp1.499.000)**: Pilihan ideal untuk klinik kecantikan dengan dashboard CMS untuk mengelola jadwal dokter, artikel tips kecantikan (SEO friendly), dan penawaran promo bulanan.
 - **Paket Infinity (Rp2.499.000)**: Untuk jaringan franchise salon/klinik multi-cabang.

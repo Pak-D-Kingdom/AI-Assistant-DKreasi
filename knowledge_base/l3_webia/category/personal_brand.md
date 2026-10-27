@@ -15,6 +15,6 @@ Website personal bergaya modern, estetik, dan interaktif untuk membangun reputas
 - **AI Personal Avatar Assistant**: Chatbot yang mengadopsi persona atau gaya bahasa sang tokoh untuk menyapa audiens dan mengarahkan undangan kerjasama bisnis ke tim manajer.
 
 ## 3. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Tepat sebagai link-in-bio personal yang jauh lebih profesional dibanding layanan link gratis biasa.
+- **Paket Pixel (Rp499.000)**: Tepat sebagai link-in-bio personal yang jauh lebih profesional dibanding layanan link gratis biasa.
 - **Paket Pulse (Rp899.000)**: Landing page personal lengkap dengan showreel video, media kit, testimoni klien, dan kontak manajer.
 - **Paket Nexus (Rp1.499.000)**: Pilihan utama bagi creator yang aktif menulis blog/esai berkala, membagikan tips karir, atau menjual tiket workshop mandiri via CMS.
