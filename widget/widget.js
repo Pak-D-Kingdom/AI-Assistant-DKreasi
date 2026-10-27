@@ -110,14 +110,14 @@
         'site_webia_tenant_public': {
             theme: 'client',
             layer: 'l4',
-            title: 'Asisten Layanan Bisnis',
-            subtitle: 'Online · AI Customer Support',
-            eyebrow: 'AI CUSTOMER ASSISTANT',
+            title: 'Layanan Pelanggan',
+            subtitle: 'Online · Customer Support',
+            eyebrow: 'LAYANAN PELANGGAN RESMI',
             launcherLabel: '',
             launcherIcon: CLIENT_ICON_LAUNCHER,
             avatarIcon: CLIENT_ICON_AVATAR,
             welcomeTitle: 'Selamat Datang di Bisnis Kami! ✨',
-            welcomeDesc: 'Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar layanan, produk, jam buka, dan promo kami.',
+            welcomeDesc: 'Siap membantu menjawab pertanyaan seputar layanan, produk, jam operasional, dan promo kami.',
             initialMsg: 'Halo! Ada yang bisa saya bantu terkait produk, reservasi, atau layanan kami hari ini?',
             chips: [
                 { label: '⏰ Jam Buka & Lokasi', prompt: 'Buka jam berapa dan di mana alamat lokasi bisnis ini?' },
@@ -125,7 +125,7 @@
                 { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
                 { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
             ],
-            footer: 'Asisten AI otomatis. Verifikasi info penting ke CS · by PakDe Group',
+            footer: 'Layanan bantuan resmi · by PakDe Group',
             resetIcon: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Mulai Obrolan Baru"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
         }
     };
@@ -303,10 +303,10 @@
 
         if (tenantMeta.name) {
             if (titleEl) titleEl.textContent = tenantMeta.name;
-            if (eyebrowEl) eyebrowEl.textContent = `${tenantMeta.name.toUpperCase()} · AI ASSISTANT`;
+            if (eyebrowEl) eyebrowEl.textContent = `WELCOME TO ${tenantMeta.name.toUpperCase()}`;
             welcomeTitleEl.textContent = `Selamat Datang di ${tenantMeta.name}! ✨`;
             if (welcomeDescEl) {
-                welcomeDescEl.textContent = `Saya adalah asisten AI resmi yang siap menjawab pertanyaan seputar layanan, produk, jam operasional, dan promo ${tenantMeta.name}.`;
+                welcomeDescEl.textContent = `Siap membantu menjawab pertanyaan seputar layanan, produk, jam operasional, dan promo ${tenantMeta.name}.`;
             }
         } else {
             if (titleEl) titleEl.textContent = activeConfig.title;
