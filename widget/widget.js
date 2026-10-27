@@ -427,20 +427,6 @@
     };
     document.querySelectorAll('select[data-pakde-tenant]').forEach(bindTenantSelect);
 
-    // ------------------------------------------------------------------
-    // Interaksi panel
-    // ------------------------------------------------------------------
-    function togglePanel(open) {
-        const wasOpen = panel.classList.contains('is-open');
-        panel.classList.toggle('is-open', open);
-        panel.setAttribute('aria-hidden', String(!open));
-        panel.inert = !open;
-
-        // Chat ditutup -> riwayat dihapus (UI, memori, dan sesi baru di server)
-        if (wasOpen && !open) {
-            resetChat();
-        }
-
     const extractConversationSummary = () => {
         const fullChat = history.map(m => m.content).join(' ');
         const lastAssistant = [...history].reverse().find(m => m.role === 'assistant')?.content || '';
