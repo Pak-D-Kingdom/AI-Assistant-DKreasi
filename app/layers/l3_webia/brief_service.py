@@ -24,7 +24,7 @@ class BusinessBriefSchema(BaseModel):
 
 
 class BusinessBriefService:
-    DEFAULT_SALES_PHONE = "6281234567890"
+    DEFAULT_SALES_PHONE = "6289603056349"
 
     @classmethod
     def create_brief(cls, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -69,6 +69,7 @@ class BusinessBriefService:
             "data": brief.model_dump(),
             "markdown_display": md_display,
             "whatsapp_url": wa_url,
+            "plain_text_copy": wa_text,
             "l4_tenant_seed": l4_seed,
         }
 

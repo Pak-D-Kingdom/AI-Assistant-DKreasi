@@ -14,7 +14,7 @@ Solusi website bisnis untuk industri kuliner, makanan, dan minuman yang mengutam
 - **AI Chatbot Customer Service 24/7**: Otomatis menjawab pertanyaan seputar menu bestseller, ketersediaan tempat, promo hari ini, dan lokasi parkir.
 
 ## 3. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Cocok untuk cafe atau kedai kopi baru yang butuh landing page satu halaman elegan berisi daftar menu, lokasi Maps, dan tombol WhatsApp.
+- **Paket Pixel (Rp499.000)**: Cocok untuk cafe atau kedai kopi baru yang butuh landing page satu halaman elegan berisi daftar menu, lokasi Maps, dan tombol WhatsApp.
 - **Paket Pulse (Rp899.000)**: Tepat untuk cafe/resto yang ingin galeri suasana tempat, testimoni pengunjung, menu lengkap, dan FAQ.
 - **Paket Nexus (Rp1.499.000)**: Sangat direkomendasikan untuk restoran atau katering yang rutin memperbarui promo berkala, artikel kuliner, atau menu musiman melalui Dashboard CMS mandiri.
 - **Paket Infinity (Rp2.499.000)**: Untuk resto multi-cabang dengan integrasi sistem POS/katalog custom.

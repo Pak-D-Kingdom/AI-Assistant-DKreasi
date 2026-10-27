@@ -15,7 +15,7 @@ Website edukatif yang informatif, ramah, dan terstruktur rapi untuk lembaga pend
 - **AI Education Counselor**: Membantu orang tua murid memahami biaya SPP, jalur beasiswa, dan syarat administrasi pendaftaran secara instan.
 
 ## 3. Rekomendasi Paket Website WEBIA
-- **Paket Pixel (Rp99.500)**: Cocok untuk tutor privat atau kelas workshop kilat satu hari.
+- **Paket Pixel (Rp499.000)**: Cocok untuk tutor privat atau kelas workshop kilat satu hari.
 - **Paket Pulse (Rp899.000)**: Tepat untuk bimbel atau tempat kursus bahasa yang butuh landing page konversi pendaftaran murid baru.
 - **Paket Nexus (Rp1.499.000)**: Pilihan ideal untuk sekolah atau lembaga kursus berkelanjutan yang membutuhkan CMS untuk mempublikasikan artikel berita sekolah, pengumuman ujian, dan galeri kegiatan ekstrakurikuler.
 - **Paket Infinity (Rp2.499.000)**: Untuk institusi yang butuh integrasi portal siswa atau LMS (Learning Management System).

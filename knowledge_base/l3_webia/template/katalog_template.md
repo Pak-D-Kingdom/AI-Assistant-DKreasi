@@ -13,9 +13,27 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *FRESH FROM OUR OVEN — Little treats, Big smiles.*
   - Target: Toko roti & kue, artisan bakery, catering tasyakuran, dessert shop.
   - Fitur: Galeri kue fotogenik, etalase paket snack box / porsi katering, tombol pre-order WhatsApp.
+- **Laut Biru Seafood** (`fnb-restaurant-laut-biru-seafood` · Style: *Fresh Nautical*):
+  - Target: Restoran seafood, rumah makan bahari, masakan laut keluarga.
+  - Fitur: Menu olahan laut segar, kalkulator porsi timbangan ikan, reservasi rombongan.
+  - Demo / Live: `/webia/template/fnb/restaurant/laut-biru-seafood`
+- **AurumCo & VallaCo Catering**:
+  - Target: Layanan catering prasmanan acara, nasi box kantoran, catering wedding.
+  - Demo / Live: `/webia/template/fnb/aurumco-catering` & `/webia/template/fnb/vallaco-catering`
 - **F01 Modern Restaurant / Cafe Earthtone**:
-  - *Varian Elegan (The Lumière)*: Nuansa hangat mewah, popup modal reservasi meja, menu premium (beef steak, pasta, latte), promo banner.
-  - *Varian Minimalis (Origins Cafe)*: Clean ringkas, filter kategori menu (kopi/nonkopi/makanan/snack), auto-play slider promo, fast booking form.
+  - *Varian Elegan (The Lumière)*: Nuansa hangat mewah, popup modal reservasi meja, menu premium (beef steak, pasta, latte), promo banner. Demo: `/webia/template/fnb/elegan`
+  - *Varian Minimalis (Origins Cafe)*: Clean ringkas, filter kategori menu (kopi/nonkopi/makanan/snack), auto-play slider promo, fast booking form. Demo: `/webia/template/fnb/minimalis`
+  - *Varian Vintage (Kopi Lembang)*: Suasana retro klasik, sajian kopi tradisional, dan nostalgia. Demo: `/webia/template/fnb/vintage`
+
+---
+
+## 2. Seri Wedding & Event Organizer
+- **Ruby Luxe Catering & Wedding Cake** (`wedding-catering-ruby-luxe`):
+  - Target: Vendor kue pengantin mewah, dekorasi dessert table pesta, katering pernikahan eksklusif.
+  - Demo / Live: `/webia/template/wedding-event/Catering-Wedding-Cake/ruby-luxe`
+- **Burgundy Moments Event Organizer** (`event-organizer-burgundy-wine`):
+  - Target: Jasa wedding organizer (WO), perencana pesta, corporate gala event planner.
+  - Demo / Live: `/webia/template/wedding-event/event-organizer/burgundy-wine`
 
 ---
 
@@ -63,6 +81,18 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *BUILT FOR WHAT'S NEXT — Ideas into impact.*
   - Target: Perusahaan CV/PT, kontraktor bangunan, pabrik manufaktur, distributor, konsultan agensi.
   - Fitur: Showcase proyek sukses, profil tim manajemen & legalitas ISO, formulir Request for Quotation (RFQ).
+- **KreasiNusa** (`company-terracotta` · Style: *Elegant* · Tone: *Terracotta & Ivory*):
+  - Konsep: *CRAFTING CORPORATE STORIES — Kreasi yang menyentuh, cerita yang meyakinkan.*
+  - Target: Agensi kreatif, konsultan korporat, brand storytelling.
+  - Demo / Live: `/webia/template/company/elegan/company-profile-terracotta`
+- **Inovatek** (`company-ocean-teal` · Style: *Modern* · Tone: *Ocean Teal & White*):
+  - Konsep: *TECHNOLOGY MEETS TRUST — Inovasi untuk masa depan bisnismu.*
+  - Target: Startup teknologi, software house, konsultan IT, agensi digital.
+  - Demo / Live: `/webia/template/company/modern/company-profile-ocean-teal`
+- **Nusantara Kreasi** (`company-warm-neutral` · Style: *Classic* · Tone: *Warm Neutral & Cream*):
+  - Konsep: *ROOTED IN NUSANTARA — Dari Indonesia, untuk Indonesia.*
+  - Target: Manufaktur lokal, kerajinan nusantara, kontraktor nasional.
+  - Demo / Live: `/webia/template/company/classic/company-profile-warm-neutral`
 
 ---
 
@@ -71,14 +101,38 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *FIND YOUR NEXT HOME — A place to belong.*
   - Target: Developer perumahan, agen properti, real estate broker, sewa villa.
   - Fitur: Listing unit rumah/tanah, galeri denah dan foto lingkungan, tombol survey lokasi, simulasi harga.
+- **GreenHaven** (`property-emerald-green` · Style: *Luxury* · Tone: *Emerald Green & Gold*):
+  - Konsep: *WHERE ELEGANCE LIVES — Rumah impianmu, kurasi terbaik kami.*
+  - Target: Agen real estate mewah, perumahan eksklusif, private cluster.
+  - Demo / Live: `/webia/template/property/luxury/real-estate-agency-emerald-green`
+- **The Emerald Residence** (`property-nature-green` · Style: *Premium Minimal* · Tone: *Nature Green & White*):
+  - Konsep: *LIVE CLOSE TO NATURE — Tempat tinggal berdampingan dengan alam.*
+  - Target: Hunian eco-living, townhouse asri, perumahan modern tropis.
+  - Demo / Live: `/webia/template/property/premium-minimal/real-estate-agency-nature-green`
+- **Coral Homes** (`property-coral-peach` · Style: *Professional* · Tone: *Coral Peach & Cream*):
+  - Konsep: *FIND THE HOME THAT FEELS RIGHT — Rumah hangat untuk keluarga hangatmu.*
+  - Target: Agen properti keluarga, rumah subsidi/komersial, perumahan suburban.
+  - Demo / Live: `/webia/template/property/professional/real-estate-agency-coral-peach`
 
 ---
 
-## 6. Seri Education & Course
+## 6. Seri Education & E-Learning
 - **BrightPath Academy** (`brightpath-academy` · Style: *Friendly* · Tone: *Blue Lavender*):
   - Konsep: *LEARN WITHOUT LIMITS — Grow your potential.*
-  - Target: Sekolah swasta, lembaga bimbel, kursus bahasa asing, pelatihan skill profesional, e-learning.
+  - Target: Sekolah swasta, lembaga bimbel, kursus bahasa asing, pelatihan skill profesional.
   - Fitur: Formulir pendaftaran siswa baru, jadwal program belajar & rincian biaya, profil pengajar/tutor.
+- **E-learna** (`elearning-ocean-blue` · Style: *Modern* · Tone: *Ocean Blue*):
+  - Konsep: *LEARN BEYOND CLASSROOM — Belajar apa pun, di mana pun, kapan pun.*
+  - Target: Platform kursus online, bootcamp coding/desain, sertifikasi profesi.
+  - Demo / Live: `/webia/template/e-learning/modern/e-learning-ocean-blue`
+- **EduPlus** (`elearning-pastel-mix` · Style: *Playful* · Tone: *Pastel Mix*):
+  - Konsep: *FUN WAYS TO LEARN — Belajar jadi pengalaman paling seru.*
+  - Target: Kursus anak & remaja, bimbingan belajar kreatif, kelas hobi.
+  - Demo / Live: `/webia/template/e-learning/playful-colorful/e-learning-pastel-mix`
+- **NovaLearn** (`elearning-dark-mode` · Style: *Futuristic* · Tone: *Dark Mode*):
+  - Konsep: *THE NEXT CLASS IS HERE — Belajar generasi baru di kelas masa depan.*
+  - Target: Akademi AI/teknologi tinggi, pelatihan data science, platform programming intensif.
+  - Demo / Live: `/webia/template/e-learning/futuristic/e-learning-dark-mode`
 
 ---
 

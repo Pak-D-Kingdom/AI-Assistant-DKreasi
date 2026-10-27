@@ -4,7 +4,7 @@ WEBIA menyediakan 4 tingkatan paket pembuatan website bisnis yang fleksibel, ber
 
 ---
 
-## 1. Paket Pixel — Rp99.500 (Harga Normal: Rp589.500)
+## 1. Paket Pixel — Rp499.000 (Harga Normal: Rp589.500)
 - **Karakter**: *01 / START SIMPLE* — Tampil profesional di internet dengan landing page sederhana dan biaya sangat terjangkau.
 - **Tipe**: **TANPA CMS** (Sekali bayar).
 - **Cocok Untuk**: Usaha mikro, warung/kedai kopi baru, link-in-bio personal, atau produk single yang butuh kartu nama digital cepat dan langsung closing ke WhatsApp.
