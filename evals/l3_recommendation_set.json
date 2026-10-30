@@ -75,5 +75,54 @@
     "expected_intent": "recommend_dental_website",
     "expected_action": "navigate",
     "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_12",
+    "query": "Di mana saya bisa cek status pesanan website saya?",
+    "expected_intent": "customer_order_tracking",
+    "expected_action": "navigate",
+    "expected_target": "/dashboard"
+  },
+  {
+    "id": "l3_eval_13",
+    "query": "Bagaimana cara login akun saya?",
+    "expected_intent": "customer_auth",
+    "expected_action": "navigate",
+    "expected_target": "/login"
+  },
+  {
+    "id": "l3_eval_14",
+    "query": "Saya butuh website untuk software house agensi pembuatan aplikasi",
+    "expected_intent": "recommend_technology_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_15",
+    "query": "Saya mau buat website untuk agen tour travel dan open trip liburan",
+    "expected_intent": "recommend_travel_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_16",
+    "query": "Bisa bikin website untuk toko mebel furniture dan interior rumah?",
+    "expected_intent": "recommend_furniture_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_17",
+    "query": "Saya mau buat website untuk usaha laundry kiloan dan cuci sepatu",
+    "expected_intent": "recommend_home_services_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_18",
+    "query": "Saya butuh website untuk peternakan sapi dan kambing qurban modern",
+    "expected_intent": "recommend_agriculture_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
   }
 ]

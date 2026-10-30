@@ -1,6 +1,6 @@
 # Katalog Desain & Tema Undangan Digital D'Karsa
 
-D'Karsa menyediakan koleksi 24 tema desain resmi siap pakai (turnkey templates) + 1 opsi Custom Request yang terbagi ke dalam 6 Kategori Acara dan 4 Tier Paket Harga (mulai dari Rp50.000 hingga Rp280.000). Calon pemesan dapat melihat live demo setiap tema di `/demo/{key}` atau berkonsultasi via Layanan Terima Beres WhatsApp CS D'Karsa.
+D'Karsa menyediakan koleksi 28 tema desain resmi siap pakai (turnkey templates) + 1 opsi Custom Request yang terbagi ke dalam 6 Kategori Acara dan 4 Tier Paket Harga (mulai dari Rp50.000 hingga Rp280.000). Calon pemesan dapat melihat live demo setiap tema di `/demo/{key}` atau berkonsultasi via Layanan Terima Beres WhatsApp CS D'Karsa.
 
 ---
 
@@ -20,6 +20,9 @@ D'Karsa menyediakan koleksi 24 tema desain resmi siap pakai (turnkey templates) 
 - **Wildflower Pink / Rose Romance** (`wildflower-pink` · *Premium - Rp110.000*):
   - Bingkai kubah lengkung (arched frame), wax seal berdenyut, kelopak mawar berguguran, amplop digital QRIS & Bank.
   - Demo: `/demo/wildflower-pink`
+- **Pawiwahan Adat Jawa Geometris** (`botanical-emerald` · *Premium - Rp110.000*):
+  - Desain sakral pernikahan adat Jawa kontemporer berbalut ornamen Gunungan & motif Kawung geometris, alunan Ladrang Wilujeng, dan amplop digital kersaning rahayu.
+  - Demo: `/demo/botanical-emerald`
 - **Simple Minimalist Floral** (`minimalist-floral` · *Basic - Rp50.000*):
   - Desain bersih modern bergaya majalah editorial dengan garis sage botanical, sangat ringan dan harga paling hemat.
   - Demo: `/demo/minimalist-floral`
@@ -35,6 +38,21 @@ D'Karsa menyediakan koleksi 24 tema desain resmi siap pakai (turnkey templates) 
 - **Kids Birthday Party Balon Ceria** (`kids-birthday` · *Premium - Rp110.000*):
   - Konfeti balon warna-warni ceria untuk ulang tahun anak, rundown games seru, tiup lilin bersama sahabat, kado celengan ceria.
   - Demo: `/demo/kids-birthday`
+- **Rustic Coral & Peach** (`rustic-coral-peach` · *Premium - Rp110.000*):
+  - Desain perayaan sweet seventeen / milad bernuansa rustic coral, soft peach & warm terracotta: arched portrait cover, 4-capsule countdown timer, agenda dinner, dan polaroid memories gallery.
+  - Demo: `/demo/rustic-coral-peach`
+- **Korporat Profesional Arctic Frost - Sweet 17th Birthday** (`arctic-frost` · *Premium - Rp110.000*):
+  - Desain perayaan ulang tahun / sweet seventeen eksekutif bertema Arctic Frost Gala: sampul amplop digital protokol VIP, segel lilin perak monogram, profil frosted architecture, countdown timer glacial, timeline agenda korporat, retrospeksi galeri, RSVP VIP & kado digital.
+  - Demo: `/demo/arctic-frost`
+- **Editorial Cherry Blossom - Sweet Seventeen** (`editorial-cherry-blossom` · *Premium - Rp110.000*):
+  - Desain majalah editorial perayaan Sweet 17 bernuansa Sakura Reverie: palet blush rouge cherry, kartu amplop digital haute couture, countdown mekar musim semi, lookbook galeri eksklusif, RSVP terintegrasi & kado digital.
+  - Demo: `/demo/editorial-cherry-blossom`
+- **Elegan Klasik Orange Energy - Sweet Seventeen** (`orange-energy` · *Premium - Rp110.000*):
+  - Kemegahan perayaan sweet seventeen bertema Aura Soleil XVII: nuansa terracotta amber & emas hangat, segel lilin monogram, countdown energi muda, galeri visual vibrant, RSVP tamu & kado digital.
+  - Demo: `/demo/orange-energy`
+- **Rustic Purple Dream - Sweet 17th Birthday** (`rustic-purple-dream` · *Premium - Rp110.000*):
+  - Desain perayaan sweet seventeen bernuansa Rustic Lavender & Purple Dream: nuansa taman lavender hangat, tipografi elegan, countdown kebahagiaan 17 tahun, galeri polaroid kenangan, rundown intimate gathering & kado tali asih digital.
+  - Demo: `/demo/rustic-purple-dream`
 - **Fun Minimalist & Cheerful Birthday** (`cheerful-birthday` · *Basic - Rp50.000*):
   - Pesta ulang tahun ceria bernuansa pastel & konfeti sederhana, kue ulang tahun, galeri momen seru, dan kado digital.
   - Demo: `/demo/cheerful-birthday`
@@ -93,12 +111,15 @@ D'Karsa menyediakan koleksi 24 tema desain resmi siap pakai (turnkey templates) 
 ---
 
 ## 6. Kategori Acara Formal & Bisnis
-- **Executive Corporate & Grand Opening** (`formal-corporate` · *Eksklusif - Rp180.000*):
-  - Layout eksekutif arsitektural untuk peresmian bisnis, gala dinner korporat, seminar VIP & peluncuran produk dengan RSVP mitra.
+- **Korporat Profesional & Grand Opening** (`formal-corporate` · *Eksklusif - Rp180.000*):
+  - Tata letak eksekutif presisi untuk peresmian bisnis, gala dinner korporat, seminar VIP & temu kangen reuni akbar dengan RSVP mitra strategis.
   - Demo: `/demo/formal-corporate`
 - **Gala Reuni Akbar & Alumni Gathering** (`reuni-akbar` · *Premium - Rp110.000*):
   - Sapphire navy & silver, nostalgia dinding foto polaroid angkatan, panduan dress code, countdown jam reuni & konfirmasi kehadiran.
   - Demo: `/demo/reuni-akbar`
+- **Floral Midnight Navy** (`floral-midnight-navy` · *Premium - Rp110.000*):
+  - Desain gala dinner & malam keakraban komunitas/organisasi resmi bernuansa floral midnight navy & emas dengan sambutan presidium, rundown protokoler, RSVP jamuan, dan donasi filantropi.
+  - Demo: `/demo/floral-midnight-navy`
 - **Clean Workshop & Seminar Profesional** (`clean-seminar` · *Basic - Rp50.000*):
   - Desain fungsional untuk workshop & simposium, profil pembicara ahli, rundown sesi terstruktur, dan delegasi pass RSVP.
   - Demo: `/demo/clean-seminar`

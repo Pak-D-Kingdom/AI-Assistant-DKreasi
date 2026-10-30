@@ -136,6 +136,7 @@ DKARSA_CATEGORIES = [
 DKARSA_THEMES = [
     {
         "id": "theme-floral-wreath",
+        "demo_url": "/demo/floral-wreath",
         "name": "Simple Minimalist Floral",
         "tier": "basic",
         "package_val": "Paket Basic - Rp50.000",
@@ -143,6 +144,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-rose-romance",
+        "demo_url": "/demo/rose-romance",
         "name": "Elegant Rose Romance (ChungDoi Wildflower)",
         "tier": "premium",
         "package_val": "Paket Premium - Rp110.000",
@@ -150,6 +152,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-javanese-royal",
+        "demo_url": "/demo/javanese-royal",
         "name": "3D Javanese Royal Keraton",
         "tier": "eksklusif",
         "package_val": "Paket Eksklusif - Rp180.000",
@@ -157,6 +160,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-batak-heritage",
+        "demo_url": "/demo/batak-heritage",
         "name": "Batak Istimewa Heritage",
         "tier": "eksklusif",
         "package_val": "Paket Eksklusif - Rp180.000",
@@ -164,6 +168,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-green-mosque",
+        "demo_url": "/demo/green-mosque",
         "name": "Green Mosque Harmony",
         "tier": "premium",
         "package_val": "Paket Premium - Rp110.000",
@@ -171,6 +176,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-snow-white",
+        "demo_url": "/demo/snow-white",
         "name": "SnowFall Minimalist White",
         "tier": "eksklusif",
         "package_val": "Paket Eksklusif - Rp180.000",
@@ -178,6 +184,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-golden-birthday",
+        "demo_url": "/demo/golden-birthday",
         "name": "Golden Luxury Birthday / Wisuda",
         "tier": "eksklusif",
         "package_val": "Paket Eksklusif - Rp180.000",
@@ -185,6 +192,7 @@ DKARSA_THEMES = [
     },
     {
         "id": "theme-little-prince",
+        "demo_url": "/demo/little-prince",
         "name": "Little Prince Safari Khitan",
         "tier": "basic",
         "package_val": "Paket Basic - Rp50.000",
@@ -340,6 +348,52 @@ class L2IntentRouter:
                 "calculation": rec,
             }
 
+        # 0d. Online Builder Mandiri (/buat-undangan)
+        if any(w in normalized for w in ["buat sendiri", "bikin sendiri", "susun sendiri", "builder", "buat undangan online", "form online", "isi data sendiri"]):
+            return {
+                "intent": "online_builder",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "/buat-undangan",
+                "button_text": "Buka Online Builder Undangan D'Karsa →",
+                "service_name": "Online Builder Mandiri D'Karsa",
+                "data": {
+                    "url": "/buat-undangan",
+                    "features": ["Isi data mempelai & acara", "Upload galeri foto", "Pilih musik latar MP3", "Live Preview instan"],
+                },
+            }
+
+        # 0e. Fitur RSVP & Buku Tamu Online
+        if any(w in normalized for w in ["rsvp", "buku tamu", "ucapan doa", "doa restu", "konfirmasi kehadiran"]):
+            return {
+                "intent": "rsvp_wish_feature",
+                "confidence": 0.95,
+                "action": "inform",
+                "target_url": "#fitur",
+                "button_text": "Lihat Fitur Interaktif D'Karsa →",
+                "service_name": "Fitur RSVP & Buku Tamu Real-Time",
+                "data": {
+                    "rsvp": "Tamu bisa konfirmasi hadir/tidak hadir beserta jumlah tamu yang dibawa.",
+                    "wish_wall": "Tamu bisa mengirimkan doa restu yang langsung tayang interaktif pada buku tamu online.",
+                },
+            }
+
+        # 0c. Metode Pembayaran & Verifikasi Midtrans
+        if any(w in normalized for w in ["metode bayar", "metode pembayaran", "cara bayar", "bisa bayar pakai", "qris", "transfer bank", "virtual account", "midtrans", "kartu kredit", "va bca"]):
+            return {
+                "intent": "payment_inquiry",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#harga",
+                "button_text": "Lihat Pilihan Paket & Metode Pembayaran Midtrans →",
+                "service_name": "Metode Pembayaran Resmi D'Karsa (Midtrans)",
+                "data": {
+                    "gateway": "Midtrans",
+                    "methods": ["QRIS (GoPay, ShopeePay, OVO)", "Virtual Account (BCA, Mandiri, BRI, BNI)", "Kartu Kredit / Debit"],
+                    "verification": "Otomatis Real-Time (Aktif Instan)",
+                },
+            }
+
         # 1. Custom / Request Khusus -> Handoff WA
         if any(w in normalized for w in ["custom", "kustom", "request khusus", "desain sendiri", "dari nol", "pinterest"]):
             return {
@@ -466,12 +520,13 @@ class L2IntentRouter:
         # 4. Harga / Biaya / Paket
         if any(w in normalized for w in ["harga", "biaya", "tarif", "paket", "berapa", "promo", "murah"]):
             return {
-                "intent": "pricing_inquiry",
+                "intent": "guest_calculator",
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#harga",
-                "button_text": "Lihat 4 Paket Harga D'Karsa (Mulai Rp50.000) →",
-                "service_name": "Paket Harga D'Karsa",
+                "button_text": "Hitung Estimasi Paket & Tamu Live ⚡ →",
+                "service_name": "Kalkulator Paket & Tamu D'Karsa",
+                "calculation": calculate_guest_tier(150),
             }
 
         # 5. WhatsApp CS / Pemesanan Langsung

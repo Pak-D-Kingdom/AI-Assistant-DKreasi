@@ -55,6 +55,13 @@
     --th-chip-text: #E2E8F0;
     --th-chip-hover-bg: rgba(139, 92, 246, 0.2);
     --th-chip-hover-border: #8B5CF6;
+    --th-proactive-bg: #141b2d;
+    --th-proactive-border: rgba(139, 92, 246, 0.5);
+    --th-proactive-shadow: 0 16px 36px rgba(11, 21, 48, 0.6), 0 2px 8px rgba(0, 0, 0, 0.3);
+    --th-proactive-text: #f8fafc;
+    --th-proactive-muted: #94a3b8;
+    --th-proactive-avatar-bg: linear-gradient(135deg, #0B64D4, #8B5CF6);
+    --th-proactive-avatar-color: #ffffff;
     --th-font-family: 'Inter', sans-serif;
     --th-title-font: 'Inter', sans-serif;
 }
@@ -89,6 +96,13 @@
     --th-chip-text: #ede9fe;
     --th-chip-hover-bg: rgba(168, 85, 247, 0.32);
     --th-chip-hover-border: #a855f7;
+    --th-proactive-bg: #1b1333;
+    --th-proactive-border: rgba(167, 139, 250, 0.5);
+    --th-proactive-shadow: 0 16px 40px rgba(18, 12, 34, 0.55), 0 0 20px rgba(124, 58, 237, 0.25);
+    --th-proactive-text: #ffffff;
+    --th-proactive-muted: #c4b5fd;
+    --th-proactive-avatar-bg: linear-gradient(135deg, #7c3aed, #f472b6);
+    --th-proactive-avatar-color: #ffffff;
     --th-font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     --th-title-font: 'Plus Jakarta Sans', sans-serif;
 }
@@ -124,6 +138,13 @@
     --th-chip-text: #ea580c;
     --th-chip-hover-bg: #ffedd5;
     --th-chip-hover-border: #f97316;
+    --th-proactive-bg: #ffffff;
+    --th-proactive-border: rgba(249, 115, 22, 0.45);
+    --th-proactive-shadow: 0 16px 36px rgba(234, 88, 12, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08);
+    --th-proactive-text: #1b1416;
+    --th-proactive-muted: #75686c;
+    --th-proactive-avatar-bg: linear-gradient(135deg, #f97316, #ea580c);
+    --th-proactive-avatar-color: #ffffff;
     --th-font-family: 'Plus Jakarta Sans', sans-serif;
     --th-title-font: 'Playfair Display', Georgia, serif;
 }
@@ -158,6 +179,13 @@
     --th-chip-text: #A7F3D0;
     --th-chip-hover-bg: rgba(16, 185, 129, 0.25);
     --th-chip-hover-border: #10B981;
+    --th-proactive-bg: #0d1615;
+    --th-proactive-border: rgba(52, 211, 153, 0.45);
+    --th-proactive-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 20px rgba(16, 185, 129, 0.25);
+    --th-proactive-text: #ecfdf5;
+    --th-proactive-muted: #6ee7b7;
+    --th-proactive-avatar-bg: linear-gradient(135deg, #059669, #10b981);
+    --th-proactive-avatar-color: #ffffff;
     --th-font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     --th-title-font: 'Plus Jakarta Sans', sans-serif;
 }
@@ -166,53 +194,176 @@
    2. LAUNCHER BUTTONS & PROACTIVE POPUP
 ======================================================== */
 
-.pakde-ai-proactive {
-    position: absolute;
-    right: 0;
-    bottom: 64px;
-    width: 250px;
-    background: var(--th-card-bg);
-    border: 1px solid var(--th-primary);
-    border-radius: 16px;
-    border-bottom-right-radius: 4px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    padding: 12px 14px;
-    cursor: pointer;
-    font-family: var(--th-font-family);
-    animation: pakdeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10;
+.pakde-ai-widget .pakde-ai-proactive {
+    position: absolute !important;
+    right: 0 !important;
+    bottom: 68px !important;
+    width: 310px !important;
+    max-width: calc(100vw - 36px) !important;
+    background: var(--th-proactive-bg, #1a162b) !important;
+    border: 1.5px solid var(--th-proactive-border, rgba(167, 139, 250, 0.45)) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--th-proactive-shadow, 0 16px 40px rgba(0, 0, 0, 0.35)) !important;
+    padding: 12px 14px !important;
+    cursor: pointer !important;
+    font-family: var(--th-font-family, sans-serif) !important;
+    animation: pakdeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    z-index: 99999 !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-sizing: border-box !important;
+    text-align: left !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.pakde-ai-proactive-body {
-    position: relative;
-    padding-right: 18px;
+.pakde-ai-widget .pakde-ai-proactive:hover {
+    transform: translateY(-2px) !important;
 }
 
-.pakde-ai-proactive-close {
-    position: absolute;
-    right: -6px;
-    top: -6px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    color: var(--th-text-muted);
-    font-size: 14px;
-    line-height: 1;
-    cursor: pointer;
+/* Speech bubble arrow pointing to the launcher button below */
+.pakde-ai-widget .pakde-ai-proactive-arrow {
+    position: absolute !important;
+    bottom: -7px !important;
+    right: 32px !important;
+    width: 13px !important;
+    height: 13px !important;
+    background: var(--th-proactive-bg, #1a162b) !important;
+    border-right: 1.5px solid var(--th-proactive-border, rgba(167, 139, 250, 0.45)) !important;
+    border-bottom: 1.5px solid var(--th-proactive-border, rgba(167, 139, 250, 0.45)) !important;
+    transform: rotate(45deg) !important;
+    pointer-events: none !important;
 }
 
-.pakde-ai-proactive-close:hover {
-    color: var(--th-primary);
+.pakde-ai-widget .pakde-ai-proactive-body {
+    position: relative !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-.pakde-ai-proactive p {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.45;
-    color: var(--th-text-body);
+.pakde-ai-widget .pakde-ai-proactive-avatar {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    background: var(--th-proactive-avatar-bg, #7c3aed) !important;
+    color: var(--th-proactive-avatar-color, #ffffff) !important;
+    font-size: 15px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+    user-select: none !important;
+}
+
+.pakde-ai-widget .pakde-ai-proactive-content {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.pakde-ai-widget .pakde-ai-proactive p,
+.pakde-ai-widget .pakde-ai-proactive-content p,
+.pakde-ai-widget #pakde-ai-proactive-text {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: var(--th-font-family, sans-serif) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+    color: var(--th-proactive-text, #ffffff) !important;
+    text-align: left !important;
+    letter-spacing: -0.01em !important;
+    word-break: break-word !important;
+    display: block !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+.pakde-ai-widget .pakde-ai-proactive-close {
+    flex-shrink: 0 !important;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 50% !important;
+    display: grid !important;
+    place-items: center !important;
+    background: rgba(128, 128, 128, 0.14) !important;
+    border: none !important;
+    color: var(--th-proactive-muted, #94a3b8) !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: all 0.2s ease !important;
+}
+
+.pakde-ai-widget .pakde-ai-proactive-close:hover {
+    background: rgba(128, 128, 128, 0.28) !important;
+    color: var(--th-primary, #ffffff) !important;
+    transform: scale(1.1) !important;
+}
+
+
+/* Sembunyikan pop-up proaktif ketika panel chat sedang terbuka */
+.pakde-ai-widget.is-panel-open .pakde-ai-proactive,
+.pakde-ai-widget:has(.pakde-ai-panel.is-open) .pakde-ai-proactive,
+.pakde-ai-widget .pakde-ai-panel.is-open ~ .pakde-ai-proactive {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Explicit theme styling for proactive bubble */
+.pakde-ai-theme--dkreasi .pakde-ai-proactive {
+    background: #141b2d !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+    box-shadow: 0 16px 40px rgba(11, 21, 48, 0.55), 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+.pakde-ai-theme--dkreasi .pakde-ai-proactive-arrow {
+    background: #141b2d !important;
+    border-right: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+    border-bottom: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+}
+.pakde-ai-theme--dkreasi #pakde-ai-proactive-text {
+    color: #f8fafc !important;
+}
+
+.pakde-ai-theme--webia .pakde-ai-proactive {
+    background: #1b1333 !important;
+    border: 1.5px solid rgba(167, 139, 250, 0.5) !important;
+    box-shadow: 0 16px 40px rgba(18, 12, 34, 0.55), 0 0 20px rgba(124, 58, 237, 0.25) !important;
+}
+.pakde-ai-theme--webia .pakde-ai-proactive-arrow {
+    background: #1b1333 !important;
+    border-right: 1.5px solid rgba(167, 139, 250, 0.5) !important;
+    border-bottom: 1.5px solid rgba(167, 139, 250, 0.5) !important;
+}
+.pakde-ai-theme--webia #pakde-ai-proactive-text {
+    color: #ffffff !important;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-proactive {
+    background: #ffffff !important;
+    border: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+    box-shadow: 0 16px 36px rgba(234, 88, 12, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+.pakde-ai-theme--dkarsa .pakde-ai-proactive-arrow {
+    background: #ffffff !important;
+    border-right: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+    border-bottom: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+}
+.pakde-ai-theme--dkarsa #pakde-ai-proactive-text {
+    color: #1b1416 !important;
+}
+.pakde-ai-theme--dkarsa .pakde-ai-proactive-close {
+    color: #9a8a8e !important;
 }
 
 .pakde-ai-launcher {
@@ -823,8 +974,115 @@ ul.pakde-ai-list {
 }
 
 /* ========================================================
-   7. ACTION CARDS (Routing / Handoff)
+   7. ACTION CARDS, ESTIMATOR & INTERACTIVE COPILOT
 ======================================================== */
+
+.pakde-ai-estimator {
+    background: var(--th-card-bg);
+    border: 1px solid var(--th-card-border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    animation: pakdeFadeIn 0.3s ease;
+}
+
+.pakde-ai-estimator-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pakde-ai-estimator-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--th-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pakde-ai-estimator-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--th-primary);
+    color: #ffffff;
+}
+
+.pakde-ai-estimator-slider-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pakde-ai-estimator-slider {
+    width: 100%;
+    accent-color: var(--th-primary);
+    cursor: pointer;
+}
+
+.pakde-ai-estimator-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: var(--th-text-muted);
+}
+
+.pakde-ai-estimator-result {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--th-card-border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pakde-ai-estimator-result-pkg {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--th-text-title);
+    margin: 0;
+}
+
+.pakde-ai-estimator-result-price {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--th-primary);
+    margin: 0;
+}
+
+.pakde-ai-estimator-note {
+    font-size: 11px;
+    color: var(--th-text-body);
+    line-height: 1.45;
+    margin: 0;
+}
+
+.pakde-ai-estimator-btn {
+    display: block;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--th-primary), var(--th-secondary));
+    color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.pakde-ai-estimator-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
 
 .pakde-ai-action-card {
     background: var(--th-card-bg);
@@ -881,6 +1139,65 @@ ul.pakde-ai-list {
 .pakde-ai-action-btn--cart:hover {
     background: #0369a1;
     transform: translateY(-2px);
+}
+
+.pakde-ai-cart-confirm-wrap {
+    margin-top: 4px;
+}
+
+.pakde-ai-cart-dialog {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--th-card-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 6px;
+    animation: pakdeFadeIn 0.2s ease;
+}
+
+.pakde-ai-cart-dialog-msg {
+    font-size: 11.5px;
+    color: var(--th-text-body);
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.pakde-ai-cart-dialog-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.pakde-ai-cart-btn-yes {
+    flex: 1;
+    background: #059669;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.pakde-ai-cart-btn-yes:hover {
+    background: #047857;
+}
+
+.pakde-ai-cart-btn-no {
+    background: transparent;
+    color: var(--th-text-muted);
+    border: 1px solid var(--th-card-border);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pakde-ai-cart-btn-no:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--th-text-body);
 }
 
 .pakde-ai-action-btn--copy {
@@ -990,27 +1307,30 @@ ul.pakde-ai-list {
     align-items: center;
     gap: 8px;
     padding: 6px 4px;
+    margin: 4px 0;
+    min-height: 40px;
     animation: pakdeFadeIn 0.2s ease;
 }
 
 .pakde-ai-typing-bubble {
     background: var(--th-bubble-bot-bg);
     border: 1px solid var(--th-bubble-bot-border);
-    padding: 10px 16px;
+    padding: 10px 18px;
     border-radius: 16px;
     border-top-left-radius: 4px;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    box-shadow: 0 4px 14px rgba(27, 20, 22, 0.06);
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .pakde-ai-typing-dot {
-    width: 7px;
-    height: 7px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: var(--th-primary);
-    box-shadow: 0 0 8px var(--th-primary);
+    background: var(--th-primary) !important;
+    box-shadow: 0 0 10px var(--th-primary);
     animation: pakdeBounce 1.4s infinite ease-in-out both;
 }
 
@@ -1136,7 +1456,64 @@ ul.pakde-ai-list {
         border-radius: 20px;
     }
 
-    .pakde-ai-launcher {
+    
+/* Sembunyikan pop-up proaktif ketika panel chat sedang terbuka */
+.pakde-ai-widget.is-panel-open .pakde-ai-proactive,
+.pakde-ai-widget:has(.pakde-ai-panel.is-open) .pakde-ai-proactive,
+.pakde-ai-widget .pakde-ai-panel.is-open ~ .pakde-ai-proactive {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Explicit theme styling for proactive bubble */
+.pakde-ai-theme--dkreasi .pakde-ai-proactive {
+    background: #141b2d !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+    box-shadow: 0 16px 40px rgba(11, 21, 48, 0.55), 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+.pakde-ai-theme--dkreasi .pakde-ai-proactive-arrow {
+    background: #141b2d !important;
+    border-right: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+    border-bottom: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+}
+.pakde-ai-theme--dkreasi #pakde-ai-proactive-text {
+    color: #f8fafc !important;
+}
+
+.pakde-ai-theme--webia .pakde-ai-proactive {
+    background: #1b1333 !important;
+    border: 1.5px solid rgba(167, 139, 250, 0.5) !important;
+    box-shadow: 0 16px 40px rgba(18, 12, 34, 0.55), 0 0 20px rgba(124, 58, 237, 0.25) !important;
+}
+.pakde-ai-theme--webia .pakde-ai-proactive-arrow {
+    background: #1b1333 !important;
+    border-right: 1.5px solid rgba(167, 139, 250, 0.5) !important;
+    border-bottom: 1.5px solid rgba(167, 139, 250, 0.5) !important;
+}
+.pakde-ai-theme--webia #pakde-ai-proactive-text {
+    color: #ffffff !important;
+}
+
+.pakde-ai-theme--dkarsa .pakde-ai-proactive {
+    background: #ffffff !important;
+    border: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+    box-shadow: 0 16px 36px rgba(234, 88, 12, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+.pakde-ai-theme--dkarsa .pakde-ai-proactive-arrow {
+    background: #ffffff !important;
+    border-right: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+    border-bottom: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+}
+.pakde-ai-theme--dkarsa #pakde-ai-proactive-text {
+    color: #1b1416 !important;
+}
+.pakde-ai-theme--dkarsa .pakde-ai-proactive-close {
+    color: #9a8a8e !important;
+}
+
+.pakde-ai-launcher {
         padding: 0 16px;
         min-height: 48px;
         font-size: 12.5px;

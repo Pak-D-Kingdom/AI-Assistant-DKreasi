@@ -59,6 +59,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def add_no_cache_to_widget(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/widget/"):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
 # Mount API Routers
 app.include_router(health_router, prefix="/api/v1")
 app.include_router(chat_router, prefix="/api/v1")

@@ -71,6 +71,10 @@ def test_l2_intent_routes_to_guest_calculator():
     assert res["intent"] == "guest_calculator"
     assert res["calculation"]["tier"] == "eksklusif"
 
+    res_pricing = L2IntentRouter.detect_and_route("Berapa harga paket undangan?")
+    assert res_pricing["intent"] == "guest_calculator"
+    assert "calculation" in res_pricing
+
 
 def test_l2_intent_routes_to_checklist():
     from app.layers.l2_dkarsa.tools import L2IntentRouter
@@ -100,6 +104,26 @@ def test_l3_routes_to_dental_solution():
     assert "Dental" in res["recommendation"]["recommended_template"]
 
 
+def test_l3_routes_to_technology_solution():
+    res = L3IntentRouter.detect_and_route("Saya punya perusahaan software house dan butuh website profil IT")
+    assert res["intent"] == "recommend_technology_website"
+    assert res["action"] == "navigate"
+    assert "AzuraCraft" in res["recommendation"]["recommended_template"] or "Software House" in res["recommendation"]["recommended_template"]
+    assert res["recommendation"]["recommended_package"] == "Paket Nexus"
+
+
+def test_l3_routes_to_customer_account_and_orders():
+    res_orders = L3IntentRouter.detect_and_route("Di mana saya bisa cek status pesanan website saya?")
+    assert res_orders["intent"] == "customer_order_tracking"
+    assert res_orders["action"] == "navigate"
+    assert res_orders["target_url"] == "/dashboard"
+
+    res_auth = L3IntentRouter.detect_and_route("Bagaimana cara login akun saya?")
+    assert res_auth["intent"] == "customer_auth"
+    assert res_auth["action"] == "navigate"
+    assert res_auth["target_url"] == "/login"
+
+
 def test_l3_brief_creation():
     data = {
         "business_name": "Kopi Senja Utama",
@@ -115,3 +139,42 @@ def test_l3_brief_creation():
     unquoted_wa = urllib.parse.unquote(brief["whatsapp_url"])
     assert "Kopi Senja Utama" in unquoted_wa
     assert brief["l4_tenant_seed"]["category"] == "f&b"
+
+
+def test_l3_routes_to_laundry_home_services():
+    res = L3IntentRouter.detect_and_route("Saya mau buat website untuk usaha laundry kiloan dan cuci sepatu antar jemput")
+    assert res["intent"] == "recommend_home_services_website"
+    assert res["action"] == "navigate"
+    assert "Laundry" in res["recommendation"]["category"]
+    assert "Mint Fresh" in res["recommendation"]["recommended_template"] or "Baby Blue" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "laundry-mint-fresh"
+
+
+def test_l3_routes_to_agriculture_farming():
+    res = L3IntentRouter.detect_and_route("Saya butuh website untuk peternakan sapi potong dan kambing qurban modern")
+    assert res["intent"] == "recommend_agriculture_website"
+    assert res["action"] == "navigate"
+    assert "Agriculture" in res["recommendation"]["category"]
+    assert "Agriternak" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "agriternak-bold-livestock"
+
+
+def test_l3_routes_to_payment_checkout_inquiry():
+    res = L3IntentRouter.detect_and_route("Bisa bayar pakai QRIS atau transfer via Midtrans?")
+    assert res["intent"] == "payment_checkout_inquiry"
+    assert res["action"] == "navigate"
+    assert res["target_url"] == "/orders/create"
+    assert "Midtrans" in res["service_name"]
+
+
+def test_l3_routes_to_addon_inquiry():
+    res = L3IntentRouter.detect_and_route("Apa saja pilihan add-on fitur tambahan resmi di Webia?")
+    assert res["intent"] == "addon_inquiry"
+    assert len(res["data"]["addons"]) == 4
+    assert any(a["id"] == "seo-optimization" for a in res["data"]["addons"])
+
+
+def test_l3_customer_auth_guest_checkout():
+    res = L3IntentRouter.detect_and_route("Bagaimana cara daftar akun?")
+    assert res["intent"] == "customer_auth"
+    assert "/orders/create" in res["data"]["guest_checkout_url"]

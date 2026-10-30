@@ -3,6 +3,29 @@ from app.services.handoff_service import HandoffService
 from app.layers.l3_webia.brief_service import BusinessBriefService, BusinessBriefSchema
 
 
+WEBIA_ADDONS = [
+    {
+        "id": "seo-optimization",
+        "name": "SEO Optimization",
+        "description": "Optimasi teknis dan konten meta tag terstruktur sesuai standar Google.",
+    },
+    {
+        "id": "admin-dashboard",
+        "name": "Admin Dashboard",
+        "description": "Kelola konten produk, artikel, dan layanan melalui panel admin CMS mandiri.",
+    },
+    {
+        "id": "custom-module",
+        "name": "Custom Module",
+        "description": "Tambahkan fungsi khusus seperti kalkulator tarif, filter kustom, atau alur unik bisnis.",
+    },
+    {
+        "id": "integrasi-tambahan",
+        "name": "Integrasi Tambahan",
+        "description": "Integrasi layanan pihak ketiga, API eksternal, atau sistem CRM.",
+    },
+]
+
 WEBIA_PACKAGES = [
     {
         "id": "pixel",
@@ -88,6 +111,11 @@ WEBIA_CATEGORIES = [
     {"number": "09", "slug": "retail", "name": "Retail", "symbol": "▣", "desc": "Store, distributor, supplier, fashion, gadget"},
     {"number": "10", "slug": "healthcare", "name": "Healthcare", "symbol": "✚", "desc": "Clinic, pharmacy, medical practice, dental"},
     {"number": "11", "slug": "pet-animal-service", "name": "Pet & Animal Services", "symbol": "🐾", "desc": "Pet shop, pet care, grooming salon, veterinary clinic"},
+    {"number": "12", "slug": "technology-it", "name": "Technology & IT", "symbol": "⚡", "desc": "Software house, IT agency, web development, SaaS, tech startup"},
+    {"number": "13", "slug": "travel-tourism", "name": "Travel & Tourism", "symbol": "✈", "desc": "Tour & travel agent, open trip, vacation packages, eco-tourism"},
+    {"number": "14", "slug": "interior-architecture", "name": "Interior & Architecture", "symbol": "🛋", "desc": "Custom furniture, interior design, architecture, woodcraft"},
+    {"number": "15", "slug": "home-services", "name": "Home Services & Laundry", "symbol": "🧺", "desc": "Laundry kiloan/satuan, dry clean, cuci sepatu, home cleaning, renovasi hunian"},
+    {"number": "16", "slug": "agriculture-farming", "name": "Agriculture & Farming", "symbol": "🌱", "desc": "Peternakan sapi/kambing/unggas, agribisnis, smart farming IoT, hasil bumi"},
 ]
 
 # PRD WEBIA §7.6: Category & Package Recommendation Matrix
@@ -213,6 +241,61 @@ RECOMMENDATION_MATRIX = {
         "template_name": "PawMart (Pet Shop Minimalist) / Furry & Co. (Pet Boutique Luxury)",
         "recommended_modules": ["Katalog Makanan & Perlengkapan Hewan", "Online Booking Grooming", "Direct WhatsApp Order", "AI Nutrisi & Perawatan Hewan"],
     },
+    "technology_it": {
+        "category_name": "Technology & IT",
+        "entry_package": "Nexus",
+        "entry_price": "Rp1.499.000",
+        "upgrade_package": "Infinity",
+        "upgrade_trigger": "Bila software house memerlukan portal klien mandiri, sistem tiket/proyek custom, atau integrasi API backend kompleks.",
+        "template_id": "AzuraCraft Studio / RoseCode / Nexora Digital",
+        "template_slug": "technology-softwarehouse-elegant-babyblue-putri",
+        "template_name": "AzuraCraft Studio (Software House Elegant) / RoseCode / Nexora Digital",
+        "recommended_modules": ["Showcase Portofolio Proyek IT", "Estimator Biaya Pembuatan Software", "Tech Stack & Layanan", "Formulir RFP / Kontak WhatsApp"],
+    },
+    "travel_tourism": {
+        "category_name": "Travel & Tourism",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila biro perjalanan memerlukan CMS untuk mengupdate jadwal keberangkatan open trip, itinerary baru, dan galeri tur berkala.",
+        "template_id": "OceanJourney / GreenTrip / GrandJourney",
+        "template_slug": "travel-agent-ocean-teal",
+        "template_name": "OceanJourney (Modern Ocean Teal) / GreenTrip (Organic Forest Moss) / GrandJourney (Luxury VIP)",
+        "recommended_modules": ["Katalog Paket Wisata", "Itinerary Harian Lengkap", "Jadwal Keberangkatan", "Formulir Booking / WhatsApp Consultant"],
+    },
+    "interior_architecture": {
+        "category_name": "Interior, Furniture & Architecture",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila toko mebel atau biro interior membutuhkan upload katalog produk furnitur custom secara mandiri tanpa koding.",
+        "template_id": "WoodenLane / RusticFurni / Griya Etnik Nantara",
+        "template_slug": "furniture-mocha-cream",
+        "template_name": "WoodenLane (Premium Minimal) / RusticFurni (Rustic Terracotta) / Griya Etnik Nantara",
+        "recommended_modules": ["Katalog Furnitur & Ruang", "Visualizer / Galeri 3D", "Formulir Custom Furniture", "Konsultasi WhatsApp Desainer"],
+    },
+    "home_services": {
+        "category_name": "Home Services & Laundry",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila bisnis laundry Anda membutuhkan sistem CMS untuk update promo berkala, pelacakan status pengerjaan cucian, atau form booking antar-jemput.",
+        "template_id": "Mint Fresh / Baby Blue / Classic Trust",
+        "template_slug": "laundry-mint-fresh",
+        "template_name": "Mint Fresh Laundry (Minimalis) / Baby Blue (Modern) / Classic Trust (Professional)",
+        "recommended_modules": ["Price List Kiloan & Satuan", "Interactive Coverage Area Map", "Live Status Buka/Tutup Toko", "Form Booking Pick-up & Delivery", "Kalkulator Estimasi Biaya Renovasi per m2", "Form Booking Survey Arsitek", "AI Chatbot CS"],
+    },
+    "agriculture_farming": {
+        "category_name": "Agriculture & Farming",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila usaha peternakan atau agribisnis membutuhkan katalog stok hewan qurban/panen berkala, dashboard IoT kandang, atau pemesanan B2B suplai.",
+        "template_id": "Agriternak Bold Livestock / Agriternak Futuristic IoT",
+        "template_slug": "agriternak-bold-livestock",
+        "template_name": "Agriternak Bold Livestock (Peternakan Tangguh) / Futuristic IoT (Smart Farming) / Organic Precision",
+        "recommended_modules": ["Katalog Hewan Ternak & Bobot", "Sertifikasi Kesehatan & SKKH", "Monitoring Sensor IoT Kandang", "Form Pemesanan Qurban/B2B", "WhatsApp Farm Manager"],
+    },
 }
 
 
@@ -282,6 +365,63 @@ class L3IntentRouter:
                 "service_name": "Undangan Digital D-Karsa",
             }
 
+        # 1b. Customer Account & Order Status Tracking (Webia Account System)
+        if any(w in normalized for w in ["status pesanan", "cek pesanan", "order saya", "lacak pesanan", "dashboard saya", "progress web", "progres pembuatan"]):
+            return {
+                "intent": "customer_order_tracking",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "/dashboard",
+                "button_text": "Buka Dashboard & Pesanan Saya →",
+                "service_name": "Dashboard Pesanan Customer WEBIA",
+            }
+
+        if any(w in normalized for w in ["login", "masuk akun", "daftar akun", "register", "bikin akun", "sign in", "sign up"]):
+            return {
+                "intent": "customer_auth",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "/login",
+                "button_text": "Login Akun WEBIA (Order Baru via Guest Checkout) →",
+                "service_name": "Akun Customer WEBIA (Guest Checkout Aktif)",
+                "data": {
+                    "login_url": "/login",
+                    "guest_checkout_url": "/orders/create",
+                    "note": "Pemesanan baru tidak perlu registrasi manual; akun dibuat otomatis dan dikirim via email setelah order.",
+                },
+            }
+
+        # 1d. Add-on Services Resmi WEBIA
+        if any(w in normalized for w in ["addon", "add-on", "fitur tambahan", "modul tambahan", "tambahan modul", "upgrade fitur"]):
+            return {
+                "intent": "addon_inquiry",
+                "confidence": 0.95,
+                "action": "inform",
+                "target_url": "/orders/create",
+                "button_text": "Pilih Add-on di Formulir Pemesanan →",
+                "service_name": "4 Pilihan Add-on Resmi WEBIA",
+                "data": {
+                    "addons": WEBIA_ADDONS,
+                },
+            }
+
+        # 1c. Checkout & Metode Pembayaran Midtrans
+        if any(w in normalized for w in ["metode bayar", "metode pembayaran", "cara bayar", "bisa bayar pakai", "qris", "virtual account", "midtrans", "kartu kredit", "checkout pesanan"]):
+            return {
+                "intent": "payment_checkout_inquiry",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "/orders/create",
+                "button_text": "Buka Formulir Checkout & Pembayaran Midtrans →",
+                "service_name": "Pembayaran Otomatis WEBIA (Midtrans)",
+                "data": {
+                    "gateway": "Midtrans",
+                    "methods": ["QRIS (GoPay, OVO, ShopeePay)", "Virtual Account Bank (BCA, Mandiri, BRI, BNI)", "Kartu Kredit", "Transfer Manual Bank"],
+                    "verification": "Otomatis Real-Time (Status Langsung Paid)",
+                    "next_step": "Isi data bisnis di Dashboard (/dashboard) setelah pembayaran berhasil",
+                },
+            }
+
         # 2. Business Brief Generator (Prioritas sebelum kategori umum)
         if any(w in normalized for w in ["brief", "business brief", "susun brief", "buatkan brief", "formulir kebutuhan", "briefing"]):
             return {
@@ -305,6 +445,45 @@ class L3IntentRouter:
             }
 
         # 3. Rekomendasi Spesifik Berdasarkan Kategori Industri (Recommendation Matrix PRD §7.6)
+        if any(w in normalized for w in ["travel", "tour", "wisata", "liburan", "open trip", "trip planner", "biro perjalanan", "paket tour", "jalan-jalan"]):
+            sol = recommend_webia_solution("travel_tourism")
+            return {
+                "intent": "recommend_travel_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Template Travel & Tourism (OceanJourney) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "travel-agent-ocean-teal"),
+            }
+
+        if any(w in normalized for w in ["furniture", "furnitur", "mebel", "meubel", "kayu", "interior", "arsitektur", "joglo", "limasan"]):
+            sol = recommend_webia_solution("interior_architecture")
+            return {
+                "intent": "recommend_furniture_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Template Furniture & Interior (WoodenLane) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "furniture-mocha-cream"),
+            }
+
+        if any(w in normalized for w in ["software house", "software", "teknologi", "technology", "developer", "pembuatan aplikasi", "saas", "tech startup", "jasa koding"]):
+            sol = recommend_webia_solution("technology_it", needs_cms=True)
+            return {
+                "intent": "recommend_technology_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": f"Lihat Solusi Technology & Software House →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "technology-softwarehouse-elegant-babyblue-putri"),
+            }
+
         if any(w in normalized for w in ["fnb", "kuliner", "resto", "restoran", "cafe", "kafe", "kopi", "coffee", "catering", "katering", "bakery"]):
             sol = recommend_webia_solution("fnb")
             return {
@@ -392,6 +571,32 @@ class L3IntentRouter:
                 "button_text": f"Lihat Solusi Toko Retail & Etalase →",
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
+            }
+
+        if any(w in normalized for w in ["laundry", "cuci", "dry clean", "cuci baju", "kiloan", "sepatu", "setrika", "cleaning", "renovasi rumah", "home service"]):
+            sol = recommend_webia_solution("home_services", needs_cms=False)
+            return {
+                "intent": "recommend_home_services_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Laundry & Home Services (Mint Fresh / Baby Blue) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "laundry-mint-fresh"),
+            }
+
+        if any(w in normalized for w in ["peternakan", "ternak", "sapi", "kambing", "domba", "unggas", "ayam", "qurban", "agriternak", "agribisnis", "pertanian", "hidroponik", "iot kandang", "smart farm"]):
+            sol = recommend_webia_solution("agriculture_farming", needs_cms=True)
+            return {
+                "intent": "recommend_agriculture_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Agriternak & Smart Farming →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "agriternak-bold-livestock"),
             }
 
         if any(w in normalized for w in ["edukasi", "education", "kursus", "bimbel", "sekolah", "les privat", "e-learning", "elearning", "bootcamp"]):
