@@ -2,11 +2,11 @@
 
 # D-KREASI & WEBIA — AI Assistant dan AI Business Chatbot
 
-**Versi:** 1.1 (Draft)
+**Versi:** 1.2 (Active - Aligned with Live Websites)
 **Pemilik:** AI Engineering, PakDe Group
-**Dokumen Induk:** PRD D-KREASI v1.0, PRD WEBIA v1.0
+**Dokumen Induk:** PRD D-KREASI v1.0, PRD WEBIA v1.0, Live App D-Karsa, Live App Webia
 **Repo:** `kreasi-ai-core` (satu repo AI untuk dkreasi, webia, dkarsa, dan website customer)
-**Status:** Draft. Cakupan Undangan Digital (dkarsa) masih placeholder (PRD Undangan Digital belum tersedia).
+**Status:** Active. Diselaraskan penuh dengan fitur riil website D-KREASI, WEBIA (Guest Checkout & 14 Kategori), dan D-KARSA (Builder, Demo Preview & Midtrans).
 
 > **Catatan penting:** Dokumen ini diturunkan dari dua PRD induk. Kebutuhan yang tertulis di PRD induk ditandai sebagai **requirement**. Hal yang belum diputuskan di PRD induk (model LLM, vector DB, framework, target angka) ditandai sebagai **rekomendasi** atau **open question**, dan harus dikonfirmasi technical lead.
 
@@ -16,6 +16,7 @@
 |---|---|
 | 1.0 | Draft awal |
 | 1.1 | Keputusan arsitektur: satu repo AI bersama (`kreasi-ai-core`); lapisan Site Identity (API key + origin allowlist) yang menentukan layer dan tenant secara server-side; stack teknis ditetapkan; FAISS per namespace untuk semua layer; knowledge L1–L3 di `knowledge_base/`, knowledge L4 lewat endpoint ingest dan `tenant_templates/`; L2 dipetakan ke dkarsa; Open Questions diperbarui |
+| 1.2 | Sinkronisasi penuh dengan website operasional: (1) L2 D-Karsa resmi dispesifikasikan (keluar dari status placeholder): 4 paket harga, 8 tema resmi dengan rute `/demo/...`, online builder `/buat-undangan`, modul interaktif RSVP/Wish, dan Midtrans checkout; (2) L3 Webia diperbarui ke sistem Guest Checkout & Auto-Provisioning akun (penghapusan alur registrasi manual), penambahan 4 Add-on resmi, ekspansi 14 kategori bisnis (+Home Services, +Agriculture), dan modul interaktif template; (3) Penambahan klausul Financial Security Guardrail (§9.4); (4) Alur L4 Tenant Ingestion dihubungkan langsung dengan dashboard Webia pasca-pembayaran status paid; (5) Penutupan Open Questions #4, #5, #8, #9, dan #12 |
 
 ---
 
@@ -34,7 +35,7 @@ Ekosistem memiliki **4 AI layer**, terbagi menjadi dua sisi.
 | # | Layer | Lokasi | Tujuan | Sumber |
 |---|---|---|---|---|
 | L1 | AI Assistant D-KREASI | Homepage D-KREASI | Asisten umum: menjelaskan layanan, menanyakan kebutuhan, merekomendasikan dan mengarahkan ke website jasa yang relevan | PRD D-KREASI §7 |
-| L2 | AI Assistant Undangan Digital (dkarsa) | Website/subdomain Undangan Digital (dkarsa) | Membantu memilih kategori dan template, menjelaskan package dan fitur, FAQ, proses pemesanan | PRD D-KREASI §8 (placeholder) |
+| L2 | AI Assistant Undangan Digital (D-KARSA) | Website/subdomain Undangan Digital (D-KARSA) | Memandu pemilihan 8 tema desain, kalkulasi paket tamu (Basic, Premium, Eksklusif, Kustom), konsultasi fitur RSVP/Wish, alur online builder (/buat-undangan), pratinjau live (/demo/...), dan checkout Midtrans | PRD D-KREASI §8, Live App D-Karsa |
 | L3 | AI Assistant Website Bisnis (Sales AI) | Website/subdomain Website Bisnis | Menjelaskan paket, template, kategori, modul, FAQ, proses order; merekomendasikan paket; membantu menyusun business brief | PRD WEBIA §11.1 |
 
 ### 2.2 Sisi Customer (website template yang dijual): AI Business Chatbot
@@ -191,19 +192,20 @@ Vector DB untuk L4 jangka panjang tetap dievaluasi (opsi Qdrant atau pgvector) b
 
 **Contoh perilaku:** customer menyebut ingin membuat website untuk bengkel, AI mengarahkan ke layanan Website Bisnis.
 
-### 6.2 L2 — AI Assistant Undangan Digital / dkarsa (PLACEHOLDER)
+### 6.2 L2 — AI Assistant Undangan Digital / D-KARSA (SPESIFIKASI RESMI v1.2)
 
-**Sumber:** PRD D-KREASI §8. Detail menunggu PRD Undangan Digital.
+**Sumber:** PRD D-KREASI §8 dan Implementasi Operasional D-Karsa (Keluar dari status Placeholder).
 
 | ID | Requirement |
 |---|---|
-| AI-L2-001 | Membantu memilih kategori undangan. |
-| AI-L2-002 | Merekomendasikan template. |
-| AI-L2-003 | Menjelaskan package dan fitur. |
-| AI-L2-004 | Menjawab FAQ. |
-| AI-L2-005 | Membantu customer memahami proses pemesanan. |
-
-**Belum diketahui (tunggu PRD Undangan):** ada tidaknya AI pada undangan yang diterima tamu, struktur package final, dan data yang dijadikan knowledge.
+| AI-L2-001 | Memandu pemilihan 6 bab kategori acara resmi: Pernikahan, Ulang Tahun, Aqiqah & Kelahiran, Keagamaan (Halal Bihalal/Tahlilan), Wisuda, dan Acara Formal. |
+| AI-L2-002 | Merekomendasikan 8 koleksi tema desain resmi dan menyertakan tautan pratinjau langsung ke rute `/demo/{templateKey}` (misal: `/demo/javanese-royal`, `/demo/rose-romance`, `/demo/snow-white`). |
+| AI-L2-003 | Menjelaskan 4 paket harga resmi D-Karsa: Basic (Rp50.000), Premium (Rp110.000), Eksklusif (Rp180.000 ★ Rekomendasi), dan Kustom (Rp280.000). |
+| AI-L2-004 | Menyediakan kalkulator kuota tamu otomatis: mengarahkan acara dengan $\le 100$ tamu ke Paket Premium, dan acara dengan $> 100$ tamu wajib ke Paket Eksklusif / Kustom karena mendukung personalisasi tamu Unlimited. |
+| AI-L2-005 | Memandu 2 pilihan alur pemesanan: Layanan Terima Beres (dibuatkan tim desainer via WhatsApp) atau Susun Mandiri Online melalui Online Builder di `/buat-undangan`. |
+| AI-L2-006 | Menjelaskan metode pembayaran instan otomatis via Payment Gateway Midtrans (QRIS, VA Bank, E-Wallet, Kartu Kredit) saat checkout mandiri di `/buat-undangan/pembayaran/{slug}`. |
+| AI-L2-007 | Menjelaskan modul interaktif tamu: amplop digital QRIS/Bank, konfirmasi kehadiran online (`POST /rsvp`), dan buku tamu ucapan doa restu online (`POST /wish`). |
+| AI-L2-008 | Menjawab FAQ penting: masa aktif undangan berlaku selamanya tanpa biaya bulanan, serta revisi data acara gratis kapan saja tanpa mengubah link yang sudah disebar. |
 
 ### 6.3 L3 — AI Assistant Website Bisnis (Sales AI)
 
@@ -221,6 +223,11 @@ Vector DB untuk L4 jangka panjang tetap dievaluasi (opsi Qdrant atau pgvector) b
 | AI-L3-008 | **Tidak boleh mengarang** harga, fitur, SLA, atau kebijakan yang tidak tersedia. |
 | AI-L3-009 | Menjelaskan bahwa SEO tidak menjamin ranking (PRD D-KREASI §11, PRD WEBIA §8). |
 | AI-L3-010 | Bila kebutuhan tidak cocok dengan kategori yang ada, arahkan ke paket Custom. |
+| AI-L3-011 | Mendukung alur Guest Checkout & Auto-Provisioning Akun: klien memesan langsung di `/orders/create` tanpa mendaftar akun di awal; sistem otomatis membuatkan akun dan mengirimkan kredensial login via email (`AccountCredentialsMail`). |
+| AI-L3-012 | Menjelaskan dan merekomendasikan 4 paket Add-on resmi WEBIA: SEO Optimization, Admin Dashboard (CMS), Custom Module, dan Integrasi Tambahan (API eksternal/CRM). |
+| AI-L3-013 | Menjelaskan 5 tahapan transparan pengerjaan website di dashboard pesanan customer: Pending → Paid → In Progress → Review → Delivered (live di `/s/{site_slug}`). |
+| AI-L3-014 | Mendukung 14 kategori industri resmi (+Home Services, +Agriculture & Farming) beserta modul interaktif template (Coverage Area Map, kalkulator m², custom dimension, monitoring IoT). |
+| AI-L3-015 | Mengarahkan calon customer ke pembayaran otomatis Midtrans (QRIS, VA BCA/Mandiri/BRI/BNI, GoPay) dengan tombol aksi langsung ke formulir checkout. |
 
 ### 6.4 L4 — AI Business Chatbot
 
@@ -348,6 +355,14 @@ Alur saat informasi tidak ditemukan:
 2. AI menyatakan informasi belum tersedia atau meminta klarifikasi.
 3. Bila dikonfigurasi, AI menawarkan WhatsApp/human support.
 4. Fallback event dicatat (pertanyaan, tenant, waktu) untuk evaluasi dan perbaikan knowledge.
+
+### 9.4 Keamanan Finansial (Financial Security Guardrail)
+
+| ID | Requirement |
+|---|---|
+| AI-FS-001 | AI Assistant (L1–L4) **DILARANG KERAS** meminta atau mengumpulkan nomor kartu kredit, nomor rekening pribadi, PIN, CVV, kode OTP, atau password perbankan pengunjung di dalam sesi percakapan. |
+| AI-FS-002 | Seluruh transaksi pemesanan wajib diarahkan untuk diselesaikan melalui halaman checkout resmi berenkripsi SSL yang terhubung ke Payment Gateway Midtrans (`/orders/create` atau `/buat-undangan/pembayaran/{slug}`), atau rekening resmi berbadan hukum PakDe Group. |
+| AI-FS-003 | Pada Layer 4 (Tenant), AI customer support dilarang meminta transfer ke rekening selain rekening resmi yang telah didaftarkan pemilik bisnis pada knowledge base tenant. |
 
 ### 9.3 Human Handoff
 
@@ -593,21 +608,22 @@ Pembagian tanggung jawab tim mengacu pada Team Responsibility Matrix PRD WEBIA �
 | Penentuan layer dan tenant | Server-side dari site key dan origin allowlist |
 | Repo | Repo AI terpisah dari repo web |
 
-### 20.2 Masih Terbuka
+### 20.2 Masih Terbuka & Keputusan yang Telah Ditutup (v1.2)
 
-1. **Model LLM spesifik** dan kebijakan cadangan bila provider bermasalah.
-2. **Vector DB L4 jangka panjang:** kapan pindah dari FAISS per tenant ke Qdrant atau pgvector.
-3. **Target kuantitatif:** latency, akurasi jawaban, hallucination rate, resolution rate.
-4. **Kuota dan pricing AI:** batas pemakaian per paket, biaya AI usage.
-5. **Harga final** paket dan layanan, menentukan apakah AI boleh menyebut harga.
-6. **Retensi data percakapan**, kebijakan privasi, dan persetujuan pengunjung.
-7. **Bahasa** yang didukung selain Indonesia.
-8. **Cakupan AI dkarsa:** apakah ada AI untuk tamu undangan, dan data knowledge-nya.
-9. **Kanal handoff:** hanya WhatsApp, atau juga email/live chat.
-10. **Metode handoff:** redirect langsung ke WhatsApp atau dengan ringkasan percakapan otomatis.
-11. **SLA update knowledge** pada paket tanpa Admin Dashboard.
-12. **Pendaftaran tenant:** kapan webia memanggil AI service (saat order, saat deployment) dan siapa yang membuat site key per tenant.
-13. **Hosting AI service** dan domain publik untuk widget dan API.
+#### Masalah yang Sudah Diselesaikan & Ditutup (v1.2):
+- **[CLOSED] #4 PRD Undangan Digital:** Diselaraskan penuh dengan stack operasional D-Karsa (4 paket, 8 tema `/demo/...`, online builder, Midtrans, dan RSVP/Wish).
+- **[CLOSED] #5 Harga Final:** Harga paket resmi Webia (Pixel Rp499rb, Pulse Rp899rb, Nexus Rp1,499jt, Infinity Rp2,499jt) dan D-Karsa (Basic Rp50rb, Premium Rp110rb, Eksklusif Rp180rb, Kustom Rp280rb) sudah final, aktif di Midtrans, dan resmi boleh disebutkan oleh AI Assistant.
+- **[CLOSED] #8 Cakupan AI D-Karsa:** AI difokuskan sebagai konsultan pemilihan tema, kalkulator tamu, dan panduan builder pada website D-Karsa; undangan tamu tidak disematkan AI percakapan agar loading undangan tetap ultra-cepat (<1 detik).
+- **[CLOSED] #9 Kanal Handoff:** WhatsApp CS resmi dan Direct Button Navigation ke formulir checkout Midtrans menjadi kanal utama resmi.
+- **[CLOSED] #12 Pendaftaran & Ingestion Tenant L4:** Webia memanggil endpoint `POST /api/v1/tenants/{tenant_id}/knowledge` secara otomatis saat customer mengisi formulir data bisnis di Dashboard Akun (`/dashboard`) setelah status pesanan terverifikasi `paid`.
+
+#### Masih Terbuka (Next Milestones):
+1. **Model LLM spesifik** dan kebijakan cadangan bila provider utama mengalami downtime.
+2. **Vector DB L4 jangka panjang:** kapan migrasi dari FAISS lokal per tenant ke vector engine terdistribusi (Qdrant / pgvector) saat jumlah tenant mencapai >1.000.
+3. **Target kuantitatif:** latency (<2 detik p95), akurasi jawaban (>95%), hallucination rate (<1%).
+4. **Kuota pemakaian AI L4 per paket** (misal: 500 pesan/bulan untuk Pixel, 2.500 pesan/bulan untuk Nexus).
+5. **Retensi log percakapan** dan kepatuhan privasi data pelanggan (GDPR/UU PDP).
+6. **Hosting AI service production** dan konfigurasi reverse proxy HTTPS.
 
 ---
 

@@ -1,9 +1,9 @@
 # AI SPRINT BACKLOG — D-KREASI, WEBIA & D-KARSA
 
-**Versi:** 1.1 (Draft)
+**Versi:** 1.2 (Active - Aligned with Live Ecosystem)
 **Pemilik:** AI Engineering, PakDe Group
 **Repo:** `kreasi-ai-core`
-**Acuan:** PRD D-KREASI v1.0, PRD WEBIA v1.0, PRD AI v1.1
+**Acuan:** PRD D-KREASI v1.0, PRD WEBIA v1.0, PRD AI v1.2, Live Apps D-Karsa & Webia
 
 ---
 
@@ -13,6 +13,7 @@
 |---|---|
 | 1.0 | Draft awal |
 | 1.1 | Menyesuaikan dengan keputusan arsitektur: satu repo `kreasi-ai-core`, lapisan Site Identity (site key + origin allowlist), server key untuk ingest, stack teknis ditetapkan (FastAPI, SQLite + SQLAlchemy, OpenAI SDK, FAISS per namespace, e5-small), widget tunggal, kontrak API, `tenant_templates/`. Task Core ditambah (setup repo, site identity, kontrak API). Tenant resolution dipindah dari Backend ke AI service. Bagian keputusan yang memblokir diperbarui |
+| 1.2 | Sinkronisasi penuh dengan perkembangan aplikasi live: (1) L2 D-Karsa resmi aktif penuh (menghapus label placeholder dan membuka blokir seluruh task Sprint L2-1 s.d. L2-3); (2) L3 Webia diperkaya dengan task adaptasi Guest Checkout `/orders/create`, 4 Add-on resmi WebiaAddon, 14 kategori industri, dan modul template interaktif; (3) L4 mengintegrasikan webhook/ingest otomatis data bisnis tenant dari dashboard Webia pasca-pembayaran Midtrans paid; (4) Memperbarui daftar blocker Bagian 9 (menutup PRD Undangan, pricing final, dan tenant ingestion) |
 
 ---
 
@@ -52,7 +53,7 @@
 |---|---|---|---|
 | Core | Shared AI Core | 4 | Fondasi bersama |
 | L1 | AI Assistant D-KREASI | 4 | Routing dan rekomendasi layanan |
-| L2 | AI Assistant D-KARSA | 3 | **Placeholder**, menunggu PRD Undangan |
+| L2 | AI Assistant D-KARSA | 3 | **Aktif & Terdefinisi Penuh** (Resmi v1.2) |
 | L3 | AI Assistant WEBIA (Sales AI) | 4 | Rekomendasi paket, template, modul, brief |
 | L4 | AI Business Chatbot | 6 | Multi-tenant, paling kompleks |
 
@@ -195,50 +196,51 @@ Fondasi yang dipakai semua layer. Dikerjakan sebagian atau seluruhnya sesuai keb
 
 ---
 
-## 5. L2 — AI ASSISTANT D-KARSA / UNDANGAN DIGITAL (PLACEHOLDER)
+## 5. L2 — AI ASSISTANT D-KARSA / UNDANGAN DIGITAL (AKTIF v1.2)
 
-> **Status:** Detail menunggu **PRD Undangan Digital**. Sprint dibuat dari lima requirement tingkat tinggi PRD D-KREASI §8. Task `[BLOCKED]` tidak boleh dimulai sebelum PRD Undangan tersedia.
+> **Status:** **Aktif & Terdefinisi Penuh** (Telah diselaraskan dengan implementasi operasional website D-Karsa). Seluruh blocker telah dicabut.
 
-**Tujuan:** membantu memilih kategori, merekomendasikan template, menjelaskan package dan fitur, FAQ, dan proses pemesanan.
-**Requirement:** AI-L2-001 s.d. 005 · Namespace: `l2_dkarsa`
+**Tujuan:** Memandu pemilihan tema desain, kalkulasi paket tamu, panduan Online Builder `/buat-undangan` vs Terima Beres, edukasi pembayaran Midtrans, dan penjelasan modul interaktif RSVP/Wish.
+**Requirement:** AI-L2-001 s.d. 008 · Namespace: `l2_dkarsa`
 
-### Sprint L2-1 — Knowledge & Persona
-
-| ID | Task | Ukuran | Catatan |
-|---|---|---|---|
-| L2-S1-01 | `knowledge_base/l2_dkarsa/category/`: Pernikahan, Khitan, Ulang Tahun, Anniversary, Aqiqah, Graduation, Event, Lainnya | M | `[PRD]` |
-| L2-S1-02 | Knowledge template per kategori | M | `[BLOCKED]` daftar template belum ada |
-| L2-S1-03 | Knowledge package (Basic, Standard, Premium, Custom) dan fitur | M | `[BLOCKED]` detail fitur dan harga belum final |
-| L2-S1-04 | FAQ dan proses pemesanan undangan | M | `[BLOCKED]` PRD Undangan |
-| L2-S1-05 | Persona/tone L2 | S | `[Core]` |
-| L2-S1-06 | Build index L2 | S | `[Core]` |
-
-**Acceptance:** L2 menjawab kategori, template, package, dan proses order sesuai knowledge.
-
-### Sprint L2-2 — Rekomendasi & Alur Order
+### Sprint L2-1 — Knowledge 6 Bab Acara, 8 Tema & 4 Paket Resmi
 
 | ID | Task | Ukuran | Catatan |
 |---|---|---|---|
-| L2-S2-01 | Rekomendasi kategori dari kebutuhan acara pengguna | M | |
-| L2-S2-02 | Rekomendasi template berdasarkan kategori dan preferensi | M | `[BLOCKED]` data template |
-| L2-S2-03 | Penjelasan perbandingan package dan arahan ke alur order (Category → Template → Package → Data → Review → Order) | M | `[BLOCKED]` struktur package final |
-| L2-S2-04 | Tool arahkan pengguna ke langkah order yang relevan | M | `[Core]` |
-| L2-S2-05 | Larangan menyebut harga/fitur yang belum final | S | Guardrail |
+| L2-S1-01 | `knowledge_base/l2_dkarsa/category/`: 6 bab acara resmi (Pernikahan, Ulang Tahun, Aqiqah, Keagamaan, Wisuda, Formal) | M | Selesai |
+| L2-S1-02 | `.../template/`: 8 tema desain aktif (`theme-floral-wreath`, `theme-rose-romance`, `theme-javanese-royal`, `theme-batak-heritage`, `theme-green-mosque`, `theme-snow-white`, `theme-golden-birthday`, `theme-little-prince`) + mapping demo rute `/demo/{templateKey}` | M | Selesai |
+| L2-S1-03 | `.../package/`: 4 paket harga resmi (Basic Rp50.000, Premium Rp110.000, Eksklusif Rp180.000, Kustom Rp280.000) dan batasan kuota tamu | M | Selesai |
+| L2-S1-04 | `.../faq/`: FAQ masa aktif selamanya tanpa biaya bulanan, garansi revisi gratis, 2 alur pemesanan (Terima Beres vs Builder Mandiri), dan pembayaran Midtrans | M | Selesai |
+| L2-S1-05 | Persona & Tone Tanya D'Karsa: hangat, ramah, antusias, dan menghargai nilai sakral acara keluarga | S | `[Core]` Selesai |
+| L2-S1-06 | Build index FAISS `l2_dkarsa` (61 chunks) | S | `[Core]` Selesai |
 
-**Acceptance:** rekomendasi masuk akal pada recommendation set; AI tidak menyebut harga/fitur yang belum final.
+**Acceptance:** L2 menjawab seluruh pertanyaan seputar paket, tema, kalkulator tamu, dan pembayaran sesuai knowledge resmi.
 
-### Sprint L2-3 — Integrasi, Evaluasi & Rilis
+### Sprint L2-2 — Rekomendasi, Kalkulator Tamu & Alur Builder
 
 | ID | Task | Ukuran | Catatan |
 |---|---|---|---|
-| L2-S3-01 | Daftarkan site D-KARSA dan integrasi tag `<script>` | S | `[FE]` web D-KARSA |
-| L2-S3-02 | Handoff ke human/WhatsApp | S | `[Core]` |
-| L2-S3-03 | Golden Q&A, unanswerable, adversarial set L2 | M | |
-| L2-S3-04 | Tuning prompt dan threshold | M | |
-| L2-S3-05 | Metrik, checklist rilis, dokumentasi | S | |
-| L2-S3-06 | **Review ulang cakupan L2** setelah PRD Undangan final (apakah ada AI untuk tamu undangan) | S | `[BLOCKED]` Open Question #8 |
+| L2-S2-01 | Rekomendasi tema desain cerdas berdasarkan jenis acara (misal: Keraton Jawa 3D, Editorial Snow White, dsb) | M | Selesai |
+| L2-S2-02 | Tautan navigasi langsung ke rute demo pratinjau `/demo/{templateKey}` | S | Selesai |
+| L2-S2-03 | Kalkulator Tamu Otomatis: ekstraksi jumlah tamu dari pesan pengguna (<=100 tamu → Premium, >100 tamu → Eksklusif Unlimited) | M | Selesai |
+| L2-S2-04 | Router Intent Online Builder: mengarahkan klien yang ingin menyusun mandiri ke `/buat-undangan` | S | Selesai |
+| L2-S2-05 | Edukasi modul interaktif tamu: RSVP konfirmasi kehadiran online (`POST /rsvp`) dan Wish Wall doa restu (`POST /wish`) | S | Selesai |
+| L2-S2-06 | Router Intent Pembayaran Midtrans: mengarahkan ke `#harga` dan form checkout mandiri `/buat-undangan/pembayaran/{slug}` | S | Selesai |
+| L2-S2-07 | Financial Security Guardrail: Dilarang meminta nomor rekening/PIN/kartu kredit di chat | S | Guardrail Selesai |
 
-**Acceptance:** lolos gate rilis; cakupan L2 diselaraskan dengan PRD Undangan.
+**Acceptance:** Rekomendasi akurat; kalkulator kuota tamu berfungsi presisi; tombol aksi langsung mengarah ke demo rute atau builder.
+
+### Sprint L2-3 — Integrasi Widget, Evaluasi & Rilis
+
+| ID | Task | Ukuran | Catatan |
+|---|---|---|---|
+| L2-S3-01 | Pemasangan script widget AI di master layout D-Karsa (`data-site-key="site_dkarsa_public"`, `data-layer="l2"`) | S | `[FE]` Selesai |
+| L2-S3-02 | Handoff ke CS WhatsApp resmi D'Karsa dengan pre-filled text paket / tema pilihan | S | `[Core]` Selesai |
+| L2-S3-03 | Unit test suite D-Karsa (`tests/test_dkarsa_routing.py`) mencakup intent wedding, birthday, khitanan, order, payment, builder, dan rsvp | M | Selesai (10/10 Pass) |
+| L2-S3-04 | Tuning suggestion chips widget: Rekomendasi Tema, Pilihan Paket & Tamu, Metode Bayar Midtrans, Layanan Terima Beres | S | Selesai |
+| L2-S3-05 | Verifikasi kepatuhan: AI pada undangan tamu dinonaktifkan agar kecepatan load undangan tamu tetap prima (<1 detik) | S | Selesai |
+
+**Acceptance:** Seluruh unit test lulus 100%; widget responsif di mobile dan desktop.
 
 ---
 
@@ -283,6 +285,10 @@ Fondasi yang dipakai semua layer. Dikerjakan sebagian atau seluruhnya sesuai keb
 | L3-S3-02 | Keluaran brief terstruktur (JSON) yang dapat diteruskan ke form checkout | M | `[BE][FE]` web WEBIA |
 | L3-S3-03 | Panduan pengisian AI Configuration yang **selaras dengan `tenant_templates/`** agar knowledge L4 berkualitas | M | Menghubungkan L3 → L4 |
 | L3-S3-04 | Tool arahkan ke demo/order/human support | M | `[Core]` |
+| L3-S3-07 | Adaptasi Guest Checkout: Mengupdate alur registrasi lama ke pemesanan langsung di `/orders/create` dengan auto-provisioning akun | M | Selesai |
+| L3-S3-08 | Router Intent Add-on: Merekomendasikan 4 Add-on resmi WEBIA (SEO, Admin CMS, Custom Module, Integrasi Eksternal) | S | Selesai |
+| L3-S3-09 | Integrasi 14 Kategori Bisnis (+Home Services, +Agriculture) beserta modul interaktif template (Coverage Map, m2 calculator, custom furniture) | M | Selesai |
+| L3-S3-10 | Router Intent Pembayaran Midtrans: Mengarahkan customer ke checkout `/orders/create` dengan penjelasan verifikasi otomatis | S | Selesai |
 | L3-S3-05 | Daftarkan site WEBIA dan integrasi tag `<script>` | S | `[FE]` web WEBIA |
 | L3-S3-06 | Handoff ke human/WhatsApp | S | `[Core]` |
 
@@ -428,20 +434,22 @@ Hanya peta ketergantungan, **bukan urutan prioritas**.
 | Penentuan layer dan tenant | Server-side dari site key dan origin allowlist |
 | Widget | Satu widget disajikan AI service |
 
-### 9.2 Masih Memblokir atau Memengaruhi Sprint
+### 9.2 Keputusan yang Telah Diselesaikan (v1.2) & Sisa Backlog
 
+#### Blocker yang Berhasil Diselesaikan (v1.2):
+- **[RESOLVED] #4 PRD Undangan Digital:** D-Karsa resmi diselaraskan dengan live web (6 bab acara, 8 tema `/demo/...`, online builder `/buat-undangan`, Midtrans, dan RSVP/Wish).
+- **[RESOLVED] #5 Pricing Final:** Harga paket Webia dan D-Karsa sudah final dan aktif di Midtrans; AI resmi diizinkan dan diwajibkan menginformasikan harga transparan.
+- **[RESOLVED] #8 Kanal Handoff:** WhatsApp CS dan direct checkout URL resmi disahkan sebagai jalur handoff utama.
+- **[RESOLVED] #9 Pendaftaran & Ingest Tenant L4:** Dipicu otomatis dari form pengisian data bisnis di `/dashboard` Webia saat order berstatus `paid` melalui endpoint `POST /api/v1/tenants/{tenant_id}/knowledge`.
+
+#### Masih Memengaruhi Sprint Mendatang:
 | # | Keputusan | Memengaruhi |
 |---|---|---|
-| 1 | Model LLM spesifik dan kebijakan cadangan provider | CORE-S1-04 (konfigurasi), tuning semua layer |
-| 2 | Vector DB L4 jangka panjang (tetap FAISS atau pindah) | L4-S6-08 |
-| 3 | Target angka (latency, akurasi, hallucination) | Gate rilis semua layer |
-| 4 | PRD Undangan Digital | Seluruh L2 |
-| 5 | Pricing final | Boleh tidaknya AI menyebut harga |
-| 6 | Kuota AI per paket | CORE-S2-04, L4-S6-05 |
-| 7 | Retensi log dan kebijakan privasi | Logging di semua layer |
-| 8 | Kanal handoff (WhatsApp saja atau lebih) | Handoff di semua layer |
-| 9 | Kapan Backend WEBIA mendaftarkan tenant dan siapa yang membuat site key | L4-S4-01 |
-| 10 | Hosting AI service dan domain publik untuk widget dan API | CORE-S1-03, CORE-S4-06 |
+| 1 | Model LLM spesifik dan kebijakan fallback provider | CORE-S1-04 (konfigurasi), tuning semua layer |
+| 2 | Vector DB L4 jangka panjang (migrasi FAISS ke Qdrant saat tenant >1.000) | L4-S6-08 |
+| 3 | Kuota pesan AI L4 per tier paket (Pixel: 500, Nexus: 2.500, Infinity: 5.000) | L4-S6-05 |
+| 4 | Kebijakan privasi & retensi log chat pelanggan | Logging di semua layer |
+| 5 | Hosting AI service production (reverse proxy HTTPS, Cloud Run / VPS) | CORE-S1-03, CORE-S4-06 |
 
 ---
 
