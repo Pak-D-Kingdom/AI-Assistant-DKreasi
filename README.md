@@ -54,6 +54,7 @@ python main.py
 ```
 *Backend AI berjalan pada port **8001** (port 8000 dicadangkan untuk web Laravel Webia & D-Karsa).*
 - **Interactive Swagger API Docs**: [http://localhost:8001/docs](http://localhost:8001/docs)
+- **Analytics Performance Dashboard**: [http://localhost:8001/analytics](http://localhost:8001/analytics)
 - **Health Check Endpoint**: [http://localhost:8001/api/v1/health](http://localhost:8001/api/v1/health)
 - **Widget Testing UI Sandbox**: [http://localhost:8001/widget/index.html](http://localhost:8001/widget/index.html)
 
@@ -118,8 +119,32 @@ Tambahkan tag script berikut pada layout master website masing-masing:
 
 ---
 
-## 📡 API Ingest Data Tenant L4 (Integrasi Form Webia)
+## 📊 Manajemen Kuota Chatbot AI Klien & Enforce Limit (Layer 4)
 
+Backend AI Assistant mengimplementasikan pembatasan kuota (*Quota Enforcement*) bulanan pada Layer 4 (Tenant Bisnis) yang tersinkronisasi penuh dengan paket template di Webia:
+
+| Paket Website | Kuota Pesan Chatbot / Bulan | Perilaku Saat Batas Kuota Tercapai |
+| :--- | :--- | :--- |
+| **Pixel** | **500 pesan** | Chatbot otomatis dialihkan ramah ke tombol WhatsApp admin toko (*Zero Lost Lead*) |
+| **Pulse** | **1.500 pesan** | Chatbot otomatis dialihkan ramah ke tombol WhatsApp admin toko (*Zero Lost Lead*) |
+| **Nexus** | **2.500 pesan** | Chatbot otomatis dialihkan ramah ke tombol WhatsApp admin toko (*Zero Lost Lead*) |
+| **Infinity** | **5.000 pesan** | Chatbot otomatis dialihkan ramah ke tombol WhatsApp admin toko (*Zero Lost Lead*) |
+
+> Layanan internal **L1 (D-Kreasi)**, **L2 (D-Karsa)**, dan **L3 (Webia Sales)** memiliki kuota **Unlimited** sebagai kanal konversi utama.
+
+### 🌐 Arsitektur Monitoring Kuota 3 Pilar Terpadu:
+1. **Pilar 1: AI Analytics Performance Dashboard (`http://localhost:8001/analytics`)**
+   - Dashboard analitik internal engineer & manajemen: metrik latensi, token LLM, pertanyaan populer, serta tabel monitoring kuota tenant bisnis dengan hitung mundur reset akhir bulan.
+2. **Pilar 2: Superadmin Webia (`http://localhost:8000/admin/ai-quotas`)**
+   - Panel monitoring CRM seluruh klien/tenant, filter status (*Semua, Kritis, Habis, Aman*), tombol **WA Sales** (upselling kuota otomatis), dan tombol **Detail Pesanan**.
+3. **Pilar 3: Portal Konsumen Webia (`http://localhost:8000/ai-assistant`)**
+   - Panel monitoring pemilik bisnis: progress bar penggunaan kuota, hitung mundur reset bulanan kalender, perbandingan paket, dan live sync indicator.
+
+---
+
+## 📡 API Ingest Data & Manajemen Kuota Tenant L4
+
+### 1. Ingest Data Bisnis (Form Webia)
 Ketika klien selesai mengisi formulir data bisnis di Dashboard Akun Webia (`/dashboard`), backend Webia dapat langsung mengirimkan HTTP POST untuk menyusun dan mengindeks AI chatbot toko secara otomatis:
 
 - **Endpoint**: `POST /api/v1/tenants/{tenant_id}/knowledge`
@@ -134,3 +159,24 @@ Ketika klien selesai mengisi formulir data bisnis di Dashboard Akun Webia (`/das
 }
 ```
 *Sistem AI akan otomatis menyimpan file markdown dan langsung mengompilasi index FAISS dalam 2 detik.*
+
+### 2. Cek Status Kuota Tenant
+- **Endpoint**: `GET /api/v1/tenants/{tenant_id}/quota`
+- **Response**:
+```json
+{
+  "tenant_id": "tenant_automotive_01",
+  "period": "2026-11",
+  "package_tier": "pixel",
+  "monthly_quota": 500,
+  "used_messages": 486,
+  "remaining_messages": 14,
+  "percentage_used": 97.2,
+  "is_quota_exhausted": false
+}
+```
+
+### 3. Pembaruan Tier Langganan Tenant
+- **Endpoint**: `POST /api/v1/tenants/{tenant_id}/tier`
+- **Body**: `{"package_tier": "pulse", "custom_quota": 1500}`
+

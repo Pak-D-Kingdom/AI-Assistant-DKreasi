@@ -219,6 +219,40 @@ class PipelineOrchestrator:
         # 2-4. Routing, RAG, System Prompt
         prep = await self._prepare(messages, context)
 
+        # Quota Enforcement for Tenant (Sprint L4-S6-05)
+        if prep["is_tenant"] and tenant_id:
+            quota_status = await UsageService.check_quota(db=db, tenant_id=tenant_id, layer=layer_name)
+            if not quota_status["allowed"]:
+                quota_msg = quota_status.get("message") or (
+                    "Mohon maaf, kuota layanan asisten chat otomatis bulan ini untuk bisnis ini "
+                    "telah mencapai batas. Silakan hubungi kami langsung via WhatsApp untuk bantuan lebih lanjut."
+                )
+                if db:
+                    await UsageService.log_interaction(
+                        db=db,
+                        session_id=session_id,
+                        layer=layer_name,
+                        user_message=latest_user_message,
+                        assistant_message=quota_msg,
+                        tenant_id=tenant_id,
+                        site_id=context.site_id,
+                        provider="quota-enforcement",
+                        model="quota-v1",
+                        is_fallback=True,
+                    )
+                return {
+                    "success": True,
+                    "layer": layer_name,
+                    "session_id": session_id,
+                    "message": {"role": "assistant", "content": quota_msg},
+                    "routing": prep["routing"],
+                    "meta": {
+                        "quota_blocked": True,
+                        "quota": quota_status.get("quota"),
+                        "usage": quota_status.get("usage"),
+                    },
+                }
+
         # 5. Call LLM
         llm_response = await self.llm_service.chat(
             messages=messages,
@@ -303,6 +337,34 @@ class PipelineOrchestrator:
 
         # Kirim meta (routing, nomor WA & nama tenant) segera
         yield sse(self._meta_event(session_id, context, prep))
+
+        # Quota Enforcement for Tenant (Sprint L4-S6-05)
+        if prep["is_tenant"] and tenant_id:
+            quota_status = await UsageService.check_quota(db=db, tenant_id=tenant_id, layer=layer_name)
+            if not quota_status["allowed"]:
+                quota_msg = quota_status.get("message") or (
+                    "Mohon maaf, kuota layanan asisten chat otomatis bulan ini untuk bisnis ini "
+                    "telah mencapai batas. Silakan hubungi kami langsung via WhatsApp untuk bantuan lebih lanjut."
+                )
+                yield sse({"type": "token", "content": quota_msg})
+                yield sse({"type": "done", "length": len(quota_msg), "quota_blocked": True})
+                if db:
+                    try:
+                        await UsageService.log_interaction(
+                            db=db,
+                            session_id=session_id,
+                            layer=layer_name,
+                            user_message=latest_user_message,
+                            assistant_message=quota_msg,
+                            tenant_id=tenant_id,
+                            site_id=context.site_id,
+                            provider="quota-enforcement",
+                            model="quota-v1",
+                            is_fallback=True,
+                        )
+                    except Exception as e:
+                        logger.warning(f"Failed to log quota-blocked interaction: {e}")
+                return
 
         # 5. Stream LLM tokens
         full_output_parts: List[str] = []

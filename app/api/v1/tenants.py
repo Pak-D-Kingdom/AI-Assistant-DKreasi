@@ -1,11 +1,13 @@
 import os
 import re
 from typing import Optional, Dict, Any, List
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
 from app.services.rag_service import RagService
 from scripts.rebuild_index import rebuild_tenant_index
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.db.database import get_db
 
 router = APIRouter(prefix="/tenants", tags=["Tenants Knowledge"])
 
@@ -126,4 +128,53 @@ async def save_tenant_knowledge(tenant_id: str, payload: TenantKnowledgePayload)
         "status": "success",
         "tenant_id": tenant_id,
         "message": f"Knowledge base untuk '{tenant_id}' berhasil disimpan dan di-index ke FAISS.",
+    }
+
+class TenantTierPayload(BaseModel):
+    package_tier: str
+    custom_quota: Optional[int] = None
+
+
+@router.get("/{tenant_id}/quota")
+async def get_tenant_quota(tenant_id: str, db: AsyncSession = Depends(get_db)):
+    """Mengambil status pemakaian kuota chat bulanan tenant."""
+    from app.services.usage_service import UsageService
+    stats = await UsageService.get_tenant_usage_stats(db=db, tenant_id=tenant_id)
+    return stats
+
+
+@router.post("/{tenant_id}/tier")
+async def update_tenant_tier(tenant_id: str, payload: TenantTierPayload, db: AsyncSession = Depends(get_db)):
+    """Memperbarui paket layanan tenant (pixel, pulse, nexus, infinity) atau kuota pesan."""
+    from app.db.models import Tenant
+    from app.services.usage_service import UsageService
+    from sqlalchemy import select
+
+    tier = payload.package_tier.lower()
+    if tier not in UsageService.PACKAGE_QUOTAS and not payload.custom_quota:
+        raise HTTPException(status_code=400, detail="Package tier tidak valid. Pilihan: pixel, pulse, nexus, infinity.")
+
+    quota = payload.custom_quota or UsageService.PACKAGE_QUOTAS.get(tier, 500)
+
+    res = await db.execute(select(Tenant).where(Tenant.id == tenant_id))
+    tenant = res.scalar_one_or_none()
+    if not tenant:
+        tenant = Tenant(
+            id=tenant_id,
+            name=tenant_id.replace("_", " ").title(),
+            package_tier=tier,
+            monthly_message_quota=quota,
+        )
+        db.add(tenant)
+    else:
+        tenant.package_tier = tier
+        tenant.monthly_message_quota = quota
+
+    await db.commit()
+    return {
+        "status": "success",
+        "tenant_id": tenant_id,
+        "package_tier": tier,
+        "monthly_quota": quota,
+        "message": f"Paket tenant '{tenant_id}' berhasil diperbarui ke {tier} (kuota {quota} pesan/bulan).",
     }

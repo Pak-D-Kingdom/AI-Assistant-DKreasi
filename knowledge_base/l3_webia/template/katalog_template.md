@@ -92,6 +92,21 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *KULIT SEHAT, DIBACA DENGAN PRESISI.*
   - Target: Klinik dermatologi modern, laser treatment center, skin analysis clinic.
   - Demo / Live: `/webia/template/nuvia-skin-tech-clinic`
+- **Salon Classic Warm Neutral** (`salon-classic-warm-neutral` · Style: *Classic* · Tone: *Warm Neutral*):
+  - Konsep: *ELEGANCE & TIMELESS HAIR STYLING — Layanan Salon Klasik & Perawatan Rambut.*
+  - Target: Salon kecantikan rambut & wajah, haircutting salon, creambath & hair spa.
+  - Fitur: Price list treatment rambut, profil hair stylist, online reservation, WhatsApp booking.
+  - Demo / Live: `/webia/template/salon-classic-warm-neutral`
+- **Salon Elegant Soft Pink** (`salon-elegant-soft-pink` · Style: *Elegant* · Tone: *Soft Pink*):
+  - Konsep: *YOUR CHIC BEAUTY ESCAPE — Sentuhan Manis untuk Pesona Diri.*
+  - Target: Salon kecantikan wanita, aesthetic hair studio, blow bar & scalp treatment.
+  - Fitur: Lookbook tren gaya rambut, booking appointment terapis, galeri testimoni, WhatsApp chat.
+  - Demo / Live: `/webia/template/salon-elegant-soft-pink`
+- **Salon Modern Sage** (`salon-modern-sage` · Style: *Modern Minimalist* · Tone: *Sage Green*):
+  - Konsep: *ORGANIC HAIR CARE & MINIMALIST BEAUTY — Perawatan Alami untuk Rambut Sehat.*
+  - Target: Botanical eco-salon, organic hair treatment, hair coloring spesialis.
+  - Fitur: Treatment menu organik, reservasi waktu kunjungan, filter layanan, Google Maps embed.
+  - Demo / Live: `/webia/template/salon-modern-sage`
 
 ---
 
@@ -155,6 +170,21 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *RANCANG. LIHAT. PASANG. — Modifikasi Kendaraan Listrik & Futuristik.*
   - Target: Modifikasi modern, bengkel EV & hybrid, audio visual car specialist.
   - Demo / Live: `/webia/template/voltrix-futuristic-automotive`
+- **Tidal Detail Automotive** (`tidal-detail-artistic-automotive` · Style: *Artistic* · Tone: *Tidal Ocean & Carbon*):
+  - Konsep: *ARTISTRY IN EVERY CURVE — Premium Auto Detailing & Paint Protection.*
+  - Target: Spesialis auto detailing, paint protection film (PPF), ceramic coating, restorasi cat kendaraan.
+  - Fitur: Showcase transformasi kilap sebelum-sesudah (before-after slider), paket detailing bergaransi, formulir booking slot studio.
+  - Demo / Live: `/webia/template/tidal-detail-artistic-automotive`
+- **Noir Atelier Automotive** (`noir-atelier-luxury-automotive` · Style: *Luxury* · Tone: *Noir Black & Champagne*):
+  - Konsep: *THE EPITOME OF AUTOMOTIVE LUXURY — Showroom Eksklusif & Supercar Concierge.*
+  - Target: Showroom mobil mewah/supercar, importir umum (IU), car collection gallery.
+  - Fitur: Katalog mobil eksklusif, spesifikasi performa mesin, private viewing booking, VIP WhatsApp advisor.
+  - Demo / Live: `/webia/template/noir-atelier-luxury-automotive`
+- **Form Auto Care** (`form-auto-care-minimal-automotive` · Style: *Minimalist* · Tone: *Steel Gray & Clean White*):
+  - Konsep: *ESSENTIAL CARE, MAXIMUM PERFORMANCE — Servis Mobil Cepat, Tepat & Transparan.*
+  - Target: Bengkel quick service, ganti oli & tune up modern, bengkel servis berkala terstandar.
+  - Fitur: Menu servis kilat, estimasi waktu pengerjaan, booking tanpa antre, estimasi rincian biaya transparan.
+  - Demo / Live: `/webia/template/form-auto-care-minimal-automotive`
 
 ---
 
@@ -235,6 +265,11 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *CARE THAT MATTERS — Your health comes first.*
   - Target: Klinik umum/pratama, praktek dokter keluarga, apotek, konseling kesehatan.
   - Fitur: Jadwal dokter, pendaftaran antrean berobat online, fasilitas medis, kontak darurat.
+- **Mitra Jiwa Konseling** (`mitra-jiwa-psikologi-konseling` · Style: *Empathetic & Professional* · Tone: *Warm Teal & Soft Beige*):
+  - Konsep: *TEMUKAN KEMBALI KESEIMBANGAN HIDUP BERSAMA MITRA JIWA.*
+  - Target: Klinik psikologi profesional, konseling karir & pernikahan, terapi kognitif perilaku (CBT), tes minat bakat anak/karyawan.
+  - Fitur: Profil psikolog berizin praktik SIPP, booking konsultasi online/offline, formulir pra-konseling privat, dan jaminan kerahasiaan penuh.
+  - Demo / Live: `/webia/template/healthcare/psychology/mitra-jiwa`
 - **Ruang Tenang** (`ruang-tenang-psikologi-konseling` · Style: *Calming & Warm* · Tone: *Earthy Sage & Soft Sand*):
   - Konsep: *RUANG YANG AMAN UNTUK DIDENGAR DAN PULIH.*
   - Target: Biro psikologi, praktek konselor klinis, terapi keluarga & anak, konsultasi kesehatan mental.
@@ -297,6 +332,11 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Target: Konsultan data analytics, business intelligence agency, implementasi big data pipeline, visualisasi data eksekutif & data science studio.
   - Fitur: Showcase arsitektur pipeline data modern, interactive dashboard live preview, kalkulator potensi ROI data, formulir konsultasi audit data perusahaan.
   - Demo / Live: `/webia/template/technology-dataanalytics-luxury-pastelmix-putri`
+- **ArcticFrost Analytics** (`technology-dataanalytics-creative-arcticfrost-putri` · Style: *Creative Modern* · Tone: *Arctic Frost & Deep Navy*):
+  - Konsep: *EXPLORE DATA WITH CLARITY — Visualisasi & Dashboard Analitik Kreatif.*
+  - Target: Agensi business intelligence, konsultan visualisasi data, visual storytelling untuk startup.
+  - Fitur: Showcase portofolio interactive chart, kalkulator efisiensi data, konsultasi BI via WhatsApp.
+  - Demo / Live: `/webia/template/technology-dataanalytics-creative-arcticfrost-putri`
 - **Quantix Data Corp** (`technology-dataanalytics-corporate-oceanteal-putri` · Style: *Corporate High-Trust* · Tone: *Ocean Teal & Navy*):
   - Konsep: *ENTERPRISE DATA ANALYTICS & INTELLIGENCE ARCHITECTURE — Mengubah Data Menjadi Keunggulan Kompetitif.*
   - Target: Konsultan data science enterprise, agensi business intelligence korporat, konsultan big data pipeline, implementasi AI analytics & cloud data platform.
@@ -313,6 +353,19 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *DISCOVER SOMETHING NEW — Your store, online.*
   - Target: Toko fashion & clothing, produk bayi & anak, distributor produk gaya hidup.
   - Fitur: Etalase katalog produk rapi, filter kategori belanja, tombol WhatsApp quick checkout.
+- **Aurora Petit** (`aurora-petit-yellow-sunshine` · Style: *Playful Chic* · Tone: *Yellow Sunshine & Cream*):
+  - Konsep: *SUNSHINE IN EVERY STITCH — Butik Busana & Perlengkapan Bayi Lucu.*
+  - Target: Toko baju bayi & anak, perlengkapan newborn, baby boutique, kado kelahiran.
+  - Fitur: Etalase pakaian anak berdasarkan rentang usia (0-12 bulan, 1-3 tahun, 4-6 tahun), katalog paket kado hampers bayi, panduan ukuran pakaian (size guide), dan direct WhatsApp shopping checkout.
+  - Demo / Live: `/webia/template/retail/baby-kids-products/aurora-petit-yellow-sunshine`
+- **Petit Wonder** (`petit-wonder-candy-cloud` · Style: *Dreamy Pastel* · Tone: *Candy Cloud Pastel*):
+  - Konsep: *WONDERFUL MOMENTS FOR YOUR LITTLE ONES — Dunia Ceria Si Kecil.*
+  - Target: Butik pakaian anak-anak, aksesoris & mainan edukatif, perlengkapan tidur bayi.
+  - Fitur: Filter kategori belanja ceria, lookbook outfit anak, promo bundle belanja hemat, tombol pesan via WhatsApp.
+  - Demo / Live: `/webia/template/retail/baby-kids-products/petit-wonder-candy-cloud`
+- **Pebble Sprouts** (`pebble-sprouts-baby-kids` · Style: *Organic Eco-Friendly* · Tone: *Pebble Stone & Soft Sage*):
+  - Target: Pakaian bayi katun organik hipoalergenik, produk perawatan bayi natural.
+  - Demo / Live: `/webia/template/retail/baby-kids-products/pebble-sprouts`
 - **Belleza** (`retail-skincare-soft-pink` · Style: *Luxury* · Tone: *Soft Pink*):
   - Target: Brand skincare mewah, toko kecantikan online, kosmetik premium.
   - Demo / Live: `/webia/template/retail/luxury/skincare-soft-pink`
@@ -331,6 +384,16 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Konsep: *MAKE YOUR MARK — Your story, your impact.*
   - Target: Content creator, influencer, public speaker, desainer, portofolio profesional.
   - Fitur: Social media link hub, galeri karya & showreel video, media kit sponsorship, kontak kolaborasi.
+- **Lumiere Photography Studio** (`lumiere-photography-studio` · Style: *Editorial & Artistic* · Tone: *Warm Light & Ivory*):
+  - Konsep: *CAPTURING EMOTIONS, TIMELESS MEMORIES — Studio Fotografi Profesional.*
+  - Target: Studio foto wisuda, foto keluarga, maternity, pre-wedding intimate, commercial product shoot.
+  - Fitur: Galeri portofolio foto beresolusi tinggi, daftar paket sesi foto (durasi, jumlah foto cetak, softcopy), formulir reservasi tanggal sesi studio, integrasi booking WhatsApp.
+  - Demo / Live: `/webia/template/photography/lumiere-photography-studio`
+- **Noir Studio Photography** (`noir-studio-photography` · Style: *Bold Monochrome & Cinematic* · Tone: *Deep Black & Silver Slate*):
+  - Konsep: *POWERFUL SHADOWS, CINEMATIC PORTRAITS — Fotografi Bergaya Sinematik & Berkarakter.*
+  - Target: Fotografer fashion editorial, portrait artis/musisi, lookbook brand fashion, fotografi personal branding profesional.
+  - Fitur: Showcase karya sinematik, lookbook editorial, paket studio monokrom, ratesheet komersial, direct booking.
+  - Demo / Live: `/webia/template/photography/noir-studio-photography`
 - **Aria Thorne** (`aria-thorne-author-writer` · Style: *Literary Editorial* · Tone: *Parchment & Charcoal*):
   - Target: Penulis buku, novelis, jurnalis, copywriter ternama.
   - Demo / Live: `/webia/template/aria-thorne-author-writer`
@@ -379,3 +442,22 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Target: Produsen susu sapi & kambing segar organik, telur ayam kampung bebas antibiotik, daging grass-fed, sayuran organik.
   - Fitur: Informasi standar etika peternakan (free-range), sertifikasi halal MUI dan uji lab bebas residu kimia, sistem langganan mingguan susu & telur segar, serta reservasi farm tour edukasi.
   - Demo / Live: `/webia/template/agriculture-farming/agriternak-organic-ethical-precision`
+
+---
+
+## 17. Seri Transportation & Logistics
+- **Logistics Company Classic Trust** (`logistics-company-classic-trust` · Style: *Corporate High-Trust* · Tone: *Navy & Pure White*):
+  - Konsep: *CONNECTING NATIONS, SECURING DELIVERIES — Solusi Freight Forwarding & Ekspedisi Terpercaya.*
+  - Target: Perusahaan ekspedisi kargo nasional & internasional, freight forwarder darat/laut/udara, jasa kepabeanan & pergudangan.
+  - Fitur: Modul Cek Resi / Tracking Muatan, Kalkulator Freight Cargo, Showcase Armada Truk & Kontainer, Peta Cakupan Wilayah Rute Nusantara, Formulir Request for Quotation (RFQ), WhatsApp CS Ekspedisi 24 Jam.
+  - Demo / Live: `/webia/template/logistics-company-classic-trust`
+- **Logistics Company Midnight Navy** (`logistics-company-midnight-navy` · Style: *Modern Tech-Driven* · Tone: *Midnight Blue & Neon Cyan*):
+  - Konsep: *NEXT-GEN LOGISTICS & SMART SUPPLY CHAIN — Pengiriman Cepat Berbasis Teknologi.*
+  - Target: Jasa logistik e-commerce, trucking express dengan GPS tracking armada, smart warehousing.
+  - Fitur: Interactive live tracking simulation, portal tarif kargo kilat, galeri armada berteknologi tinggi, formulir kerja sama B2B.
+  - Demo / Live: `/webia/template/transportation-logistics/modern/logistics-company-midnight-navy`
+- **Logistics Company Orange Energy** (`logistics-company-orange-energy` · Style: *Bold & Agile* · Tone: *Safety Orange & Industrial Gray*):
+  - Konsep: *FAST, RELIABLE, EVERYWHERE — Kirim Barang Lebih Cepat Tanpa Khawatir.*
+  - Target: Jasa sewa truk pindahan, kurir kargo same-day, jasa pengiriman alat berat & material konstruksi.
+  - Fitur: Quick price estimation, booking armada instan via WhatsApp, cakupan titik jemput, jaminan garansi keamanan barang.
+  - Demo / Live: `/webia/template/transportation-logistics/bold/logistics-company-orange-energy`

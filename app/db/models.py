@@ -24,6 +24,8 @@ class Tenant(Base):
     id: Mapped[str] = mapped_column(String(64), primary_key=True)
     name: Mapped[str] = mapped_column(String(128))
     category: Mapped[str] = mapped_column(String(64), default="general")
+    package_tier: Mapped[Optional[str]] = mapped_column(String(32), default="pixel", nullable=True)
+    monthly_message_quota: Mapped[Optional[int]] = mapped_column(Integer, default=500, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 

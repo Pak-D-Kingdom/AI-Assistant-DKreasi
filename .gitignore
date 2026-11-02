@@ -29,3 +29,6 @@ htmlcov/
 .vscode/
 .idea/
 *.swp
+
+# Internal Docs
+docs/PANDUAN_KUOTA_DAN_INTEGRASI_DASHBOARD_AI.md

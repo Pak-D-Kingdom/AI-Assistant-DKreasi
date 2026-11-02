@@ -116,6 +116,7 @@ WEBIA_CATEGORIES = [
     {"number": "14", "slug": "interior-architecture", "name": "Interior & Architecture", "symbol": "🛋", "desc": "Custom furniture, interior design, architecture, woodcraft"},
     {"number": "15", "slug": "home-services", "name": "Home Services & Laundry", "symbol": "🧺", "desc": "Laundry kiloan/satuan, dry clean, cuci sepatu, home cleaning, renovasi hunian"},
     {"number": "16", "slug": "agriculture-farming", "name": "Agriculture & Farming", "symbol": "🌱", "desc": "Peternakan sapi/kambing/unggas, agribisnis, smart farming IoT, hasil bumi"},
+    {"number": "17", "slug": "transportation-logistics", "name": "Transportation & Logistics", "symbol": "🚛", "desc": "Ekspedisi kargo, logistik, freight forwarding, trucking, tracking armada"},
 ]
 
 # PRD WEBIA §7.6: Category & Package Recommendation Matrix
@@ -139,7 +140,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila perlu admin dashboard untuk jadwal appointment terapis atau manajemen katalog treatment klinik.",
         "template_id": "Maison Beauty / Blush Nail Studio",
         "template_slug": "maison-beauty",
-        "template_name": "Maison Beauty (Salon) / Blush Nail Studio (Nail Art) / Glow Society",
+        "template_name": "Maison Beauty / Blush Nail Studio / Salon Classic Warm Neutral / Salon Elegant Soft Pink / Salon Modern Sage",
         "recommended_modules": ["Appointment Booking", "Galeri Portofolio & Before-After", "Daftar Terapis/Treatment", "AI CS 24/7"],
     },
     "automotive": {
@@ -150,7 +151,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila bengkel/dealer memerlukan admin service management untuk melacak riwayat servis berkala pelanggan.",
         "template_id": "Pitstop Garage",
         "template_slug": "pitstop-garage",
-        "template_name": "Pitstop Garage (Bengkel & Auto Detailing)",
+        "template_name": "Pitstop Garage (Bengkel) / Tidal Detail (Auto Detailing) / Noir Atelier (Luxury) / Form Auto Care (Minimal)",
         "recommended_modules": ["Booking Servis Berkala", "Emergency Call WhatsApp", "Peta Bengkel", "Daftar Paket Servis"],
     },
     "company": {
@@ -205,7 +206,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Upgrade ke Pulse bila butuh galeri portofolio lengkap & review klien, atau Nexus bila perlu blog tulisan mandiri.",
         "template_id": "The Creator Room",
         "template_slug": "the-creator-room",
-        "template_name": "The Creator Room (Creator & Influencer Portfolio)",
+        "template_name": "The Creator Room / Lumiere Photography Studio / Noir Studio Photography",
         "recommended_modules": ["Social Media Hub", "Portofolio Showreel", "Media Kit Download", "Direct Endorsement Contact"],
     },
     "retail": {
@@ -216,7 +217,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila membutuhkan payment gateway otomatis, manajemen stok multi-gudang, atau integrasi kurir pengiriman.",
         "template_id": "Urban Supply",
         "template_slug": "urban-supply",
-        "template_name": "Urban Supply (Modern Store & Fashion)",
+        "template_name": "Urban Supply (Modern Store) / Aurora Petit & Petit Wonder (Baby & Kids Boutique)",
         "recommended_modules": ["Etalase Katalog Produk", "Admin CMS Produk", "WhatsApp Quick Checkout", "Kategori & Search Produk"],
     },
     "healthcare": {
@@ -227,7 +228,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila butuh integrasi rekam medis, portal pasien, atau sistem antrean dokter spesifik.",
         "template_id": "Medika Care / Sunset Dental / Azure Smile / Mint Dental",
         "template_slug": "healthcare-dental-sunset",
-        "template_name": "Sunset Dental Care (Dental Clinic) / Azure Smile / Medika Care",
+        "template_name": "Sunset Dental Care / Azure Smile / Medika Care / Mitra Jiwa (Psikologi & Konseling)",
         "recommended_modules": ["Jadwal Dokter Praktek", "Pendaftaran Pasien Online", "Kalkulator Estimasi Biaya/Cicilan", "Lokasi & Call Center Darurat"],
     },
     "pet_animal_service": {
@@ -295,6 +296,17 @@ RECOMMENDATION_MATRIX = {
         "template_slug": "agriternak-bold-livestock",
         "template_name": "Agriternak Bold Livestock (Peternakan Tangguh) / Futuristic IoT (Smart Farming) / Organic Precision",
         "recommended_modules": ["Katalog Hewan Ternak & Bobot", "Sertifikasi Kesehatan & SKKH", "Monitoring Sensor IoT Kandang", "Form Pemesanan Qurban/B2B", "WhatsApp Farm Manager"],
+    },
+    "transportation_logistics": {
+        "category_name": "Transportation & Logistics",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila perusahaan ekspedisi membutuhkan dashboard CMS untuk update tarif rute berkala, manajemen armada, atau integrasi API tracking resi.",
+        "template_id": "Logistics Company Classic Trust / Midnight Navy / Orange Energy",
+        "template_slug": "logistics-company-classic-trust",
+        "template_name": "Logistics Company Classic Trust / Midnight Navy / Orange Energy",
+        "recommended_modules": ["Cek Resi / Tracking Muatan", "Kalkulator Freight Cargo", "Peta Jangkauan Armada", "Formulir Permintaan Penawaran (RFQ)", "WhatsApp CS Ekspedisi"],
     },
 }
 
@@ -445,6 +457,49 @@ class L3IntentRouter:
             }
 
         # 3. Rekomendasi Spesifik Berdasarkan Kategori Industri (Recommendation Matrix PRD §7.6)
+        if any(w in normalized for w in ["logistik", "logistics", "ekspedisi", "cargo", "kargo", "pengiriman barang", "freight", "trucking", "truk", "kontainer", "armada kapal", "resi", "antar barang", "cek resi"]):
+            sol = recommend_webia_solution("transportation_logistics")
+            return {
+                "intent": "recommend_logistics_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Transportation & Logistics (Classic Trust) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "logistics-company-classic-trust"),
+            }
+
+        if any(w in normalized for w in ["fotografi", "fotografer", "studio foto", "photo studio", "pemotretan", "videografi", "dokumentasi foto"]):
+            sol = recommend_webia_solution("personal_brand")
+            sol["recommended_template"] = "Lumiere Photography Studio / Noir Studio Photography"
+            sol["cart_template_slug"] = "lumiere-photography-studio"
+            return {
+                "intent": "recommend_photography_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Photography Studio (Lumiere / Noir) →",
+                "service_name": "Solusi Website Fotografi & Studio Foto",
+                "recommendation": sol,
+                "cart_template_slug": "lumiere-photography-studio",
+            }
+
+        if any(w in normalized for w in ["psikolog", "konseling", "kesehatan mental", "terapi jiwa", "psikologi", "mental health", "konselor"]):
+            sol = recommend_webia_solution("healthcare", needs_cms=True)
+            sol["recommended_template"] = "Mitra Jiwa / Ruang Tenang Psikologi & Konseling"
+            sol["cart_template_slug"] = "mitra-jiwa-psikologi-konseling"
+            return {
+                "intent": "recommend_psychology_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Psikologi & Konseling (Mitra Jiwa) →",
+                "service_name": "Solusi Website Psikologi & Konseling",
+                "recommendation": sol,
+                "cart_template_slug": "mitra-jiwa-psikologi-konseling",
+            }
+
         if any(w in normalized for w in ["travel", "tour", "wisata", "liburan", "open trip", "trip planner", "biro perjalanan", "paket tour", "jalan-jalan"]):
             sol = recommend_webia_solution("travel_tourism")
             return {
@@ -510,7 +565,7 @@ class L3IntentRouter:
                 "cart_template_slug": sol.get("cart_template_slug", "maison-beauty"),
             }
 
-        if any(w in normalized for w in ["bengkel", "otomotif", "automotive", "car wash", "cuci mobil", "dealer", "motor"]):
+        if any(w in normalized for w in ["bengkel", "otomotif", "automotive", "car wash", "cuci mobil", "dealer", "motor", "detailing", "auto detailing", "coating", "cat mobil"]):
             sol = recommend_webia_solution("automotive")
             return {
                 "intent": "recommend_automotive_website",
@@ -561,7 +616,7 @@ class L3IntentRouter:
                 "cart_template_slug": sol.get("cart_template_slug", "healthcare-dental-sunset"),
             }
 
-        if any(w in normalized for w in ["toko", "toko online", "retail", "jual baju", "olshop", "fashion"]):
+        if any(w in normalized for w in ["toko", "toko online", "retail", "jual baju", "olshop", "fashion", "baby shop", "baju anak", "perlengkapan bayi", "boutique"]):
             sol = recommend_webia_solution("retail", needs_cms=True)
             return {
                 "intent": "recommend_retail_website",
@@ -643,7 +698,7 @@ class L3IntentRouter:
                 "confidence": 0.95,
                 "action": "navigate",
                 "target_url": "#kategori-website",
-                "button_text": "Lihat 10 Kategori Bisnis WEBIA →",
+                "button_text": "Lihat Kategori Bisnis WEBIA →",
                 "service_name": "Kategori Bisnis WEBIA",
             }
 
