@@ -178,3 +178,28 @@ def test_l3_customer_auth_guest_checkout():
     res = L3IntentRouter.detect_and_route("Bagaimana cara daftar akun?")
     assert res["intent"] == "customer_auth"
     assert "/orders/create" in res["data"]["guest_checkout_url"]
+
+
+def test_l3_routes_to_logistics():
+    res = L3IntentRouter.detect_and_route("Saya punya bisnis ekspedisi pengiriman kargo dan butuh fitur cek resi dan tracking muatan")
+    assert res["intent"] == "recommend_logistics_website"
+    assert res["action"] == "navigate"
+    assert "Logistics" in res["recommendation"]["category"]
+    assert "Classic Trust" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "logistics-company-classic-trust"
+
+
+def test_l3_routes_to_photography():
+    res = L3IntentRouter.detect_and_route("Saya butuh website untuk studio foto wisuda dan fotografer komersial")
+    assert res["intent"] == "recommend_photography_website"
+    assert res["action"] == "navigate"
+    assert "Lumiere" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "lumiere-photography-studio"
+
+
+def test_l3_routes_to_psychology():
+    res = L3IntentRouter.detect_and_route("Bisa buat website untuk biro konseling psikologi dan konsultasi kesehatan mental?")
+    assert res["intent"] == "recommend_psychology_website"
+    assert res["action"] == "navigate"
+    assert "Mitra Jiwa" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "mitra-jiwa-psikologi-konseling"

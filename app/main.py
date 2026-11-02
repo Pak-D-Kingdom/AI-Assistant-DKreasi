@@ -12,6 +12,7 @@ from app.api.v1.health import router as health_router
 from app.api.v1.sites import router as sites_router
 from app.api.v1.ingest import router as ingest_router
 from app.api.v1.tenants import router as tenants_router
+from app.api.v1.analytics import router as analytics_router
 
 settings = get_settings()
 
@@ -76,6 +77,8 @@ app.include_router(sites_router, prefix="/api/v1")
 app.include_router(ingest_router, prefix="/api/v1")
 app.include_router(tenants_router, prefix="/api/v1")
 app.include_router(tenants_router, prefix="/v1")
+app.include_router(analytics_router, prefix="/api/v1")
+app.include_router(analytics_router, prefix="")
 
 # Also mount chat directly at root for convenience (POST /v1/chat & POST /api/ai/chat)
 app.include_router(chat_router, prefix="")
@@ -93,6 +96,7 @@ async def root():
         "status": "online",
         "docs": "/docs",
         "health": "/api/v1/health",
+        "analytics": "/analytics",
     }
 
 

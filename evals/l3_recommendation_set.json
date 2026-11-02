@@ -124,5 +124,26 @@
     "expected_intent": "recommend_agriculture_website",
     "expected_action": "navigate",
     "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_19",
+    "query": "Saya punya usaha ekspedisi kargo pengiriman barang antar pulau, ada website yang cocok?",
+    "expected_intent": "recommend_logistics_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_20",
+    "query": "Saya butuh website untuk studio foto wisuda dan sesi pemotretan profesional",
+    "expected_intent": "recommend_photography_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_21",
+    "query": "Ada template website untuk biro psikologi dan praktek konseling kesehatan mental?",
+    "expected_intent": "recommend_psychology_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
   }
 ]
