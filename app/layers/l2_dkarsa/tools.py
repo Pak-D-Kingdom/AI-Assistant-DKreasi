@@ -262,7 +262,9 @@ def get_builder_checklist() -> Dict[str, Any]:
                 "items": [
                     "Foto Cover Utama (resolusi tinggi)",
                     "Foto Mempelai Pria & Wanita / Tokoh Acara",
-                    "2 s.d 20 Foto Galeri Prewedding / Momen Bahagia (sesuai paket)",
+                    "Foto Galeri (Basic: 2 foto, Premium: 10 foto, Eksklusif: 20 foto)",
+                    "Format foto: JPG, PNG, atau WEBP (maks. 5 MB/foto, kompresi tajam otomatis)",
+                    "Fitur Builder: Multi-upload, Drag & Drop, Reorder tombol ◀ ▶, dan Caption cerita",
                     "Judul Lagu atau File MP3 Pilihan",
                 ],
             },
@@ -375,6 +377,32 @@ class L2IntentRouter:
                 "data": {
                     "rsvp": "Tamu bisa konfirmasi hadir/tidak hadir beserta jumlah tamu yang dibawa.",
                     "wish_wall": "Tamu bisa mengirimkan doa restu yang langsung tayang interaktif pada buku tamu online.",
+                },
+            }
+
+        # 0f. Fitur Galeri Foto & Upload Builder
+        if any(w in normalized for w in ["galeri", "foto galeri", "upload foto", "berapa foto", "format foto", "drag and drop foto", "atur urutan foto", "ganti foto", "caption foto"]):
+            return {
+                "intent": "gallery_feature_inquiry",
+                "confidence": 0.96,
+                "action": "navigate",
+                "target_url": "/buat-undangan",
+                "button_text": "Coba Fitur Galeri di Builder Online →",
+                "service_name": "Fitur Galeri Foto Interaktif D'Karsa",
+                "data": {
+                    "multiple_upload": "Mendukung pemilihan banyak foto sekaligus atau seret langsung (drag-and-drop).",
+                    "incremental_upload": "Bisa menambah foto secara bertahap tanpa menimpa foto lama.",
+                    "reordering": "Dilengkapi tombol panah ◀ dan ▶ untuk mengatur susunan urutan foto.",
+                    "caption": "Mendukung teks caption atau keterangan momen pada setiap foto.",
+                    "auto_draft": "Foto otomatis tersimpan di draf browser (anti-hilang).",
+                    "format_and_size": "Mendukung JPG, PNG, WEBP (maksimal 5 MB per foto, kompresi tajam otomatis).",
+                    "quota_by_package": {
+                        "basic": "2 foto",
+                        "premium": "10 foto + Timeline Love Story",
+                        "eksklusif": "20 foto + Video Teaser Sinematik",
+                        "kustom": "Kapasitas fleksibel sesuai kebutuhan event",
+                    },
+                    "smart_fallback": "Jika belum memiliki foto galeri tambahan, sistem otomatis menampilkan foto cover dan profil di galeri undangan.",
                 },
             }
 
@@ -507,7 +535,7 @@ class L2IntentRouter:
                 "service_name": "Undangan Acara Formal D'Karsa",
             }
 
-        if any(w in normalized for w in ["halal bihalal", "halalbihalal", "lebaran", "idul fitri", "silaturahmi", "tahlilan", "tahlil", "haul", "syukuran"]):
+        if any(w in normalized for w in ["halal bihalal", "halalbihalal", "lebaran", "idul fitri", "silaturahmi", "tahlilan", "tahlil", "haul", "syukuran", "safar", "umrah", "umroh", "haji"]):
             return {
                 "intent": "keagamaan_invitation",
                 "confidence": 0.95,

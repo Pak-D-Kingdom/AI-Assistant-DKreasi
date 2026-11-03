@@ -83,6 +83,17 @@ def test_render_dashboard_html():
             {"query": "Apakah bisa integrasi POS kasir offline?", "count": 5},
         ],
         "recent_activity": [],
+        "hourly_traffic": [
+            {
+                "hour": "10:00",
+                "hour_num": 10,
+                "count": 45,
+                "tenants": [
+                    {"tenant_id": "tenant_automotive_01", "name": "Bengkel PakDe Motor Jaya", "count": 30},
+                    {"tenant_id": "tenant_beauty_01", "name": "Glow Aesthetic Clinic", "count": 15},
+                ],
+            }
+        ],
     }
 
     html = AnalyticsService.render_dashboard_html(sample_data, days=30)
@@ -98,4 +109,54 @@ def test_render_dashboard_html():
     assert "Bengkel PakDe Motor Jaya" in html
     assert "Glow Aesthetic Clinic" in html
     assert "Habis (Blocked)" in html
+    assert "Peak Hours Traffic" in html
+    assert "Rincian Top Tenant (Maks 5)" in html
     assert "Waspada (≥80%)" in html
+    assert "loadTrafficChart" in html
+    assert "hourlyChartWrapper" in html
+    assert "traffic-btn" in html
+
+
+def test_render_hourly_chart_svg():
+    hourly_sample = [
+        {
+            "hour": "14:00",
+            "hour_num": 14,
+            "count": 55,
+            "tenants": [
+                {"tenant_id": "tenant_beauty_01", "name": "Glow Clinic", "count": 35},
+                {"tenant_id": "tenant_auto_01", "name": "PakDe Motor", "count": 20},
+            ],
+        }
+    ]
+    svg = AnalyticsService._render_hourly_chart(hourly_sample)
+    assert "<svg" in svg
+    assert "Glow Clinic" in svg
+    assert "PakDe Motor" in svg
+    assert "55 chat" in svg
+    assert "trafficAreaGradient" in svg
+    assert "animate-chart-line" in svg
+    assert "animate-chart-area" in svg
+
+
+def test_render_traffic_chart_7_days():
+    sample_7_days = {
+        "period_days": 7,
+        "max_count": 80,
+        "traffic_points": [
+            {"label": "Rab, 29/10", "tooltip_title": "📅 Rabu, 29 Okt 2026", "count": 40, "tenants": []},
+            {"label": "Kam, 30/10", "tooltip_title": "📅 Kamis, 30 Okt 2026", "count": 80, "tenants": [{"name": "PakDe Motor", "count": 50}]},
+            {"label": "Hari Ini", "tooltip_title": "📅 Jumat, 31 Okt 2026", "count": 25, "tenants": []},
+        ],
+        "x_ticks": [
+            {"label": "Rab, 29/10"},
+            {"label": "Kam, 30/10"},
+            {"label": "Hari Ini"},
+        ]
+    }
+    html = AnalyticsService._render_hourly_chart(sample_7_days, days=7)
+    assert "<svg" in html
+    assert "animate-chart-line" in html
+    assert "Rab, 29/10" in html
+    assert "Hari Ini" in html
+    assert "Kamis, 30 Okt 2026" in html
