@@ -1,3 +1,4 @@
+import re
 from typing import Dict, Any, List, Optional
 from app.services.handoff_service import HandoffService
 from app.layers.l3_webia.brief_service import BusinessBriefService, BusinessBriefSchema
@@ -117,6 +118,8 @@ WEBIA_CATEGORIES = [
     {"number": "15", "slug": "home-services", "name": "Home Services & Laundry", "symbol": "🧺", "desc": "Laundry kiloan/satuan, dry clean, cuci sepatu, home cleaning, renovasi hunian"},
     {"number": "16", "slug": "agriculture-farming", "name": "Agriculture & Farming", "symbol": "🌱", "desc": "Peternakan sapi/kambing/unggas, agribisnis, smart farming IoT, hasil bumi"},
     {"number": "17", "slug": "transportation-logistics", "name": "Transportation & Logistics", "symbol": "🚛", "desc": "Ekspedisi kargo, logistik, freight forwarding, trucking, tracking armada"},
+    {"number": "18", "slug": "nonprofit-community", "name": "Non-Profit & Community", "symbol": "🤝", "desc": "Yayasan, organisasi sosial, aksi kemanusiaan, komunitas relawan, lembaga filantropi, panti asuhan"},
+    {"number": "19", "slug": "photography-creative-studio", "name": "Photography & Creative Studio", "symbol": "📷", "desc": "Studio foto produk, fotografer komersial, studio wisuda, wedding photoshoot, videografi"},
 ]
 
 # PRD WEBIA §7.6: Category & Package Recommendation Matrix
@@ -182,10 +185,10 @@ RECOMMENDATION_MATRIX = {
         "entry_price": "Rp1.499.000",
         "upgrade_package": "Infinity",
         "upgrade_trigger": "Bila butuh integrasi LMS, pembayaran SPP/kursus online otomatis, dan area member siswa.",
-        "template_id": "BrightPath Academy / E-learna / EduPlus / NovaLearn",
-        "template_slug": "brightpath-academy",
-        "template_name": "BrightPath Academy (School) / E-learna (Bootcamp) / NovaLearn (Futuristic Dark)",
-        "recommended_modules": ["Formulir Pendaftaran Siswa", "Jadwal Kelas & Biaya", "Profil Pengajar/Tutor", "Testimoni Alumni"],
+        "template_id": "SPARK Academy / BrightPath / Rumah Latte & Tunas Cendekia (Daycare)",
+        "template_slug": "spark-academy-maximum-impact",
+        "template_name": "SPARK Academy (Modern School) / BrightPath / Rumah Latte & Tunas Cendekia (Daycare & Preschool)",
+        "recommended_modules": ["Formulir Pendaftaran Siswa / PPDB Online", "Jadwal Kelas, Biaya SPP & Daycare", "Profil Pengajar/Tutor", "Testimoni Alumni & Wali Murid"],
     },
     "professional_service": {
         "category_name": "Professional Service (Hukum, Pajak, Konsultan)",
@@ -307,6 +310,28 @@ RECOMMENDATION_MATRIX = {
         "template_slug": "logistics-company-classic-trust",
         "template_name": "Logistics Company Classic Trust / Midnight Navy / Orange Energy",
         "recommended_modules": ["Cek Resi / Tracking Muatan", "Kalkulator Freight Cargo", "Peta Jangkauan Armada", "Formulir Permintaan Penawaran (RFQ)", "WhatsApp CS Ekspedisi"],
+    },
+    "nonprofit_community": {
+        "category_name": "Non-Profit & Community (Yayasan, Donasi, Lembaga Sosial)",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila yayasan membutuhkan CMS untuk mempublikasikan laporan transparansi donasi, agenda bakti sosial berkala, dan artikel aksi lapangan.",
+        "template_id": "REVOLT // IMPACT",
+        "template_slug": "revolt-impact-social-organization",
+        "template_name": "REVOLT // IMPACT (Bold Social Movement & Organization)",
+        "recommended_modules": ["Live Impact & Donation Counter", "Formulir Pendaftaran Relawan Online", "Tiers Donasi Transparan", "Interactive Manifesto Visi-Misi", "Kalender Event Aksi Sosial", "WhatsApp Koordinator"],
+    },
+    "photography_creative_studio": {
+        "category_name": "Photography & Creative Studio",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila studio memerlukan CMS upload portofolio client photoshoot berkala, update pricelist musiman, dan download invoice/proposal klien.",
+        "template_id": "Peachy Studio / Lumière Studio / Noir Studio",
+        "template_slug": "peachy-studio",
+        "template_name": "Peachy Studio (Product Photography) / Lumière Studio (Luxury) / Noir Studio (Dramatic)",
+        "recommended_modules": ["Showcase Portofolio Foto Kategori Interaktif", "Pricelist Paket Photoshoot", "Formulir Booking Sesi Foto", "Direct WhatsApp Studio Admin", "Testimoni Klien & Brand"],
     },
 }
 
@@ -457,6 +482,49 @@ class L3IntentRouter:
             }
 
         # 3. Rekomendasi Spesifik Berdasarkan Kategori Industri (Recommendation Matrix PRD §7.6)
+        if any(w in normalized for w in ["nonprofit", "non-profit", "yayasan", "komunitas", "relawan", "donasi", "charity", "filantropi", "panti asuhan", "organisasi sosial", "aksi sosial", "gerakan sosial", "baksos"]) or re.search(r'\bngo\b', normalized):
+            sol = recommend_webia_solution("nonprofit_community")
+            return {
+                "intent": "recommend_nonprofit_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template REVOLT // IMPACT (Non-Profit & Organisasi Sosial) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "revolt-impact-social-organization"),
+            }
+
+        if any(w in normalized for w in ["foto produk", "peachy", "product photography", "katalog foto produk", "foto katalog"]):
+            sol = recommend_webia_solution("photography_creative_studio")
+            sol["recommended_template"] = "Peachy Studio — Product Photography"
+            sol["cart_template_slug"] = "peachy-studio"
+            return {
+                "intent": "recommend_product_photography_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Peachy Studio (Product Photography) →",
+                "service_name": "Solusi Website Foto Produk & Studio Kreatif",
+                "recommendation": sol,
+                "cart_template_slug": "peachy-studio",
+            }
+
+        if any(w in normalized for w in ["daycare", "preschool", "penitipan anak", "paud", "playgroup", "kelompok bermain", "anak usia dini"]):
+            sol = recommend_webia_solution("education")
+            sol["recommended_template"] = "Rumah Latte / Tunas Cendekia (Preschool & Daycare)"
+            sol["cart_template_slug"] = "rumah-latte-preschool-daycare"
+            return {
+                "intent": "recommend_daycare_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Rumah Latte (Preschool & Daycare) →",
+                "service_name": "Solusi Website Preschool & Daycare",
+                "recommendation": sol,
+                "cart_template_slug": "rumah-latte-preschool-daycare",
+            }
+
         if any(w in normalized for w in ["logistik", "logistics", "ekspedisi", "cargo", "kargo", "pengiriman barang", "freight", "trucking", "truk", "kontainer", "armada kapal", "resi", "antar barang", "cek resi"]):
             sol = recommend_webia_solution("transportation_logistics")
             return {

@@ -17,6 +17,29 @@ async def get_analytics_overview(
     return await AnalyticsService.get_overview_metrics(db=db, days=days)
 
 
+@router.get("/hourly-traffic")
+async def get_hourly_traffic(
+    days: int = Query(30, description="Periode analisis dalam jumlah hari"),
+    db: AsyncSession = Depends(get_db),
+):
+    """Mengembalikan data tren lalu lintas AI beserta SVG chart animasi dan sumbu X dinamis."""
+    traffic_data = await AnalyticsService.get_traffic_trend_metrics(db=db, days=days)
+    chart_svg = AnalyticsService._render_hourly_chart(traffic_data, days=days)
+    max_count = traffic_data.get("max_count", 0)
+    peak_unit = traffic_data.get("peak_unit", "chat/jam")
+    return {
+        "status": "success",
+        "period_days": days,
+        "badge_text": traffic_data.get("badge_text", "Continuous 24 Jam"),
+        "subtitle": traffic_data.get("subtitle", "Kurva Throughput Beban Chat"),
+        "peak_unit": peak_unit,
+        "max_hourly_count": max_count,
+        "peak_label": f"Puncak: {max_count} {peak_unit}",
+        "chart_svg": chart_svg,
+        "hourly_traffic": traffic_data.get("traffic_points", []),
+    }
+
+
 @router.get("/dashboard", response_class=HTMLResponse)
 @router.get("", response_class=HTMLResponse)
 async def get_analytics_dashboard_ui(

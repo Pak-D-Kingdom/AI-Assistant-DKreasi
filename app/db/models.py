@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import String, Integer, DateTime, Boolean, Text, ForeignKey
+from sqlalchemy import String, Integer, DateTime, Boolean, Text, ForeignKey, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.database import Base
 
@@ -91,3 +91,19 @@ class HandoffEvent(Base):
     layer: Mapped[str] = mapped_column(String(32))
     target_url: Mapped[str] = mapped_column(String(256))
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class MonthlyQuotaHistory(Base):
+    __tablename__ = "monthly_quota_histories"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    tenant_id: Mapped[str] = mapped_column(String(64), index=True)
+    period: Mapped[str] = mapped_column(String(7), index=True)  # Format: "YYYY-MM" e.g. "2026-11"
+    package_tier: Mapped[str] = mapped_column(String(32), default="pixel")
+    quota_limit: Mapped[int] = mapped_column(Integer, default=500)
+    used_messages: Mapped[int] = mapped_column(Integer, default=0)
+    remaining_messages: Mapped[int] = mapped_column(Integer, default=500)
+    percentage_used: Mapped[float] = mapped_column(Float, default=0.0)
+    is_quota_exhausted: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

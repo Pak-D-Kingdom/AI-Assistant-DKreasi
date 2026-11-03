@@ -203,3 +203,28 @@ def test_l3_routes_to_psychology():
     assert res["action"] == "navigate"
     assert "Mitra Jiwa" in res["recommendation"]["recommended_template"]
     assert res["cart_template_slug"] == "mitra-jiwa-psikologi-konseling"
+
+
+def test_l3_routes_to_nonprofit():
+    res = L3IntentRouter.detect_and_route("Saya ingin membuat website untuk yayasan non-profit dan pendaftaran relawan aksi sosial")
+    assert res["intent"] == "recommend_nonprofit_website"
+    assert res["action"] == "navigate"
+    assert "REVOLT // IMPACT" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "revolt-impact-social-organization"
+    assert res["recommendation"]["recommended_package"] == "Paket Pulse"
+
+
+def test_l3_routes_to_product_photography():
+    res = L3IntentRouter.detect_and_route("Saya butuh website untuk studio foto produk UMKM dan katalog photoshoot komersial")
+    assert res["intent"] == "recommend_product_photography_website"
+    assert res["action"] == "navigate"
+    assert "Peachy Studio" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "peachy-studio"
+
+
+def test_l3_routes_to_daycare_preschool():
+    res = L3IntentRouter.detect_and_route("Saya butuh landing page untuk tempat penitipan anak daycare dan preschool ramah balita")
+    assert res["intent"] == "recommend_daycare_website"
+    assert res["action"] == "navigate"
+    assert "Rumah Latte" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "rumah-latte-preschool-daycare"

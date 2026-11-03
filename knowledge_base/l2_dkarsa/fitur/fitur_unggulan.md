@@ -19,6 +19,19 @@
 - Fasilitas transfer hadiah langsung ke rekening pengantin (BCA, Mandiri, BRI, BNI) atau scan QRIS.
 - Alamat kirim kado fisik untuk pengiriman hadiah langsung ke rumah mempelai.
 
-## 5. Musik Latar & Galeri Foto Interaktif
-- Musik romantis otomatis berputar saat undangan dibuka, dilengkapi tombol pemutar musik (*floating music fab*).
-- Galeri foto prewedding dengan fitur Lightbox perbesar gambar dan video cerita cinta.
+## 5. Musik Latar & Galeri Foto Interaktif (Multiple Upload & Reorder)
+- **Musik Latar**: Musik romantis/syahdu otomatis berputar saat undangan dibuka, dilengkapi tombol pemutar musik (*floating music fab*), bisa upload MP3 sendiri.
+- **Multiple Upload & Drag and Drop**: Memilih banyak foto sekaligus atau seret langsung (*drag & drop*) ke dropzone builder online.
+- **Incremental Upload (Tambah Bertahap)**: Pengguna dapat menambah foto baru secara bertahap tanpa khawatir menimpa foto lama.
+- **Pengaturan Urutan Foto (Reordering)**: Dilengkapi tombol panah kiri ◀ dan kanan ▶ pada kartu foto untuk memindahkan dan menyusun urutan tampilan galeri.
+- **Caption Cerita per Foto**: Setiap foto galeri dapat disematkan teks keterangan cerita atau tanggal kenangan.
+- **Ganti Foto Satuan (*Replace*)**: Mengganti satu foto tertentu dengan 1 klik tanpa harus mengulang upload seluruh galeri.
+- **Tampilan Lightbox Fullscreen**: Tamu dapat mengklik foto untuk melihat gambar dalam ukuran penuh dengan navigasi keyboard (*ArrowLeft*, *ArrowRight*, *Escape*).
+- **Penyimpanan Draf Otomatis (Anti-Hilang)**: Foto-foto galeri otomatis tersimpan di draf browser lokal sehingga aman jika browser ter-refresh atau tertutup.
+- **Format & Kompresi**: Mendukung JPG, PNG, dan WEBP (maksimal 5 MB per foto), otomatis dikompresi tajam agar undangan ringan diakses tamu.
+- **Fallback Cerdas (*Zero Blank Gallery*)**: Jika pemesan belum mengunggah foto galeri tambahan, sistem otomatis menampilkan foto sampul (*cover*) dan foto mempelai/tuan rumah di galeri undangan.
+- **Kapasitas Foto per Paket**:
+  - Paket Basic: 2 foto
+  - Paket Premium: 10 foto + timeline Love Story
+  - Paket Eksklusif: 20 foto + Video Teaser Sinematik
+  - Paket Kustom: Kapasitas fleksibel sesuai kebutuhan event.

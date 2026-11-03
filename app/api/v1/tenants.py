@@ -171,6 +171,7 @@ async def update_tenant_tier(tenant_id: str, payload: TenantTierPayload, db: Asy
         tenant.monthly_message_quota = quota
 
     await db.commit()
+    UsageService.invalidate_quota_cache(tenant_id)
     return {
         "status": "success",
         "tenant_id": tenant_id,
@@ -178,3 +179,27 @@ async def update_tenant_tier(tenant_id: str, payload: TenantTierPayload, db: Asy
         "monthly_quota": quota,
         "message": f"Paket tenant '{tenant_id}' berhasil diperbarui ke {tier} (kuota {quota} pesan/bulan).",
     }
+
+
+@router.get("/{tenant_id}/history")
+async def get_tenant_history(tenant_id: str, period: Optional[str] = None, db: AsyncSession = Depends(get_db)):
+    """Mengambil riwayat snapshot kuota bulanan untuk tenant tertentu."""
+    from app.services.usage_service import UsageService
+    history = await UsageService.get_monthly_quota_history(db=db, tenant_id=tenant_id, period=period)
+    return {"tenant_id": tenant_id, "history": history}
+
+
+@router.get("/history/overview")
+async def get_all_tenants_history(period: Optional[str] = None, db: AsyncSession = Depends(get_db)):
+    """Mengambil rekapitulasi riwayat snapshot bulanan seluruh tenant."""
+    from app.services.usage_service import UsageService
+    history = await UsageService.get_monthly_quota_history(db=db, period=period)
+    return {"period": period, "total_records": len(history), "history": history}
+
+
+@router.get("/{tenant_id}/insights")
+async def get_tenant_insights(tenant_id: str, db: AsyncSession = Depends(get_db)):
+    """Mengambil wawasan analitik konsumen untuk portal pemilik toko (tren 7 hari & top pertanyaan)."""
+    from app.services.usage_service import UsageService
+    insights = await UsageService.get_tenant_customer_insights(db=db, tenant_id=tenant_id)
+    return insights

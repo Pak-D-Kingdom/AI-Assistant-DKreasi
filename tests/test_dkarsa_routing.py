@@ -16,14 +16,14 @@ def test_l2_routes_to_whatsapp_on_javanese_royal():
     assert "3D%20Javanese%20Royal" in res["target_url"]
 
 
-def test_l2_routes_to_catalog_on_birthday_intent():
+def test_l2_routes_to_birthday_intent():
     res = L2IntentRouter.detect_and_route("Mau bikin undangan ulang tahun sweet 17")
     assert res["intent"] == "birthday_invitation"
     assert res["action"] == "navigate"
     assert res["target_url"] == "#desain"
 
 
-def test_l2_routes_to_catalog_on_khitanan_intent():
+def test_l2_routes_to_khitanan_intent():
     res = L2IntentRouter.detect_and_route("Bisa buat undangan khitanan anak?")
     assert res["intent"] == "khitanan_invitation"
     assert res["action"] == "navigate"
@@ -69,3 +69,27 @@ def test_l2_routes_to_rsvp_wish():
 def test_l2_theme_has_demo_url():
     from app.layers.l2_dkarsa.tools import DKARSA_THEMES
     assert all("demo_url" in t for t in DKARSA_THEMES)
+
+
+def test_l2_routes_to_gallery_feature_inquiry():
+    res = L2IntentRouter.detect_and_route("Bagaimana cara upload foto galeri dan berapa maksimal fotonya?")
+    assert res["intent"] == "gallery_feature_inquiry"
+    assert res["target_url"] == "/buat-undangan"
+    assert "multiple_upload" in res["data"]
+    assert "reordering" in res["data"]
+    assert "basic" in res["data"]["quota_by_package"]
+
+
+def test_l2_routes_to_safar_umrah():
+    res = L2IntentRouter.detect_and_route("Bisa buat undangan walimatussafar umrah keluarga?")
+    assert res["intent"] == "keagamaan_invitation"
+    assert res["target_url"] == "#desain"
+
+
+def test_l2_builder_checklist_updated():
+    from app.layers.l2_dkarsa.tools import get_builder_checklist
+    chk = get_builder_checklist()
+    step3 = next(s for s in chk["steps"] if s["step"] == 3)
+    items_str = " ".join(step3["items"])
+    assert "WEBP" in items_str
+    assert "Reorder" in items_str

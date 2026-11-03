@@ -69,3 +69,19 @@ def test_tenant_custom_tiers():
     assert res_infinity["allowed"] is True
     assert res_infinity["remaining"] == 1
     assert res_infinity["quota"] == 5000
+
+
+def test_quota_cache_and_invalidation():
+    tenant_id = "test_cache_tenant_99"
+    UsageService.clear_quota_cache()
+    
+    # Set cache directly
+    cache_key = f"{tenant_id}_2026_11"
+    UsageService._QUOTA_CACHE[cache_key] = {
+        "cached_at": 9999999999.0,
+        "result": {"allowed": True, "remaining": 123, "quota": 500, "usage": 377},
+    }
+    
+    assert cache_key in UsageService._QUOTA_CACHE
+    UsageService.invalidate_quota_cache(tenant_id)
+    assert cache_key not in UsageService._QUOTA_CACHE

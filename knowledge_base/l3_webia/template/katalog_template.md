@@ -461,3 +461,118 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Target: Jasa sewa truk pindahan, kurir kargo same-day, jasa pengiriman alat berat & material konstruksi.
   - Fitur: Quick price estimation, booking armada instan via WhatsApp, cakupan titik jemput, jaminan garansi keamanan barang.
   - Demo / Live: `/webia/template/transportation-logistics/bold/logistics-company-orange-energy`
+
+
+---
+
+## 18. Seri Non-Profit & Community
+- **REVOLT // IMPACT** (`revolt-impact-social-organization` • Style: *Bold Activism & Modern Dark* • Tone: *High-Contrast Lime & Deep Carbon*):
+  - Konsep: *EMPOWERING CHANGE, AMPLIFYING SOCIAL IMPACT — Gerakan Aksi Nyata untuk Kemanusiaan & Lingkungan.*
+  - Target: Yayasan non-profit (NGO), gerakan sukarelawan, komunitas aksi lingkungan/sosial, lembaga filantropi, dan kampanye sosial pemuda.
+  - Fitur: Live Impact Counter (metrik penerima manfaat & dana tersalurkan), Manifesto Interaktif Visi-Misi, Kartu Kampanye Aksi Nyata, Tiers Donasi Terstruktur & Transparan, Formulir Pendaftaran Relawan Online, Kalender Event Sosial, dan Integrasi WhatsApp Koordinator.
+  - Demo / Live: `/webia/template/revolt-impact`
+
+---
+
+## 19. Seri Photography & Creative Studio
+- **Peachy Studio — Product Photography** (`peachy-studio` • Style: *Fresh Modern Pastel* • Tone: *Soft Peach & Warm Linen*):
+  - Konsep: *CAPTURING PRODUCTS WITH SOUL — Fotografi Komersial Estetik yang Meningkatkan Penjualan Produk.*
+  - Target: Studio foto produk katalog e-commerce, UMKM kuliner, skincare & kosmetik, fashion apparel, dan rental studio indoor.
+  - Fitur: Showcase Portofolio Produk Interaktif dengan filter kategori, Pricelist Paket Photoshoot (Foto Tunggal, Bundling Video Reels, Katalog), Formulir Reservasi Sesi Foto Online, Galeri Studio & Peralatan Lighting, Testimoni Brand Partner, dan Direct WhatsApp Booking.
+  - Demo / Live: `/webia/template/peachy-studio`
+- **Lumière Studio — Photography & Videography** (`lumiere-photography-studio` • Style: *Editorial Luxury* • Tone: *Ivory, Champagne & Dark Slate*):
+  - Konsep: *TIMELESS VISUAL STORYTELLING — Portofolio Fotografi & Sinematografi Kelas Atas.*
+  - Target: Fotografer prewedding & wedding mewah, fashion lookbook, editorial majalah, dan videografer profil perusahaan.
+  - Fitur: Galeri full-screen ultra-high resolution, video showreel embed, breakdown paket wedding & editorial, formulir inquiry klien personal, dan kontak WhatsApp fotografer utama.
+  - Demo / Live: `/webia/template/lumiere-photography-studio`
+- **Noir Studio — Photography & Videography** (`noir-studio-photography` • Style: *Contemporary Dramatic Dark* • Tone: *Monochrome & Matte Charcoal*):
+  - Konsep: *THE ART OF LIGHT AND SHADOW — Karakter Visual Kuat, Dramatis, dan Sinematik.*
+  - Target: Fotografer otomotif, arsitektur malam, seni rupa, konser musik, dan videografer dokumenter.
+  - Fitur: Portofolio moodboard visual dramatis, tarif sewa ruang studio & gear, filter karya berdasarkan tema, direct booking admin.
+  - Demo / Live: `/webia/template/noir-studio`
+
+---
+
+## 20. Seri School, Preschool & Daycare Updates
+- **SPARK Academy — School & Learning** (`spark-academy-maximum-impact` • Style: *Inspiring Modern School* • Tone: *Vibrant Amber & Clean Navy*):
+  - Konsep: *NURTURING FUTURE LEADERS — Pendidikan Modern Berkarakter dan Berorientasi Masa Depan.*
+  - Target: Sekolah formal swasta (SD/SMP/SMA), akademi vokasi, pusat bimbingan belajar terpadu, dan sekolah seni.
+  - Fitur: Informasi Jenjang Kurikulum Terpadu, Fasilitas Sekolah & Ekstrakurikuler, Kalender Event & Ujian Akademik, Galeri Prestasi Siswa & Guru Berprestasi, Formulir Pendaftaran Siswa Baru (PPDB Online), WhatsApp Admission Office.
+  - Demo / Live: `/webia/template/education/spark-academy-maximum-impact.html`
+- **Rumah Latte — Preschool & Daycare** (`rumah-latte-preschool-daycare` • Style: *Warm Pastel Nurturing* • Tone: *Warm Latte & Butter Milk*):
+  - Konsep: *RUMAH KEDUA YANG NYAMAN DAN AMAN UNTUK SI KECIL TUMBUH CERIA.*
+  - Target: Daycare penitipan anak harian/bulanan (usia 6 bulan - 4 tahun), preschool, dan kelompok bermain (playgroup).
+  - Fitur: Jadwal Kegiatan & Gizi Harian, Standar Keamanan & Pengawasan CCTV, Profil Pengasuh/Pendidik Tersertifikasi, Paket Penitipan (Half Day & Full Day), Formulir Trial Class & Konsultasi Orang Tua.
+  - Demo / Live: `/webia/template/rumah-latte`
+- **Tunas Cendekia — Preschool & Daycare** (`tunas-cendekia-preschool-daycare` • Style: *Educational Bright & Friendly* • Tone: *Sky Blue & Sunny Yellow*):
+  - Konsep: *STIMULASI MOTORIK & KARAKTER SEJAK DINI DENGAN METODE BELAJAR MENYENANGKAN.*
+  - Target: Taman Kanak-Kanak (TK A/B), Preschool Bilingual, dan Daycare Terpadu.
+  - Fitur: Tahapan Tumbuh Kembang Usia, Galeri Sentra Belajar & Area Bermain, Rincian Uang Masuk & SPP Bulanan, Jadwal Tour Sekolah Langsung.
+  - Demo / Live: `/webia/template/tunas-cendekia`
+
+---
+
+## 21. Seri Culinary & Fine Dining Updates
+- **Restoran Azura — Hidangan Klasik** (`restoran-azura` • Style: *Classic Warm Hospitality* • Tone: *Sky Blue & Deep Navy*):
+  - Konsep: *HIDANGAN KLASIK, SUASANA HANGAT — Cita Rasa Autentik yang Selalu Dirindukan.*
+  - Target: Restoran keluarga, rumah makan prasmanan nusantara, casual dining, dan venue jamuan keluarga besar.
+  - Fitur: Buku Menu Digital Interaktif beserta harga & foto makanan, Tombol Reservasi Meja via WhatsApp, Informasi Jam Operasional & Titik Lokasi Peta, Paket Jamuan Rombongan & Prasmanan.
+  - Demo / Live: `/webia/template/restoran-azura`
+- **NOIR — Restaurant & Dining** (`noir-restaurant` • Style: *Modern Minimalist Fine Dining* • Tone: *Obsidian Black & Cream*):
+  - Konsep: *LESS, BUT EXCEPTIONAL — Seasonal Ingredients, Thoughtfully Prepared.*
+  - Target: Fine dining restaurant, bistro modern, rooftop lounge, dan chef's table degustation.
+  - Fitur: Tasting Menu & Wine Pairing Guide, Kisah Filosofi Dapur & Head Chef, Reservasi Kursi Eksklusif via WhatsApp, Dress Code & Etika Dining.
+  - Demo / Live: `/webia/template/noir-restaurant`
+
+
+---
+
+## 🔄 Template Tambahan Hasil Sinkronisasi Webia
+- **Apex Pulse Fitness - High Performance Gym** (`sports-gym-bold` • Category: *sports-fitness*):
+  - Deskripsi: Website mega gym dan athletic performance center bertenaga tinggi dengan program kelas HIIT/Powerlifting, profil certified coaches, paket membership transparan, booking 1-Day Free Trial Pass, FAQ, WhatsApp, dan Apex Coach AI.
+  - Demo / Live: `/webia/template/sports-gym-bold`
+
+- **EduPrime Academy - Bootcamp & E-Learning** (`education-onlinecourse-modern` • Category: *education*):
+  - Deskripsi: Website platform pembelajaran digital dan bootcamp siap kerja dengan kurikulum industri, sesi live mentoring praktisi, rincian biaya cicilan, beasiswa batch baru, alumni hiring rate, FAQ, WhatsApp, dan EduBot Academic AI.
+  - Demo / Live: `/webia/template/education-onlinecourse-modern`
+
+- **PetBase - Pet Shop Corporate Plum Velvet** (`petshop-corporate-plumvelvet` • Category: *pet-animal-service*):
+  - Deskripsi: Website pet shop profesional dengan hero banner, kategori makanan dan perlengkapan hewan, katalog produk, detail produk, harga dan spesifikasi, brand listings, informasi ketersediaan produk, promo, pemesanan grosir, lokasi toko, jam operasional, panduan pemesanan, FAQ, WhatsApp, dan antarmuka chatbot AI untuk informasi produk, ketersediaan stok, pesanan grosir, serta pertanyaan pemesanan.
+  - Demo / Live: `/webia/template/petshop-corporate-plumvelvet`
+
+- **Burgundy Moments - Event Organizer Modern Burgundy Wine** (`event-organizer-modern-burgundy-wine` • Category: *wedding-event*):
+  - Deskripsi: Website event organizer modern untuk layanan wedding, corporate event, private celebration, dan acara spesial. Dilengkapi showcase layanan, paket dan harga, galeri portfolio, pilihan venue dan dekorasi, proses perencanaan, testimoni klien, form inquiry, FAQ, WhatsApp, dan tombol AI chatbot floating.
+  - Demo / Live: `/webia/template/event-organizer-modern-burgundy-wine`
+
+- **Ruby Luxe - Catering & Wedding Cake Minimalist Ruby Luxe** (`catering-wedding-cake-minimalist-ruby-luxe` • Category: *wedding-event*):
+  - Deskripsi: Website catering dan wedding cake bergaya minimalist luxury dengan katalog menu catering, galeri wedding cake, kategori paket, informasi harga, pilihan ukuran dan rasa kue, konsultasi kapasitas catering, custom cake order, informasi food tasting, testimoni pelanggan, form inquiry WhatsApp, informasi area pengiriman, FAQ, dan tombol AI chatbot floating.
+  - Demo / Live: `/webia/template/catering-wedding-cake-minimalist-ruby-luxe`
+
+- **Jelly Pop - Personal Trainer Playful & Colorful** (`personal-trainer-playful-colorful-jelly-pop` • Category: *sports-fitness*):
+  - Deskripsi: Website personal trainer bergaya playful dan colorful dengan profil coach, program latihan, paket coaching bertingkat, detail sesi dan benefit, spesialisasi fitness, opsi online dan offline, progress gallery, testimoni, form konsultasi WhatsApp, FAQ, serta tombol AI chatbot floating.
+  - Demo / Live: `/webia/template/personal-trainer-playful-colorful-jelly-pop`
+
+- **Strawberry Fizz - Pilates Studio** (`pilates-studio-strawberry-fizz` • Category: *sports-fitness*):
+  - Deskripsi: Premium Pilates Studio website dengan desain girly modern dan elegant, katalog kelas Pilates, deskripsi kelas, paket membership dan harga, profil serta sertifikasi instruktur, galeri fasilitas studio, jadwal kelas, pilihan beginner dan advanced, private dan group session, form booking, lokasi studio, testimoni, FAQ, floating WhatsApp button, dan AI chatbot.
+  - Demo / Live: `/webia/template/pilates-studio-strawberry-fizz`
+
+- **Aethel Moss** (`aethel-moss-architectural-studio` • Category: *interior-architecture*):
+  - Deskripsi: Studio arsitektur modern dengan desain bangunan residential dan commercial, galeri denah, visualisasi 3D, kalkulator estimasi, serta konsultasi proyek.
+  - Demo / Live: `/webia/template/aethel-moss-architectural-studio`
+
+- **VIBESNATCH** (`vibesnatch-fashion-store` • Category: *retail*):
+  - Deskripsi: Toko fashion Gen-Z Pop-Dopamine dan Y2K dengan katalog, filter produk, wishlist, keranjang, lookbook, kalkulator ukuran, promo, dan checkout melalui WhatsApp.
+  - Demo / Live: `/webia/template/vibesnatch-fashion-store`
+
+- **Nantara Architecture** (`nantara-architecture-traditional-cultural` • Category: *interior-architecture*):
+  - Deskripsi: Website studio arsitektur tradisional dan heritage dengan showcase Joglo/Limasan, portofolio, denah, visualisasi 3D, material budaya, kalkulator estimasi, paket desain, dan konsultasi melalui WhatsApp.
+  - Demo / Live: `/webia/template/nantara-architecture-traditional-cultural`
+
+- **AURELIA** (`aurelia-home-renovation` • Category: *home-services*):
+  - Deskripsi: Luxury home renovation and repair website with service showcases, before-after gallery, material studio, cost estimator, packages, and consultation requests via WhatsApp.
+  - Demo / Live: `/webia/template/aurelia-home-renovation`
+
+- **MATCHA CLEAN** (`matcha-clean-organic-deep-cleaning` • Category: *home-services*):
+  - Deskripsi: Organic home cleaning landing page with personalized room selector, freshness profile, before-after slider, cleaning ritual packages, area estimator, eco-product showcase, material care guide, and WhatsApp booking inquiry.
+  - Demo / Live: `/webia/template/matcha-clean-organic-deep-cleaning`
+

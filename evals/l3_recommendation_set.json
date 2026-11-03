@@ -145,5 +145,26 @@
     "expected_intent": "recommend_psychology_website",
     "expected_action": "navigate",
     "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_22",
+    "query": "Saya ingin membuat website untuk yayasan non-profit dan pendaftaran relawan aksi sosial",
+    "expected_intent": "recommend_nonprofit_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_23",
+    "query": "Saya butuh website untuk studio foto produk UMKM dan katalog photoshoot komersial",
+    "expected_intent": "recommend_product_photography_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_24",
+    "query": "Saya butuh landing page untuk tempat penitipan anak daycare dan preschool ramah balita",
+    "expected_intent": "recommend_daycare_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
   }
 ]
