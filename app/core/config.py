@@ -3,6 +3,10 @@ from functools import lru_cache
 from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Pastikan SentenceTransformer / HuggingFace tidak mencoba memanggil jaringan jika offline
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
 
 class Settings(BaseSettings):
     APP_NAME: str = "ai-assistant-dkreasi"

@@ -4,6 +4,7 @@ from typing import Dict, Any
 
 class GuardrailService:
     def __init__(self):
+        # 1. Prompt Injection & Jailbreak (Hard Security Violation)
         self.injection_patterns = [
             "ignore previous instructions",
             "ignore all previous",
@@ -17,6 +18,25 @@ class GuardrailService:
             "jailbreak",
             "developer mode on",
             "override instructions",
+            "dan mode aktif",
+        ]
+
+        # 2. Out-of-Scope Abuse (Menjadikan chatbot bisnis sebagai ChatGPT tugas umum)
+        self.abuse_patterns = [
+            "buatkan kode",
+            "buatkan script",
+            "tuliskan kode",
+            "write code",
+            "bikin coding",
+            "buatkan program python",
+            "buatkan program java",
+            "buatkan program c++",
+            "kerjakan tugas sekolah",
+            "kerjakan pr ",
+            "buatkan esai",
+            "tuliskan esai",
+            "buatkan cerpen",
+            "buatkan puisi",
         ]
 
     def inspect_input(self, user_input: str) -> Dict[str, Any]:
@@ -25,11 +45,23 @@ class GuardrailService:
             if pattern in normalized:
                 return {
                     "safe": False,
+                    "category": "injection",
                     "reason": "Permintaan terdeteksi melanggar batasan keamanan sistem (prompt injection attempt).",
                     "sanitized": user_input,
                 }
+
+        for pattern in self.abuse_patterns:
+            if pattern in normalized:
+                return {
+                    "safe": False,
+                    "category": "out_of_scope",
+                    "reason": "Permintaan terdeteksi di luar lingkup layanan asisten bisnis (out-of-scope task abuse).",
+                    "sanitized": user_input,
+                }
+
         return {
             "safe": True,
+            "category": "safe",
             "reason": None,
             "sanitized": user_input.strip(),
         }

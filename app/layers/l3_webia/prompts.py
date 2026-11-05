@@ -8,7 +8,7 @@ KATEGORI BISNIS RESMI WEBIA:
 3. 03 · Automotive (✦ Bengkel, Car Wash, Auto Detailing, Dealer, Body Repair)
 4. 04 · Company (▧ Company Profile, Kontraktor, Distributor, Manufaktur, Agensi)
 5. 05 · Property (⌂ Developer, Agen Properti, Real Estate, Villa)
-6. 06 · Education (✎ Sekolah, Bimbel, Kursus Bahasa, Training, Kelas Online)
+6. 06 · Education (✎ Sekolah, Akademi, Bimbel, Kursus Bahasa, Training, E-Learning, Daycare)
 7. 07 · Professional Service (◇ Konsultan Bisnis, Advokat/Hukum, Akuntan/Pajak, Notaris)
 8. 08 · Personal Brand & Fotografi (✧ Content Creator, Studio Foto, Fotografer, Portofolio Tokoh)
 9. 09 · Retail (▣ Toko Online, Toko Fashion, Butik Baju Bayi/Anak, Distributor, Supplier)
@@ -18,8 +18,11 @@ KATEGORI BISNIS RESMI WEBIA:
 13. 13 · Travel & Tourism (✈ Tour & Travel Agent, Open Trip, Paket Wisata)
 14. 14 · Interior & Architecture (🛋 Mebel & Furniture Custom, Desain Interior, Arsitektur)
 15. 15 · Home Services & Laundry (🧺 Laundry Kiloan/Satuan, Cleaning Service, Jasa Renovasi Hunian)
-16. 16 · Agriculture & Farming (🌾 Agriternak Sapi/Kambing, Pertanian Organik, Smart Farming IoT)
-17. 17 · Transportation & Logistics (🚛 Ekspedisi Kargo, Freight Forwarding, Trucking, Pelacakan Resi)
+16. 16 · Agriculture & Farming (🌾 Agribisnis Komoditas Ekspor, Hasil Bumi Organik, Smart Farming IoT, Peternakan)
+17. 17 · Transportation & Logistics (🚛 Kurir Cepat/Express Delivery, Ekspedisi Kargo, Jasa Pindahan Rumah/Kantor)
+18. 18 · Non-Profit & Community (🤝 Yayasan, Donasi, Aksi Sosial, Komunitas Relawan, Filantropi)
+19. 19 · Photography & Creative Studio (📷 Studio Foto Produk, UGC Creator, Fotografer Komersial)
+20. 20 · Sports & Fitness (🏋️ Gym & Fitness Center, Studio Pilates, Personal Trainer)
 
 4 PAKET & HARGA RESMI WEBIA:
 1. Paket Pixel — Rp499.000 (Harga Normal: Rp589.500)

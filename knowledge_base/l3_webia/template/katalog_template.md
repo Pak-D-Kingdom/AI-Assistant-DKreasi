@@ -576,3 +576,215 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
   - Deskripsi: Organic home cleaning landing page with personalized room selector, freshness profile, before-after slider, cleaning ritual packages, area estimator, eco-product showcase, material care guide, and WhatsApp booking inquiry.
   - Demo / Live: `/webia/template/matcha-clean-organic-deep-cleaning`
 
+
+- **Ruby Academy — School of Excellence** (`ruby-academy-classic-school` • Category: *education*):
+  - Konsep: *SHAPING MINDS, BUILDING LEADERS — School of Excellence.*
+  - Target: Sekolah swasta unggulan, akademi internasional, institusi pendidikan terakreditasi, yayasan pendidikan formal.
+  - Fitur: Showcase jenjang kurikulum (Primary, Secondary, Pre-U), profil dewan guru & akreditasi internasional, jadwal open house & admission, virtual school tour, formulir pendaftaran PPDB online, direct WhatsApp Admission Office.
+  - Demo / Live: `/webia/template/ruby-academy-classic-school`
+
+- **Green Harvest — Corporate Agribisnis Ekspor** (`agriculture-agribisnis-forest-moss` • Category: *agriculture-farming*):
+  - Konsep: *SUSTAINABLE HARVEST, GLOBAL TRUST — Mitra Agribisnis Komoditas Ekspor.*
+  - Target: Korporasi agribisnis, perkebunan terpadu, supplier komoditas pertanian (kopi, rempah, vanili, kakao), eksportir hasil bumi.
+  - Fitur: Katalog komoditas ekspor unggulan, sertifikasi GAP & Halal, rincian Minimum Order Quantity (MOQ), formulir penawaran B2B inquiry, jadwal musim panen.
+  - Demo / Live: `/webia/template/agriculture-agribisnis-forest-moss`
+
+- **Bumi Lestari / AgroHarvest — Organik & Hasil Bumi** (`agribisnis-earth-tone` • Category: *agriculture-farming*):
+  - Konsep: *DARI ALAM UNTUK KESEJAHTERAAN BERSAMA — Hasil Pertanian Organik Segar.*
+  - Target: Petani organik modern, koperasi tani, distributor sayur & buah organik, pasar tani lokal & supermarket supplier.
+  - Fitur: Kalender masa panen, jadwal suplai grosir & eceran, uji lab residu alami, kemitraan pasokan via WhatsApp.
+  - Demo / Live: `/webia/template/agribisnis-earth-tone`
+
+- **Swiftly — Delivery Service Modern Emerald Express** (`delivery-service-emerald-express` • Category: *transportation-logistics*):
+  - Konsep: *KECEPATAN, KEANDALAN, KETEPATAN WAKTU — Solusi Pengiriman Cepat Kota ke Kota.*
+  - Target: Jasa kurir instan, logistik last-mile delivery, ekspedisi paket UMKM, pengiriman same-day / next-day.
+  - Fitur: Live Tracking Resi, kalkulator estimasi ongkir berdasarkan berat & volume, daftar jangkauan drop point / pick up, formulir kerja sama kurir korporat.
+  - Demo / Live: `/webia/template/delivery-service-emerald-express`
+
+- **Hearth & Haul — Classic Moving Company Navy Hearth** (`moving-company-navy-hearth` • Category: *transportation-logistics*):
+  - Konsep: *PINDAHAN BEBAS STRES, AMAN TERPERCAYA — Jasa Pindahan Rumah & Kantor Profesional.*
+  - Target: Jasa pindahan rumah (residential moving), relokasi kantor (commercial moving), sewa armada truk & pick-up box.
+  - Fitur: Kalkulator estimasi muatan pindahan, paket jasa packing/unpacking & tenaga angkut, proteksi asuransi muatan, reservasi jadwal pindahan.
+  - Demo / Live: `/webia/template/moving-company-navy-hearth`
+
+- **Atelier Move — Luxury Moving Concierge Rose Atelier** (`moving-company-rose-atelier` • Category: *transportation-logistics*):
+  - Konsep: *WHITE-GLOVE MOVING CONCIERGE — Relokasi Premium Barang Seni & Properti Mewah.*
+  - Target: Jasa pindahan VIP, handling barang berharga / karya seni / piano / antik, luxury relocation concierge.
+  - Fitur: Protokol white-glove handling, survey privat lokasi, asuransi all-risk bernilai tinggi, dedicated relocation manager.
+  - Demo / Live: `/webia/template/moving-company-rose-atelier`
+
+- **FreshWash & BlueLaundry — Modern Home Services Laundry** (`home-services-laundry-mint-fresh`, `home-services-laundry-classic-trust`, `home-services-laundry-baby-blue` • Category: *home-services*):
+  - Konsep: *BERSIH HIGIENIS, WANGI TAHAN LAMA — Solusi Laundry Kiloan & Satuan Modern.*
+  - Target: Laundry kiloan, wet & dry cleaning, cuci sepatu/tas, setrika uap, laundry perlengkapan rumah tangga.
+  - Fitur: Price list interaktif per kg & per pcs, coverage area pickup & delivery gratis, live tracker status cucian via WhatsApp, garansi cuci ulang jika tidak bersih.
+  - Demo / Live: `/webia/template/home-services-laundry-mint-fresh`
+
+- **IRONPULSE — Gym & Fitness Center** (`ironpulse-gym-fitness-center` • Category: *sports-fitness*):
+  - Konsep: *FORGE YOUR STRONGEST SELF — Mega Gym & Strength Training Ground.*
+  - Target: Pusat kebugaran (fitness center), gym angkat beban / powerlifting, studio functional training.
+  - Fitur: Virtual tour fasilitas alat gym, rincian paket membership (harian, bulanan, tahunan), profil certified coach & personal trainer, form booking 1-Day Free Trial Pass.
+  - Demo / Live: `/webia/template/ironpulse-gym-fitness-center`
+
+- **LENTERA NUSANTARA — Social Impact & Community** (`lentera-nusantara-volunteer-group` • Category: *nonprofit-community*):
+  - Konsep: *MENYALAKAN ASA DARI PELOSOK NEGERI — Gerakan Kerelawanan & Pemberdayaan Masyarakat.*
+  - Target: Organisasi sosial, komunitas relawan muda, gerakan filantropi pendidikan & kemanusiaan, yayasan amal.
+  - Fitur: Formulir pendaftaran relawan (volunteer onboarding), transparansi laporan penyaluran donasi publik, dokumentasi ekspedisi pelosok, donasi QRIS terverifikasi.
+  - Demo / Live: `/webia/template/lentera-nusantara-volunteer-group`
+
+- **CANDY CLOUD STUDIO — UGC & Content Creator Studio** (`candy-cloud-ugc-content-creator-studio` • Category: *photography-creative-studio*):
+  - Konsep: *SWEET CONTENT, SWEET RESULTS — Studio Konten Kreatif & UGC Maker.*
+  - Target: Content creator agency, studio foto estetik Gen-Z, UGC video creator untuk TikTok & Reels.
+  - Fitur: Showreel video viral, portofolio brand collaboration, ratecard paket video konten produk, instant brief WhatsApp.
+  - Demo / Live: `/webia/template/candy-cloud-ugc-content-creator-studio`
+
+- **Bengkel Otto & Detailing Series (Otomotif)** (`otto-artistic-workshop`, `samudra-auto-detailing-artistic`, `noir-auto-detailing-luxury`, `aurum-premium-auto-detailing`, `arvo-modern-automotive`, `nightshift-dark-mode-automotive` • Category: *automotive*):
+  - Bengkel Otto: Spesialis restorasi mesin, perawatan performa, dan kustom bodi bengkel terpercaya.
+  - Samudra Detailing & AURUM: Auto detailing salon mobil premium, poles bodi 3-stage, ceramic/graphene coating bergaransi.
+  - NOIR Atelier: Studio detailing mewah dengan konsep eksklusif luxury dark room.
+  - ARVO Motor Studio & NIGHTSHIFT: Servis berkala modern cepat, booking montir online, dan spesialis upgrade performa.
+  - Demo / Live: `/webia/template/otto-artistic-workshop` & `/webia/template/aurum-premium-auto-detailing`
+
+- **Hulu — Pantry Asal-Usul Nusantara** (`hulu-pantry-asal-usul` • Category: *fnb*):
+  - Konsep: *KEMBALI KE HULU — Bahan Pangan Murni Nusantara.*
+  - Target: Toko bahan pangan artisan nusantara, rempah organik lokal, kurasi pangan tradisional.
+  - Demo / Live: `/webia/template/hulu-pantry-asal-usul`
+
+- **GLOW LAB & Atelier Kulit — Creative Beauty Clinic** (`glow-lab-creative-beauty-clinic`, `atelier-kulit-creative-beauty-clinic` • Category: *beauty*):
+  - Konsep: *AESTHETIC CARE MEETS SCIENTIFIC PRECISION.*
+  - Target: Klinik kecantikan kreatif, perawatan barrier kulit, aesthetic wellness clinic.
+  - Demo / Live: `/webia/template/glow-lab-creative-beauty-clinic`
+
+
+---
+
+## 🔄 Katalog Template Tambahan Hasil Sinkronisasi Webia
+Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia Laravel:
+
+### Kategori: FNB
+- **Maison Breads & Pastry - Bold Luxury Bakery** (`bakery-bold-luxury` • Category: *fnb*):
+  - Deskripsi: Website bakery artisan bergaya bold luxury dengan katalog roti dan pastry, pre-order WhatsApp, informasi outlet, chatbot demo, dan FAQ.
+  - Demo / Live: `/webia/template/bakery-bold-luxury`
+
+- **MIDNIGHTBAKER - Futuristic Artisan Bakery** (`midnightbaker-futuristic` • Category: *fnb*):
+  - Deskripsi: Artisanal bread & pastry catalog with category filters, pre-order & reservation inquiries, bespoke cake & luxury hampers consultation, artisan craft showcase, flagship boutique location with map directions & operating-hours notice, product availability, delivery & allergen FAQs, WhatsApp contact prompt, and AI Concierge demo FAQ interface.
+  - Demo / Live: `/webia/template/midnightbaker-futuristic`
+
+- **Origins Cafe - F&B Cafe Minimalist Earthtone** (`fnb-cafe-minimalis` • Category: *fnb*):
+  - Deskripsi: Website cafe minimalist dengan menu, reservasi, dan cerita brand dalam palet earthtone yang tenang.
+  - Demo / Live: `/webia/template/fnb/minimalis`
+
+- **Lumiere Cafe - F&B Cafe Elegant Earthtone** (`fnb-cafe-elegan` • Category: *fnb*):
+  - Deskripsi: Website cafe elegan dengan menu curated, reservasi meja, dan atmosfer hangat sepanjang halaman.
+  - Demo / Live: `/webia/template/fnb/elegan`
+
+- **Kopi Lembang - F&B Cafe Vintage Earthtone** (`fnb-cafe-vintage` • Category: *fnb*):
+  - Deskripsi: Website cafe bergaya vintage dengan menu klasik, reservasi, dan suasana retro yang karakter.
+  - Demo / Live: `/webia/template/fnb/vintage`
+
+- **Sweet Crumb Bakery - F&B Bakery Playful Colorful** (`fnb-bakery-playful-colorful-pastel-mix` • Category: *fnb*):
+  - Deskripsi: Website bakery playful penuh warna dengan katalog roti, kue, menu harian, dan pesanan khusus.
+  - Demo / Live: `/webia/template/fnb-bakery-playful-colorful`
+
+### Kategori: PET-ANIMAL-SERVICE
+- **Paws & Joy - Playful Jellypop Pet Academy** (`paws-joy-jellypop` • Category: *pet-animal-service*):
+  - Deskripsi: Playful pet academy landing page with positive-reinforcement training methods, puppy socialization and obedience programs, behavioral therapy, agility classes, sensory facilities, academy gallery, graduate testimonials, trial-session reservations, Kelapa Gading and BSD City locations, operating hours, FAQs, WhatsApp contact, and AI PawsBot demo.
+  - Demo / Live: `/webia/template/paws-joy-jellypop`
+
+### Kategori: AUTOMOTIVE
+- **APEX Heritage - Elegant Automotive Collection** (`apex-heritage-automotive-elegant` • Category: *automotive*):
+  - Deskripsi: Luxury automotive showroom with curated prestige vehicle inventory, vehicle categories and specifications, bespoke financing calculator, trade-in appraisal studio, private test-drive reservations, customer testimonials, FAQs, and AI concierge demo.
+  - Demo / Live: `/webia/template/apex-heritage-automotive-elegant`
+
+- **APEX Scuderia - Minimalist Automotive Collection** (`apex-scuderia-automotive-minimalist` • Category: *automotive*):
+  - Deskripsi: Minimalist high-performance automotive showroom with a curated sports-car vault, vehicle specifications, Ferrari SF90 XX spotlight, portfolio gallery, structured financing calculator, trade-in appraisal, VIP viewing reservations, FAQs, and WhatsApp concierge.
+  - Demo / Live: `/webia/template/apex-scuderia-automotive-minimalist`
+
+- **Maison Otto - Elegant Workshop** (`maison-otto-elegant-workshop` • Category: *automotive*):
+  - Deskripsi: Website bengkel elegan dengan paspor servis, rencana perawatan, layanan antar-jemput, dan konsultasi WhatsApp.
+  - Demo / Live: `/webia/template/maison-otto-elegant-workshop`
+
+- **Roseline Service Center - Professional Workshop** (`roseline-professional-workshop` • Category: *automotive*):
+  - Deskripsi: Website bengkel profesional rose gold dengan papan antrean, laporan inspeksi, penawaran servis tertulis, layanan armada, dan konsultasi WhatsApp.
+  - Demo / Live: `/webia/template/roseline-professional-workshop`
+
+### Kategori: EDUCATION
+- **Arctic Academy - School & Learning** (`arctic-academy-school` • Category: *education*):
+  - Deskripsi: Website Arctic Academy bergaya klasik untuk menampilkan profil, program sekolah, keunggulan, galeri, testimoni, FAQ, serta informasi pendaftaran dan kontak.
+  - Demo / Live: `/webia/template/arctic-academy-school`
+
+### Kategori: HEALTHCARE
+- **GlowClinic - Healthcare Klinik Kecantikan Luxury Champagne Glow** (`healthcare-champagne-glow` • Category: *healthcare*):
+  - Deskripsi: Website klinik kecantikan luxury champagne glow dengan layanan estetika premium, fasilitas spa, testimoni klien, jadwal praktik, lokasi, booking appointment, FAQ, dan asisten AI.
+  - Demo / Live: `/webia/template/healthcare/luxury/klinik-kecantikan-champagne-glow`
+
+- **RoseGlow Clinic - Healthcare Klinik Kecantikan Elegant Rose Gold** (`healthcare-rose-gold` • Category: *healthcare*):
+  - Deskripsi: Website klinik kecantikan elegan dengan warna rose gold, layanan perawatan, tim dokter, jadwal praktik, lokasi, booking appointment, FAQ, kebijakan, dan asisten AI.
+  - Demo / Live: `/webia/template/healthcare/elegan/klinik-kecantikan-rose-gold`
+
+### Kategori: RETAIL
+- **GlowEra - Retail Skincare Premium Minimal Warm Neutral** (`retail-skincare-warm-neutral` • Category: *retail*):
+  - Deskripsi: Website toko skincare premium minimal dengan palet warm neutral, katalog produk, daftar harga, ketersediaan stok, inquiry & konsultasi via WhatsApp, belanja online, dan asisten AI FAQ produk.
+  - Demo / Live: `/webia/template/retail/premium-minimal/skincare-warm-neutral`
+
+### Kategori: INTERIOR-ARCHITECTURE
+- **WoodenLane - Interior & Architecture Furniture Premium Minimal Mocha Cream** (`interior-furniture-mocha-cream` • Category: *interior-architecture*):
+  - Deskripsi: Website furniture & custom furniture premium minimal dengan palet mocha cream, katalog produk, custom design, material & finishing, dimensi produk, galeri proyek, form custom order, estimasi lead time produksi, permintaan penawaran, WhatsApp, dan asisten AI FAQ produk & kustomisasi.
+  - Demo / Live: `/webia/template/interior-architecture/premium-minimal/furniture-mocha-cream`
+
+- **LuxeFurni - Interior & Architecture Furniture Luxury Chocolate Luxe** (`interior-furniture-chocolate-luxe` • Category: *interior-architecture*):
+  - Deskripsi: Website furniture & custom furniture luxury dengan palet chocolate luxe, katalog produk, custom design, material & finishing, dimensi produk, galeri proyek, form custom order, estimasi lead time produksi, permintaan penawaran, WhatsApp, dan asisten AI FAQ produk & kustomisasi.
+  - Demo / Live: `/webia/template/interior-architecture/luxury/furniture-chocolate-luxe`
+
+### Kategori: TRANSPORTATION-LOGISTICS
+- **GlobalCargo - Transportation & Logistics Logistics Company Modern Midnight Navy** (`transportation-logistics-company-midnight-navy` • Category: *transportation-logistics*):
+  - Deskripsi: Website perusahaan logistik modern dengan warna midnight navy, layanan logistik, pilihan freight udara-laut-darat, jangkauan layanan, armada & gudang, proses pengiriman, tracking pengiriman, klien korporat, permintaan penawaran, WhatsApp, dan asisten AI FAQ pengiriman & logistik.
+  - Demo / Live: `/webia/template/transportation-logistics/modern/logistics-company-midnight-navy`
+
+- **COCOEXPRESS** (`cocoexpress-delivery-service` • Category: *transportation-logistics*):
+  - Deskripsi: Friendly chocolate-themed delivery logistics website with shipment tracking demo, instant shipping rate calculator, delivery service selector, package size guide, pickup scheduling, multi-package order inquiry, business partnership registration, COD information, FAQ, WhatsApp contact, and AI chatbot.
+  - Demo / Live: `/webia/template/cocoexpress-delivery-service`
+
+- **RELOKO** (`reloko-moving-company` • Category: *transportation-logistics*):
+  - Deskripsi: Modern moving and relocation website with interactive moving journey planner, origin and destination address selector, home size assessment, moving volume and cost estimator, residential and commercial relocation services, packing and fragile item handling, furniture catalog, moving date request, room-by-room inventory, packing checklist generator, moving timeline, fleet showcase, gallery, testimonials, survey booking, FAQ, WhatsApp quotation flow, and AI chatbot interface.
+  - Demo / Live: `/webia/template/reloko-moving-company`
+
+### Kategori: AGRICULTURE-FARMING
+- **AgroHarvest - Agriculture & Farming Agribisnis Organic Earth Tone** (`agriculture-agribisnis-earth-tone` • Category: *agriculture-farming*):
+  - Deskripsi: Website agribisnis organik dengan warna earth tone, katalog komoditas, informasi tanaman & panen, spesifikasi produk, jumlah pesanan minimum, kapasitas pasokan, jangkauan distribusi, sertifikasi, inquiry B2B, permintaan penawaran, WhatsApp, dan asisten AI FAQ komoditas & kemitraan.
+  - Demo / Live: `/webia/template/agriculture-farming/organic/agribisnis-earth-tone`
+
+- **AgroTrade - Agriculture & Farming Agribisnis Professional Classic Trust** (`agriculture-farming-agribisnis-classic-trust` • Category: *agriculture-farming*):
+  - Deskripsi: Website agribisnis & perdagangan komoditas profesional dengan warna classic trust, katalog komoditas, informasi tanaman & panen, spesifikasi produk, jumlah pesanan minimum, kapasitas pasokan, jangkauan distribusi, sertifikasi, B2B inquiry, quotation request, WhatsApp, dan asisten AI FAQ komoditas & kemitraan.
+  - Demo / Live: `/webia/template/agribisnis-classic-trust`
+
+### Kategori: NONPROFIT-COMMUNITY
+- **Harapan Untuk Negeri - Nonprofit & Community Foundation Professional Classic Trust** (`nonprofit-foundation-classic-trust` • Category: *nonprofit-community*):
+  - Deskripsi: Website yayasan profesional dengan warna classic trust (navy, biru, emas), misi & visi, program, laporan dampak, pilihan donasi, transparansi keuangan, mitra & sponsor, pendaftaran relawan, berita & acara, tombol WhatsApp, dan asisten AI FAQ program & donasi.
+  - Demo / Live: `/webia/template/nonprofit-community/professional/foundation-classic-trust`
+
+- **Gerak Nusa - Nonprofit & Community Social Organization Creative Tropical Rush** (`nonprofit-social-organization-tropical-rush` • Category: *nonprofit-community*):
+  - Deskripsi: Website organisasi sosial kreatif dengan warna tropical rush, profil organisasi, program komunitas, galeri kegiatan, kisah dampak, event mendatang, pendaftaran relawan & anggota, informasi mitra, kontak, tombol WhatsApp, dan asisten AI FAQ program & partisipasi.
+  - Demo / Live: `/webia/template/nonprofit-community/creative/social-organization-tropical-rush`
+
+- **SegarKita - Nonprofit & Community Social Organization Bold Citrus Pop** (`nonprofit-social-organization-citrus-pop` • Category: *nonprofit-community*):
+  - Deskripsi: Website organisasi sosial bold dengan warna citrus pop, profil organisasi, program komunitas, galeri kegiatan, kisah dampak, event mendatang, pendaftaran relawan & anggota, informasi mitra, kontak, tombol WhatsApp, dan asisten AI FAQ program & partisipasi.
+  - Demo / Live: `/webia/template/nonprofit-community/bold/social-organization-citrus-pop`
+
+### Kategori: TECHNOLOGY-IT
+- **SAKURATECH** (`sakuratech-hardware-computer-networking` • Category: *technology-it*):
+  - Deskripsi: Cyber-sakura hardware and computer networking storefront with interactive PC configurator, component catalog, socket compatibility checker, wattage and price estimator, ready-to-use PC bundles, gaming setup gallery, networking essentials, home Wi-Fi installation packages, beginner hardware guides, promotions, custom build request, product cart, WhatsApp checkout, FAQ, and SakuraBot assistant interface.
+  - Demo / Live: `/webia/template/sakuratech-hardware-computer-networking`
+
+- **SAKURABIT** (`sakurabit-hardware-computer-networking` • Category: *technology-it*):
+  - Deskripsi: Playful Cherry Blossom hardware and networking storefront with interactive PC builder, component compatibility and performance preview, PC component catalog, ready-to-use bundles, build inspiration gallery, gaming setup and accessories, beginner hardware guide, networking essentials, home Wi-Fi installation packages, tech tips, promotions, customer setup gallery, custom PC build request, product inquiry, FAQ, WhatsApp ordering, and Sakura AI assistant UI.
+  - Demo / Live: `/webia/template/sakurabit-hardware-computer-networking`
+
+### Kategori: COMPANY
+- **Bangun Karsa - Contractor Professional** (`bangun-karsa-contractor-professional` • Category: *company*):
+  - Deskripsi: Website kontraktor profesional untuk proyek bangunan, renovasi, gedung komersial, estimasi RAB awal, portofolio proyek, dan konsultasi WhatsApp.
+  - Demo / Live: `/webia/template/bangun-karsa-contractor-professional`
+
+- **Langit Karya - Contractor Minimalist** (`langit-karya-contractor-minimalist` • Category: *company*):
+  - Deskripsi: Website kontraktor minimalist untuk perencanaan bangunan, renovasi, layanan konstruksi, portofolio proyek, wizard brief proyek, dan konsultasi WhatsApp.
+  - Demo / Live: `/webia/template/langit-karya-contractor-minimalist`
+
