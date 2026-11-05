@@ -16,6 +16,22 @@ def test_allows_safe_queries():
     assert result["reason"] is None
 
 
+def test_blocks_out_of_scope_abuse():
+    guardrail = GuardrailService()
+    result = guardrail.inspect_input("Tolong buatkan kode python untuk kalkulator")
+    assert result["safe"] is False
+    assert result["category"] == "out_of_scope"
+    assert "di luar lingkup layanan" in result["reason"]
+
+
+def test_allows_conversational_queries():
+    guardrail = GuardrailService()
+    # Pertanyaan santai seputar cuaca / fasilitas sekitar tetap lolos guardrail
+    result = guardrail.inspect_input("Min, cuaca panas gini ada ruang tunggu ber-AC gak?")
+    assert result["safe"] is True
+    assert result["reason"] is None
+
+
 def test_sanitizes_coming_soon_launch_promises_for_l1():
     guardrail = GuardrailService()
     simulated_output = "Layanan aplikasi mobile akan rilis pada tanggal 10 Desember 2026."

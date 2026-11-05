@@ -50,3 +50,27 @@ async def get_analytics_dashboard_ui(
     data = await AnalyticsService.get_overview_metrics(db=db, days=days)
     html_content = AnalyticsService.render_dashboard_html(data=data, days=days)
     return HTMLResponse(content=html_content)
+
+
+@router.get("/cache")
+async def get_cache_metrics():
+    """Mengembalikan metrik performa Semantic Caching (Hit ratio, token saved, latency saved)."""
+    from app.services.semantic_cache_service import get_semantic_cache
+    return {
+        "status": "success",
+        "cache_metrics": get_semantic_cache().get_stats(),
+    }
+
+
+@router.post("/cache/clear")
+async def clear_semantic_cache(
+    layer: Optional[str] = Query(None, description="Layer spesifik yang ingin dibersihkan"),
+    tenant_id: Optional[str] = Query(None, description="Tenant ID spesifik yang ingin dibersihkan"),
+):
+    """Membersihkan semantic cache (global atau spesifik layer/tenant)."""
+    from app.services.semantic_cache_service import get_semantic_cache
+    get_semantic_cache().invalidate(layer=layer, tenant_id=tenant_id)
+    return {
+        "status": "success",
+        "message": f"Semantic cache berhasil dibersihkan (layer={layer}, tenant_id={tenant_id}).",
+    }

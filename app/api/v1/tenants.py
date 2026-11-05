@@ -124,6 +124,10 @@ async def save_tenant_knowledge(tenant_id: str, payload: TenantKnowledgePayload)
     rag = RagService()
     rebuild_tenant_index(tenant_id, rag_service=rag)
 
+    # Invalidate semantic cache for this tenant
+    from app.services.semantic_cache_service import get_semantic_cache
+    get_semantic_cache().invalidate(tenant_id=tenant_id)
+
     return {
         "status": "success",
         "tenant_id": tenant_id,

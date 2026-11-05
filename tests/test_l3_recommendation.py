@@ -228,3 +228,51 @@ def test_l3_routes_to_daycare_preschool():
     assert res["action"] == "navigate"
     assert "Rumah Latte" in res["recommendation"]["recommended_template"]
     assert res["cart_template_slug"] == "rumah-latte-preschool-daycare"
+
+
+def test_l3_routes_to_school_ruby_academy():
+    res = L3IntentRouter.detect_and_route("Saya butuh website untuk yayasan sekolah swasta dan PPDB online")
+    assert res["intent"] == "recommend_school_website"
+    assert res["action"] == "navigate"
+    assert "Ruby Academy" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "ruby-academy-classic-school"
+
+
+def test_l3_routes_to_moving_company():
+    res = L3IntentRouter.detect_and_route("Saya butuh landing page untuk jasa pindahan rumah dan kantor profesional")
+    assert res["intent"] == "recommend_moving_website"
+    assert res["action"] == "navigate"
+    assert "Hearth & Haul" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "moving-company-navy-hearth"
+
+
+def test_l3_routes_to_express_delivery():
+    res = L3IntentRouter.detect_and_route("Saya ingin membuat website kurir kilat express delivery same day antar paket")
+    assert res["intent"] == "recommend_express_delivery_website"
+    assert res["action"] == "navigate"
+    assert "Swiftly" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "delivery-service-emerald-express"
+
+
+def test_l3_routes_to_fitness_gym():
+    res = L3IntentRouter.detect_and_route("Saya punya tempat gym dan fitness center dan butuh jadwal kelas harian")
+    assert res["intent"] == "recommend_fitness_website"
+    assert res["action"] == "navigate"
+    assert "IRONPULSE" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "ironpulse-gym-fitness-center"
+
+
+def test_l3_routes_to_b2b_agriculture():
+    res = L3IntentRouter.detect_and_route("Saya butuh website perusahaan agribisnis komoditas ekspor kopi dan rempah")
+    assert res["intent"] == "recommend_b2b_agriculture_website"
+    assert res["action"] == "navigate"
+    assert "Green Harvest" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "agriculture-agribisnis-forest-moss"
+
+
+def test_l3_routes_to_auto_detailing():
+    res = L3IntentRouter.detect_and_route("Saya membuka salon auto detailing poles mobil dan nano ceramic coating")
+    assert res["intent"] == "recommend_auto_detailing_website"
+    assert res["action"] == "navigate"
+    assert "Bengkel Otto" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "otto-artistic-workshop"

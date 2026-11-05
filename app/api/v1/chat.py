@@ -28,7 +28,7 @@ orchestrator = PipelineOrchestrator()
 VALID_LAYERS = {"l1", "l2", "l3", "l4"}
 ALLOWED_ROLES = {"user", "assistant"}   # role "system" dari client DITOLAK (anti prompt-injection)
 MAX_MESSAGES = 20                       # riwayat maksimum yang diteruskan ke orchestrator
-MAX_CONTENT_CHARS = 4000                # panjang maksimum per pesan
+MAX_CONTENT_CHARS = 1000                # panjang maksimum per pesan (ramah pengguna, cegah spam copy-paste)
 
 TENANT_ID_RE = re.compile(r"^tenant_[a-z0-9_]{1,60}$")
 SESSION_ID_RE = re.compile(r"^[A-Za-z0-9_\-]{1,64}$")

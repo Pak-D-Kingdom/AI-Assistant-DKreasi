@@ -166,5 +166,47 @@
     "expected_intent": "recommend_daycare_website",
     "expected_action": "navigate",
     "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_25",
+    "query": "Saya butuh website untuk yayasan sekolah swasta dan PPDB online murid baru",
+    "expected_intent": "recommend_school_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_26",
+    "query": "Saya butuh landing page untuk jasa pindahan rumah dan relokasi kantor",
+    "expected_intent": "recommend_moving_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_27",
+    "query": "Saya ingin membuat website kurir kilat express delivery same day antar paket",
+    "expected_intent": "recommend_express_delivery_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_28",
+    "query": "Saya punya tempat gym dan fitness center, butuh jadwal kelas harian dan membership",
+    "expected_intent": "recommend_fitness_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_29",
+    "query": "Saya butuh website perusahaan agribisnis komoditas ekspor kopi dan rempah hasil bumi",
+    "expected_intent": "recommend_b2b_agriculture_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_30",
+    "query": "Saya membuka studio salon auto detailing poles mobil dan nano ceramic coating",
+    "expected_intent": "recommend_auto_detailing_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
   }
 ]

@@ -120,6 +120,7 @@ WEBIA_CATEGORIES = [
     {"number": "17", "slug": "transportation-logistics", "name": "Transportation & Logistics", "symbol": "🚛", "desc": "Ekspedisi kargo, logistik, freight forwarding, trucking, tracking armada"},
     {"number": "18", "slug": "nonprofit-community", "name": "Non-Profit & Community", "symbol": "🤝", "desc": "Yayasan, organisasi sosial, aksi kemanusiaan, komunitas relawan, lembaga filantropi, panti asuhan"},
     {"number": "19", "slug": "photography-creative-studio", "name": "Photography & Creative Studio", "symbol": "📷", "desc": "Studio foto produk, fotografer komersial, studio wisuda, wedding photoshoot, videografi"},
+    {"number": "20", "slug": "sports-fitness", "name": "Sports & Fitness", "symbol": "🏋️", "desc": "Mega gym, fitness center, studio pilates, personal trainer, athletic performance"},
 ]
 
 # PRD WEBIA §7.6: Category & Package Recommendation Matrix
@@ -154,7 +155,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila bengkel/dealer memerlukan admin service management untuk melacak riwayat servis berkala pelanggan.",
         "template_id": "Pitstop Garage",
         "template_slug": "pitstop-garage",
-        "template_name": "Pitstop Garage (Bengkel) / Tidal Detail (Auto Detailing) / Noir Atelier (Luxury) / Form Auto Care (Minimal)",
+        "template_name": "Pitstop Garage (Bengkel) / Bengkel Otto (Artistic Workshop) / Samudra Detailing (Ceramic Coating) / AURUM Premium / Tidal Detail",
         "recommended_modules": ["Booking Servis Berkala", "Emergency Call WhatsApp", "Peta Bengkel", "Daftar Paket Servis"],
     },
     "company": {
@@ -187,7 +188,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila butuh integrasi LMS, pembayaran SPP/kursus online otomatis, dan area member siswa.",
         "template_id": "SPARK Academy / BrightPath / Rumah Latte & Tunas Cendekia (Daycare)",
         "template_slug": "spark-academy-maximum-impact",
-        "template_name": "SPARK Academy (Modern School) / BrightPath / Rumah Latte & Tunas Cendekia (Daycare & Preschool)",
+        "template_name": "Ruby Academy (School of Excellence) / SPARK Academy (Modern School) / EduPrime (Bootcamp) / Rumah Latte & Tunas Cendekia (Daycare & Preschool)",
         "recommended_modules": ["Formulir Pendaftaran Siswa / PPDB Online", "Jadwal Kelas, Biaya SPP & Daycare", "Profil Pengajar/Tutor", "Testimoni Alumni & Wali Murid"],
     },
     "professional_service": {
@@ -286,7 +287,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila bisnis laundry Anda membutuhkan sistem CMS untuk update promo berkala, pelacakan status pengerjaan cucian, atau form booking antar-jemput.",
         "template_id": "Mint Fresh / Baby Blue / Classic Trust",
         "template_slug": "laundry-mint-fresh",
-        "template_name": "Mint Fresh Laundry (Minimalis) / Baby Blue (Modern) / Classic Trust (Professional)",
+        "template_name": "Mint Fresh Laundry (Minimalis) / Classic Trust (Professional) / Baby Blue (Modern) / Aurelia (Renovation) / Matcha Clean",
         "recommended_modules": ["Price List Kiloan & Satuan", "Interactive Coverage Area Map", "Live Status Buka/Tutup Toko", "Form Booking Pick-up & Delivery", "Kalkulator Estimasi Biaya Renovasi per m2", "Form Booking Survey Arsitek", "AI Chatbot CS"],
     },
     "agriculture_farming": {
@@ -306,9 +307,9 @@ RECOMMENDATION_MATRIX = {
         "entry_price": "Rp899.000",
         "upgrade_package": "Nexus",
         "upgrade_trigger": "Bila perusahaan ekspedisi membutuhkan dashboard CMS untuk update tarif rute berkala, manajemen armada, atau integrasi API tracking resi.",
-        "template_id": "Logistics Company Classic Trust / Midnight Navy / Orange Energy",
+        "template_id": "Swiftly (Express Delivery) / Hearth & Haul (Moving Company) / Atelier Move (Luxury Relocation) / Logistics Company Classic Trust",
         "template_slug": "logistics-company-classic-trust",
-        "template_name": "Logistics Company Classic Trust / Midnight Navy / Orange Energy",
+        "template_name": "Swiftly (Express Delivery) / Hearth & Haul (Moving Company) / Atelier Move (Luxury Relocation) / Logistics Company Classic Trust",
         "recommended_modules": ["Cek Resi / Tracking Muatan", "Kalkulator Freight Cargo", "Peta Jangkauan Armada", "Formulir Permintaan Penawaran (RFQ)", "WhatsApp CS Ekspedisi"],
     },
     "nonprofit_community": {
@@ -332,6 +333,17 @@ RECOMMENDATION_MATRIX = {
         "template_slug": "peachy-studio",
         "template_name": "Peachy Studio (Product Photography) / Lumière Studio (Luxury) / Noir Studio (Dramatic)",
         "recommended_modules": ["Showcase Portofolio Foto Kategori Interaktif", "Pricelist Paket Photoshoot", "Formulir Booking Sesi Foto", "Direct WhatsApp Studio Admin", "Testimoni Klien & Brand"],
+    },
+    "sports_fitness": {
+        "category_name": "Sports, Gym & Fitness",
+        "entry_package": "Pulse",
+        "entry_price": "Rp899.000",
+        "upgrade_package": "Nexus",
+        "upgrade_trigger": "Bila tempat gym/fitness butuh CMS manajemen jadwal kelas harian, profil pelatih/instruktur, dan registrasi membership online.",
+        "template_id": "IRONPULSE / Apex Pulse / Strawberry Fizz",
+        "template_slug": "ironpulse-gym-fitness-center",
+        "template_name": "IRONPULSE (Mega Gym & Strength) / Apex Pulse (Athletic Performance) / Strawberry Fizz (Pilates Studio) / Jelly Pop (Personal Trainer)",
+        "recommended_modules": ["Jadwal Kelas & Sesi Latihan", "Booking 1-Day Free Trial Pass", "Katalog Paket Membership", "Profil Certified Coach", "WhatsApp Admin Gym"],
     },
 }
 
@@ -482,7 +494,7 @@ class L3IntentRouter:
             }
 
         # 3. Rekomendasi Spesifik Berdasarkan Kategori Industri (Recommendation Matrix PRD §7.6)
-        if any(w in normalized for w in ["nonprofit", "non-profit", "yayasan", "komunitas", "relawan", "donasi", "charity", "filantropi", "panti asuhan", "organisasi sosial", "aksi sosial", "gerakan sosial", "baksos"]) or re.search(r'\bngo\b', normalized):
+        if (any(w in normalized for w in ["nonprofit", "non-profit", "yayasan", "komunitas", "relawan", "donasi", "charity", "filantropi", "panti asuhan", "organisasi sosial", "aksi sosial", "gerakan sosial", "baksos"]) or re.search(r'\bngo\b', normalized)) and not any(k in normalized for k in ["sekolah", "ppdb", "murid", "siswa", "preschool", "daycare"]):
             sol = recommend_webia_solution("nonprofit_community")
             return {
                 "intent": "recommend_nonprofit_website",
@@ -510,6 +522,80 @@ class L3IntentRouter:
                 "cart_template_slug": "peachy-studio",
             }
 
+
+        if any(w in normalized for w in ["pindahan", "jasa pindahan", "moving", "moving company", "relokasi rumah", "pindahan kantor", "angkut barang pindahan", "hearth and haul", "hearth & haul", "atelier move"]):
+            sol = recommend_webia_solution("transportation_logistics")
+            sol["recommended_template"] = "Hearth & Haul / Atelier Move — Moving Company & Luxury Concierge"
+            sol["cart_template_slug"] = "moving-company-navy-hearth"
+            return {
+                "intent": "recommend_moving_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Jasa Pindahan (Hearth & Haul) →",
+                "service_name": "Solusi Website Jasa Pindahan & Relokasi",
+                "recommendation": sol,
+                "cart_template_slug": "moving-company-navy-hearth",
+            }
+
+        if any(w in normalized for w in ["kurir", "kurir kilat", "delivery service", "express delivery", "same day", "swiftly", "antar paket instan"]):
+            sol = recommend_webia_solution("transportation_logistics")
+            sol["recommended_template"] = "Swiftly — Delivery Service Modern Emerald Express"
+            sol["cart_template_slug"] = "delivery-service-emerald-express"
+            return {
+                "intent": "recommend_express_delivery_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Swiftly (Express Delivery) →",
+                "service_name": "Solusi Website Kurir & Delivery Service",
+                "recommendation": sol,
+                "cart_template_slug": "delivery-service-emerald-express",
+            }
+
+        if any(w in normalized for w in ["gym", "fitness", "angkat beban", "pilates", "personal trainer", "pt gym", "kebugaran", "pusat kebugaran", "workout", "senam", "ironpulse", "apex pulse", "strawberry fizz"]):
+            sol = recommend_webia_solution("sports_fitness")
+            return {
+                "intent": "recommend_fitness_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template IRONPULSE (Gym & Fitness Center) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": sol.get("cart_template_slug", "ironpulse-gym-fitness-center"),
+            }
+
+        if any(w in normalized for w in ["agribisnis", "agribusiness", "hasil bumi", "komoditas", "rempah", "ekspor kopi", "vanili", "green harvest", "bumi lestari"]):
+            sol = recommend_webia_solution("agriculture_farming", needs_cms=True)
+            sol["recommended_template"] = "Green Harvest — Corporate Agribisnis & Ekspor"
+            sol["cart_template_slug"] = "agriculture-agribisnis-forest-moss"
+            return {
+                "intent": "recommend_b2b_agriculture_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Green Harvest (Agribisnis Ekspor) →",
+                "service_name": "Solusi Website Agribisnis & Komoditas Ekspor",
+                "recommendation": sol,
+                "cart_template_slug": "agriculture-agribisnis-forest-moss",
+            }
+
+        if any(w in normalized for w in ["detailing", "auto detailing", "poles mobil", "ceramic coating", "graphene coating", "salon mobil", "paint protection", "bengkel otto", "samudra detailing", "aurum"]):
+            sol = recommend_webia_solution("automotive")
+            sol["recommended_template"] = "Bengkel Otto / Samudra Detailing / AURUM Auto Detailing"
+            sol["cart_template_slug"] = "otto-artistic-workshop"
+            return {
+                "intent": "recommend_auto_detailing_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Bengkel Otto & Auto Detailing →",
+                "service_name": "Solusi Website Auto Detailing & Bengkel Kustom",
+                "recommendation": sol,
+                "cart_template_slug": "otto-artistic-workshop",
+            }
+
         if any(w in normalized for w in ["daycare", "preschool", "penitipan anak", "paud", "playgroup", "kelompok bermain", "anak usia dini"]):
             sol = recommend_webia_solution("education")
             sol["recommended_template"] = "Rumah Latte / Tunas Cendekia (Preschool & Daycare)"
@@ -523,6 +609,21 @@ class L3IntentRouter:
                 "service_name": "Solusi Website Preschool & Daycare",
                 "recommendation": sol,
                 "cart_template_slug": "rumah-latte-preschool-daycare",
+            }
+
+        if any(w in normalized for w in ["sekolah", "akademi", "school", "academy", "yayasan sekolah", "ppdb", "sekolah swasta", "sd", "smp", "sma", "ruby academy"]):
+            sol = recommend_webia_solution("education", needs_cms=True)
+            sol["recommended_template"] = "Ruby Academy — School of Excellence"
+            sol["cart_template_slug"] = "ruby-academy-classic-school"
+            return {
+                "intent": "recommend_school_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Ruby Academy (School of Excellence) →",
+                "service_name": "Solusi Website Sekolah & Akademi",
+                "recommendation": sol,
+                "cart_template_slug": "ruby-academy-classic-school",
             }
 
         if any(w in normalized for w in ["logistik", "logistics", "ekspedisi", "cargo", "kargo", "pengiriman barang", "freight", "trucking", "truk", "kontainer", "armada kapal", "resi", "antar barang", "cek resi"]):
