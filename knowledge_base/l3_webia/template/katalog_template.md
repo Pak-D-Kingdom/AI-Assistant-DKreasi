@@ -788,3 +788,78 @@ Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia La
   - Deskripsi: Website kontraktor minimalist untuk perencanaan bangunan, renovasi, layanan konstruksi, portofolio proyek, wizard brief proyek, dan konsultasi WhatsApp.
   - Demo / Live: `/webia/template/langit-karya-contractor-minimalist`
 
+
+
+---
+
+## 🔄 Katalog Template Tambahan Hasil Sinkronisasi Webia
+Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia Laravel:
+
+### Kategori: PERSONAL-BRAND
+- **Arya Sanjaya - Ruby Editorial Author Portfolio** (`arya-sanjaya-ruby-editorial` • Category: *personal-brand*):
+  - Deskripsi: Literary author portfolio featuring Arya Sanjaya’s biography, selected books, writing excerpts, literary events, reader FAQs, direct WhatsApp book orders, newsletter signup, and an AI literary assistant demo.
+  - Demo / Live: `/webia/template/arya-sanjaya-ruby-editorial`
+
+- **Arya Sanjaya - Plum Velvet Literary Portfolio** (`arya-sanjaya-plum-velvet` • Category: *personal-brand*):
+  - Deskripsi: Professional author portfolio featuring Arya Sanjaya’s literary profile, books and writing, awards, reader FAQs, direct WhatsApp book orders, newsletter signup, and an AI literary assistant demo.
+  - Demo / Live: `/webia/template/arya-sanjaya-plum-velvet`
+
+### Kategori: PET-ANIMAL-SERVICE
+- **Pawtopia - Animal Care Masa Depan** (`pawtopia-animal-care` • Category: *pet-animal-service*):
+  - Deskripsi: Klinik, grooming, dan penitipan hewan dengan pemantauan kesehatan real-time, profil digital, layanan adopsi, paket perawatan, dan asisten AI.
+  - Demo / Live: `/webia/template/pawtopia-animal-care`
+
+### Kategori: NONPROFIT-COMMUNITY
+- **GreenHope - Nonprofit & Community Foundation Creative Nature Green** (`nonprofit-foundation-nature-green` • Category: *nonprofit-community*):
+  - Deskripsi: Website yayasan kreatif dengan warna nature green, misi & visi, program, laporan dampak, opsi donasi, transparansi keuangan, mitra & sponsor, pendaftaran relawan, berita & acara, tombol WhatsApp, dan asisten AI FAQ program & donasi.
+  - Demo / Live: `/webia/template/nonprofit-community/creative/foundation-nature-green`
+
+- **HopeTogether - Nonprofit & Community Foundation Minimalist Warm Neutral** (`nonprofit-foundation-warm-neutral` • Category: *nonprofit-community*):
+  - Deskripsi: Website yayasan minimalis dengan palet warm neutral, misi & visi, program, laporan dampak, pilihan donasi, transparansi keuangan, mitra & sponsor, pendaftaran relawan, berita & acara, tombol WhatsApp, dan asisten AI HopeBot untuk FAQ program & donasi.
+  - Demo / Live: `/webia/template/nonprofit-community/minimalis/foundation-warm-neutral`
+
+### Kategori: PHOTOGRAPHY-CREATIVE-STUDIO
+- **VOLT Studio - Photography & Creative Studio UGC & Content Creator Studio Bold Pink Voltage** (`photography-ugc-content-creator-studio-pink-voltage` • Category: *photography-creative-studio*):
+  - Deskripsi: Website UGC & content creator studio bold dengan warna pink voltage, portofolio kreator, sampel video UGC, paket konten, deliverables & hak guna, platform didukung, kolaborasi brand, form brief kampanye, testimoni klien, tombol WhatsApp, dan asisten AI FAQ paket & kolaborasi.
+  - Demo / Live: `/webia/template/photography-creative-studio/bold/ugc-content-creator-studio-pink-voltage`
+
+### Kategori: AGRICULTURE-FARMING
+- **AgroPratama Machinery - Perlengkapan & Peralatan Pertanian Corporate Sage Green** (`agriculture-peralatanpertanian-corporate-sagegreen-putri` • Category: *agriculture-farming*):
+  - Deskripsi: Website distributor resmi mesin dan perlengkapan pertanian modern bergaya Corporate bertema Sage Green untuk AgroPratama Machinery. Menghadirkan katalog traktor, combine harvester, drone sprayer presisi, simulasi pembiayaan armada, layanan 3S (Sales, Service, Spare Parts), dan asisten virtual AgroBot AI.
+  - Demo / Live: `/webia/template/agriculture-peralatanpertanian-corporate-sagegreen-putri`
+
+### Kategori: TECHNOLOGY-IT
+- **CYBERWAVE** (`cyberwave-hardware-computer-networking` • Category: *technology-it*):
+  - Deskripsi: High-performance hardware, PC configurator, benchmark comparison, enterprise server and network infrastructure solutions.
+  - Demo / Live: `/webia/template/cyberwave-hardware-computer-networking`
+
+- **AETHERION** (`aetherion-digital-hardware-universe` • Category: *technology-it*):
+  - Deskripsi: Futuristic digital hardware universe untuk PC performance, workstation, server, smart networking, dan IT infrastructure.
+  - Demo / Live: `/webia/template/aetherion-digital-hardware-universe`
+
+### Kategori: TRAVEL-TOURISM
+- **BAITUL SAFAR** (`baitul-safar-umrah-haji` • Category: *travel-tourism*):
+  - Deskripsi: Rustic golden Umrah & Haji travel website with pilgrimage packages, departure calendar, itinerary, preparation checklist, and consultation forms.
+  - Demo / Live: `/webia/template/baitul-safar-umrah-haji`
+
+
+
+---
+
+## 🔄 Katalog Template Tambahan Hasil Sinkronisasi Webia
+Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia Laravel:
+
+### Kategori: WEDDING-EVENT
+- **Eventora - Wedding & Event Organizer Bold Sunset Gradient** (`wedding-event-organizer-sunset-gradient` • Category: *wedding-event*):
+  - Deskripsi: Website event organizer bold dengan warna sunset gradient, layanan event, portofolio, paket corporate & private event, proyek terdahulu, klien, proses perencanaan event, permintaan penawaran, WhatsApp, dan asisten AI FAQ layanan event.
+  - Demo / Live: `/webia/template/wedding-event/bold/event-organizer-sunset-gradient`
+
+### Kategori: AGRICULTURE-FARMING
+- **MatchaAgro Machinery - Perlengkapan & Peralatan Pertanian Creative Matcha Latte** (`agriculture-peralatanpertanian-creative-matchalatte-putri` • Category: *agriculture-farming*):
+  - Deskripsi: Website distributor perlengkapan dan alat pertanian modern bergaya Creative bertema Matcha Latte untuk MatchaAgro Machinery. Desain artistik-organik dengan layout asimetris, fluid glassmorphism, showcase traktor & smart drone presisi, simulator efisiensi lahan interaktif, FAQ dinamis, concierge WhatsApp, dan MatchaAgro AI.
+  - Demo / Live: `/webia/template/agriculture-peralatanpertanian-creative-matchalatte-putri`
+
+- **FrostyAgro Equipment - Perlengkapan & Peralatan Pertanian Playful & Colorful Arctic Frost** (`agriculture-peralatanpertanian-playfulcolorful-arcticfrost-putri` • Category: *agriculture-farming*):
+  - Deskripsi: Website distributor perlengkapan dan peralatan pertanian modern bergaya Playful & Colorful dengan palet Arctic Frost ceria untuk FrostyAgro Equipment. Menghadirkan mini tractor cerdas, drone robotik sebar benih, greenhouse kit hidroponik, simulator gear tani interaktif, kuis pemilihan alat, FAQ ceria, WhatsApp concierge, dan FrostyBot AI.
+  - Demo / Live: `/webia/template/agriculture-peralatanpertanian-playfulcolorful-arcticfrost-putri`
+

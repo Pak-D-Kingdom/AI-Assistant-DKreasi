@@ -93,3 +93,49 @@ def test_l2_builder_checklist_updated():
     items_str = " ".join(step3["items"])
     assert "WEBP" in items_str
     assert "Reorder" in items_str
+
+
+
+def test_l2_routes_to_minang_heritage():
+    res = L2IntentRouter.detect_and_route("Ada tema adat minang dengan rumah gadang atau suntiang?")
+    assert res["intent"] == "wedding_minang_heritage"
+    assert res["action"] == "handoff"
+    assert "Minang" in res["service_name"]
+
+
+def test_l2_routes_to_sunda_heritage():
+    res = L2IntentRouter.detect_and_route("Saya mau tema adat sunda siger dan mega mendung")
+    assert res["intent"] == "wedding_sunda_heritage"
+    assert res["action"] == "handoff"
+    assert "Sunda" in res["service_name"]
+
+
+def test_l2_routes_to_wisuda_invitation():
+    res = L2IntentRouter.detect_and_route("Ada undangan wisuda sarjana dan syukuran kelulusan?")
+    assert res["intent"] == "wisuda_invitation"
+    assert res["target_url"] == "#desain"
+
+
+
+def test_l2_benchmark_evaluation_set():
+    import json
+    import os
+    eval_path = os.path.join(os.path.dirname(__file__), "..", "evals", "l2_recommendation_set.json")
+    with open(eval_path, "r", encoding="utf-8") as f:
+        eval_cases = json.load(f)
+
+    assert len(eval_cases) >= 15
+    for case in eval_cases:
+        res = L2IntentRouter.detect_and_route(case["query"])
+        assert res["intent"] == case["expected_intent"], f"Failed on {case['id']}: expected {case['expected_intent']}, got {res['intent']}"
+        assert res["action"] == case["expected_action"], f"Failed action on {case['id']}"
+        assert case["expected_target"] in res["target_url"], f"Failed target on {case['id']}: expected {case['expected_target']} in {res['target_url']}"
+
+
+def test_l2_routes_to_website_referral():
+    res = L2IntentRouter.detect_and_route("Selain undangan digital, apakah D'Karsa bisa membuatkan website company profile atau toko online untuk bisnis saya?")
+    assert res["intent"] == "website_business_referral"
+    assert res["action"] == "navigate"
+    assert "webia.id" in res["target_url"]
+    assert "WEBIA" in res["button_text"]
+    assert "D'Karsa berfokus khusus pada undangan digital" in res["note"]

@@ -46,3 +46,35 @@ def test_sanitizes_false_seo_promises_for_l3():
     sanitized = guardrail.inspect_output("l3", simulated_output)
     assert "ranking 1" not in sanitized
     assert "meningkatkan visibilitas" in sanitized
+
+
+def test_sanitizes_white_label_vendor_leak():
+    guardrail = GuardrailService()
+    simulated_output = 'AI Chatbot WEBIA integrasi model LLM modern via API resmi (Google Gemini / OpenAI).'
+    sanitized = guardrail.inspect_output('l3', simulated_output)
+    assert 'Google Gemini' not in sanitized
+    assert 'OpenAI' not in sanitized
+    assert 'dikelola khusus oleh tim WEBIA' in sanitized
+
+    simulated_tenant_output = 'Chatbot ini ditenagai oleh OpenAI dan ChatGPT.'
+    sanitized_tenant = guardrail.inspect_output('l4', simulated_tenant_output)
+    assert 'OpenAI' not in sanitized_tenant
+    assert 'ChatGPT' not in sanitized_tenant
+    assert 'teknologi AI cerdas' in sanitized_tenant
+
+
+def test_sanitizes_pakde_group_leak():
+    guardrail = GuardrailService()
+    simulated_l2 = "Website bisnis ditangani WEBIA dari PakDe Group."
+    sanitized_l2 = guardrail.inspect_output("l2", simulated_l2)
+    assert "PakDe Group" not in sanitized_l2
+    assert "D'Karsa" in sanitized_l2
+
+    simulated_l3 = "WEBIA adalah platform digital by PakDe Group."
+    sanitized_l3 = guardrail.inspect_output("l3", simulated_l3)
+    assert "PakDe Group" not in sanitized_l3
+    assert "WEBIA" in sanitized_l3
+
+    simulated_l1 = "Layanan ini dikembangkan oleh tim PakDe Group."
+    sanitized_l1 = guardrail.inspect_output("l1", simulated_l1)
+    assert "PakDe Group" not in sanitized_l1

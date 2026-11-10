@@ -276,3 +276,57 @@ def test_l3_routes_to_auto_detailing():
     assert res["action"] == "navigate"
     assert "Bengkel Otto" in res["recommendation"]["recommended_template"]
     assert res["cart_template_slug"] == "otto-artistic-workshop"
+
+
+def test_l3_routes_to_umrah_travel():
+    res = L3IntentRouter.detect_and_route('Saya mencari website untuk biro travel umrah dan haji')
+    assert res['intent'] == 'recommend_travel_website'
+    assert res['action'] == 'navigate'
+    assert 'Baitul Safar' in res['recommendation']['recommended_template']
+
+
+def test_l3_routes_to_author_writer():
+    res = L3IntentRouter.detect_and_route('Saya seorang novelis dan penulis buku sastra butuh website portofolio')
+    assert res['intent'] == 'recommend_personal_brand_website'
+    assert res['action'] == 'navigate'
+    assert 'Arya Sanjaya' in res['recommendation']['recommended_template']
+    assert res['cart_template_slug'] == 'arya-sanjaya-ruby-editorial'
+
+
+def test_l3_routes_to_pet_care_pawtopia():
+    res = L3IntentRouter.detect_and_route('Saya butuh website klinik hewan dokter dan grooming anjing kucing')
+    assert res['intent'] == 'recommend_petshop_website'
+    assert res['action'] == 'navigate'
+    assert 'Pawtopia' in res['recommendation']['recommended_template']
+
+
+def test_l3_hosting_invoice_inquiry():
+    res = L3IntentRouter.detect_and_route("Bagaimana cara membayar tagihan hosting dan cek invoice hosting saya?")
+    assert res["intent"] == "hosting_invoice_inquiry"
+    assert res["action"] == "navigate"
+    assert res["target_url"] == "/hosting-invoices"
+    assert "Tagihan & Faktur Hosting" in res["button_text"]
+
+
+def test_l3_routes_to_event_organizer():
+    res = L3IntentRouter.detect_and_route("Saya butuh landing page untuk jasa event organizer dan wedding planner")
+    assert res["intent"] == "recommend_event_organizer_website"
+    assert res["action"] == "navigate"
+    assert "Eventora" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "wedding-event-organizer-sunset-gradient"
+
+
+def test_l3_routes_to_agro_machinery():
+    res = L3IntentRouter.detect_and_route("Saya menjual traktor dan alat mesin pertanian modern")
+    assert res["intent"] == "recommend_agro_machinery_website"
+    assert res["action"] == "navigate"
+    assert "MatchaAgro" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "agriculture-peralatanpertanian-creative-matchalatte-putri"
+
+
+def test_l3_routes_to_ugc_studio():
+    res = L3IntentRouter.detect_and_route("Saya mengelola agensi studio ugc dan konten kreator influencer")
+    assert res["intent"] == "recommend_ugc_studio_website"
+    assert res["action"] == "navigate"
+    assert "UGC Content Creator" in res["recommendation"]["recommended_template"]
+    assert res["cart_template_slug"] == "ugc-content-creator-studio-dark-mode"

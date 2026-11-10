@@ -208,5 +208,26 @@
     "expected_intent": "recommend_auto_detailing_website",
     "expected_action": "navigate",
     "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_31",
+    "query": "Saya butuh website klinik hewan dokter dan grooming anjing kucing",
+    "expected_intent": "recommend_petshop_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_32",
+    "query": "Bisa rekomendasikan website untuk biro travel umrah dan haji khusus?",
+    "expected_intent": "recommend_travel_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
+  },
+  {
+    "id": "l3_eval_33",
+    "query": "Saya seorang novelis dan penulis buku sastra butuh website portofolio karya",
+    "expected_intent": "recommend_personal_brand_website",
+    "expected_action": "navigate",
+    "expected_target": "#koleksi-template"
   }
 ]

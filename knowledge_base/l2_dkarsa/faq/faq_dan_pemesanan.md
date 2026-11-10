@@ -48,3 +48,15 @@ D'Karsa mendukung pembayaran instan otomatis via **Payment Gateway Midtrans** (Q
 - **Bagaimana jika browser ter-refresh saat mengisi data?** Aman! Foto galeri otomatis tersimpan di draf lokal browser (*local storage draft*).
 - **Format & Ukuran**: Format JPG, PNG, atau WEBP dengan ukuran maksimal 5 MB per foto. Foto otomatis dikompresi tajam agar undangan cepat dibuka tamu.
 - **Bagaimana jika belum punya foto prewedding/galeri tambahan?** Tenang saja, sistem D'Karsa secara otomatis menampilkan foto sampul (*cover*) dan foto mempelai di galeri undangan sehingga tampilan tetap cantik dan tidak kosong.
+
+## 9. Apakah bisa membuat undangan dengan beberapa rangkaian acara dan tanggal yang berbeda?
+Bisa! D'Karsa mendukung fitur **Multi-Event (Rangkaian Acara)**. Calon pemesan dapat mencantumkan lebih dari satu acara di dalam satu tautan undangan (misal: Akad Nikah hari Sabtu pagi di Masjid, dan Resepsi hari Minggu malam di Ballroom Gedung; atau Acara Ulang Tahun Formal + After Party).
+- Masing-masing acara memiliki pengaturan tanggal acara mandiri, jam mulai & selesai, zona waktu, nama gedung/venue, alamat lengkap, dan tombol navigasi Google Maps tersendiri.
+- Dilengkapi penghitung waktu mundur (*countdown timer*) otomatis yang dinamis menyesuaikan dengan jadwal acara terdekat.
+- Tidak ada biaya tambahan untuk menambah rangkaian acara dalam satu undangan digital Anda.
+
+## 10. Berapa lama undangan aktif setelah pembayaran dilakukan?
+**Langsung aktif seketika (Instan)!** Sistem D'Karsa terhubung langsung secara realtime dengan Midtrans Payment Gateway. Begitu Anda menyelesaikan pembayaran via QRIS, GoPay, ShopeePay, Virtual Account bank (BCA, Mandiri, BRI, BNI), atau Kartu Kredit, sistem langsung memverifikasi transaksi secara otomatis dari server perbankan. Link undangan digital Anda langsung aktif berstatus resmi dan siap dibagikan ke seluruh tamu undangan saat itu juga tanpa perlu konfirmasi manual dari admin.
+
+## 11. Apakah saya bisa melihat tampilan undangan saya sebelum melakukan pembayaran?
+Bisa! D'Karsa menyediakan fitur **Live Preview Sync** di halaman formulir online `/buat-undangan`. Saat Anda mengetikkan nama, memilih tanggal acara, memilih musik latar, atau mengunggah foto, pratinjau undangan di layar akan langsung tersinkronisasi secara realtime memperlihatkan hasil undangan Anda sebelum Anda melakukan konfirmasi checkout dan pembayaran. Selain itu, Anda juga dapat mencoba demo seluruh template siap pakai di tautan `/demo/{nama-template}` kapan saja.

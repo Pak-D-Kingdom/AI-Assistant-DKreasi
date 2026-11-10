@@ -1,6 +1,6 @@
-# Layanan Inovasi Mendatang (Coming Soon) PakDe Group
+# Layanan Inovasi Mendatang (Coming Soon)
 
-D-KREASI terus menyiapkan inovasi produk digital baru dari kreator terbaik PakDe Group:
+D-KREASI terus menyiapkan inovasi produk digital baru dari kreator digital terbaik:
 - Pembuatan Aplikasi Mobile (Android & iOS)
 - Desain Grafis, Branding, dan Logo Animasi
 - Jasa Video Editing & Produksi Konten Kreatif

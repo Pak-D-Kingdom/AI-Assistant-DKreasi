@@ -52,6 +52,7 @@ class ChatRequest(BaseModel):
     messages: List[ChatMessage] = Field(..., description="Chat message history")
     tenant_id: Optional[str] = Field(None, description="Tenant ID for L4")
     stream: Optional[bool] = Field(False, description="Enable SSE streaming mode")
+    hosting_status: Optional[dict] = Field(None, description="Hosting status for context-aware customer queries")
 
 
 # ---------------------------------------------------------------------------
@@ -131,6 +132,8 @@ async def chat_endpoint(
         if not TENANT_ID_RE.match(requested_tenant):
             raise HTTPException(status_code=400, detail="Format tenant_id tidak valid.")
         context.tenant_id = requested_tenant
+    if req.hosting_status:
+        context.hosting_status = req.hosting_status
 
     is_tenant_layer = _layer_value(context) == "l4"
     tenant_id = getattr(context, "tenant_id", None)

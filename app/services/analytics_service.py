@@ -346,7 +346,7 @@ class AnalyticsService:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Engine Intelligence Dashboard — PakDe Group</title>
+    <title>AI Engine Intelligence Dashboard — D-Kreasi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -384,7 +384,7 @@ class AnalyticsService:
                 </div>
                 <div>
                     <div class="font-extrabold text-sm tracking-tight text-slate-900 flex items-center gap-1.5">
-                        PAKDE AI
+                        D-KREASI AI
                         <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">CORE</span>
                     </div>
                     <div class="text-[11px] text-slate-500">Intelligence Platform</div>
@@ -549,7 +549,7 @@ class AnalyticsService:
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-base font-bold text-slate-900 tracking-tight">Distribusi Beban per Layer Layanan</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Pemecahan lalu lintas pertanyaan berdasarkan 4 layer PakDe Group</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Pemecahan lalu lintas pertanyaan berdasarkan 4 layer layanan</p>
                     </div>
                     <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">Multi-Tier Architecture</span>
                 </div>
@@ -677,7 +677,7 @@ class AnalyticsService:
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-500 pt-1">
-                    <span>Menampilkan seluruh tenant aktif di database SQLite PakDe Group.</span>
+                    <span>Menampilkan seluruh tenant aktif di database SQLite sistem.</span>
                     <span class="font-mono text-slate-600">Siklus Kuota: Bulanan · Reset Otomatis: <strong>{reset_label}</strong></span>
                 </div>
             </section>
@@ -731,7 +731,7 @@ class AnalyticsService:
 
         <!-- Footer -->
         <footer class="h-14 px-6 lg:px-10 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 bg-white">
-            <div>AI Engine by PakDe Group · D-Kreasi Central Ecosystem · Sinkron otomatis</div>
+            <div>AI Engine · D-Kreasi Central Ecosystem · Sinkron otomatis</div>
             <div class="font-mono text-[11px] text-emerald-700 font-semibold hidden sm:flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 Status: Healthy (200 OK)

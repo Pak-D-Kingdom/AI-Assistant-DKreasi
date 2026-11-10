@@ -9,7 +9,7 @@ class FallbackService:
 
         if layer in ["l1", "l1_dkreasi"]:
             content = (
-                "Halo! Saya AI Assistant resmi D-KREASI by PakDe Group. "
+                "Halo! Saya AI Assistant resmi D-KREASI. "
                 "Saat ini sistem sedang melakukan penyesuaian jaringan. "
                 "Anda dapat menjelajahi layanan Website Bisnis dan Undangan Digital kami, "
                 "atau menghubungi Customer Support kami langsung via WhatsApp."

@@ -46,7 +46,7 @@ async def get_analytics_dashboard_ui(
     days: int = Query(30, description="Periode analisis"),
     db: AsyncSession = Depends(get_db),
 ):
-    """Menyajikan halaman UI Dashboard visual untuk manajemen PakDe Group & Tim AI."""
+    """Menyajikan halaman UI Dashboard visual untuk manajemen D-Kreasi & Tim AI."""
     data = await AnalyticsService.get_overview_metrics(db=db, days=days)
     html_content = AnalyticsService.render_dashboard_html(data=data, days=days)
     return HTMLResponse(content=html_content)

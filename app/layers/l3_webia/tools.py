@@ -210,7 +210,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Upgrade ke Pulse bila butuh galeri portofolio lengkap & review klien, atau Nexus bila perlu blog tulisan mandiri.",
         "template_id": "The Creator Room",
         "template_slug": "the-creator-room",
-        "template_name": "The Creator Room / Lumiere Photography Studio / Noir Studio Photography",
+        "template_name": "The Creator Room / Arya Sanjaya (Author Portfolio) / Lumiere Photography Studio",
         "recommended_modules": ["Social Media Hub", "Portofolio Showreel", "Media Kit Download", "Direct Endorsement Contact"],
     },
     "retail": {
@@ -243,7 +243,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila pet shop memiliki ratusan stok pakan & aksesoris yang perlu dikelola mandiri via Dashboard CMS.",
         "template_id": "PawMart / Furry & Co.",
         "template_slug": "petshop-minimalist-glacierblue",
-        "template_name": "PawMart (Pet Shop Minimalist) / Furry & Co. (Pet Boutique Luxury)",
+        "template_name": "PawMart (Pet Shop Minimalist) / Furry & Co. (Pet Boutique Luxury) / Pawtopia (Animal Care & Clinic)",
         "recommended_modules": ["Katalog Makanan & Perlengkapan Hewan", "Online Booking Grooming", "Direct WhatsApp Order", "AI Nutrisi & Perawatan Hewan"],
     },
     "technology_it": {
@@ -254,7 +254,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila software house memerlukan portal klien mandiri, sistem tiket/proyek custom, atau integrasi API backend kompleks.",
         "template_id": "AzuraCraft Studio / RoseCode / Nexora Digital",
         "template_slug": "technology-softwarehouse-elegant-babyblue-putri",
-        "template_name": "AzuraCraft Studio (Software House Elegant) / RoseCode / Nexora Digital",
+        "template_name": "AzuraCraft Studio / Aetherion (Hardware) / Cyberwave (Networking) / Nexora Digital",
         "recommended_modules": ["Showcase Portofolio Proyek IT", "Estimator Biaya Pembuatan Software", "Tech Stack & Layanan", "Formulir RFP / Kontak WhatsApp"],
     },
     "travel_tourism": {
@@ -265,7 +265,7 @@ RECOMMENDATION_MATRIX = {
         "upgrade_trigger": "Bila biro perjalanan memerlukan CMS untuk mengupdate jadwal keberangkatan open trip, itinerary baru, dan galeri tur berkala.",
         "template_id": "OceanJourney / GreenTrip / GrandJourney",
         "template_slug": "travel-agent-ocean-teal",
-        "template_name": "OceanJourney (Modern Ocean Teal) / GreenTrip (Organic Forest Moss) / GrandJourney (Luxury VIP)",
+        "template_name": "OceanJourney (Modern Ocean Teal) / GreenTrip / Baitul Safar (Biro Umrah & Haji Khusus)",
         "recommended_modules": ["Katalog Paket Wisata", "Itinerary Harian Lengkap", "Jadwal Keberangkatan", "Formulir Booking / WhatsApp Consultant"],
     },
     "interior_architecture": {
@@ -404,7 +404,7 @@ class L3IntentRouter:
         normalized = query.lower().strip()
 
         # 1. Cross-Service: Undangan Digital (D-Karsa)
-        if any(w in normalized for w in ["nikah", "pernikahan", "undangan", "wedding", "manten", "resepsi"]):
+        if any(w in normalized for w in ["nikah", "pernikahan", "undangan", "wedding", "manten", "resepsi"]) and not any(k in normalized for k in ["wedding organizer", "wedding planner", "wo", "organizer", "event organizer"]):
             return {
                 "intent": "cross_service_dkarsa",
                 "confidence": 0.95,
@@ -423,6 +423,23 @@ class L3IntentRouter:
                 "target_url": "/dashboard",
                 "button_text": "Buka Dashboard & Pesanan Saya →",
                 "service_name": "Dashboard Pesanan Customer WEBIA",
+            }
+
+        # 1e. Tagihan & Perpanjangan Hosting (/hosting-invoices)
+        if any(w in normalized for w in ["tagihan hosting", "invoice hosting", "bayar hosting", "perpanjang hosting", "perpanjangan hosting", "hosting suspend", "hosting disuspend", "hosting mati", "biaya hosting", "cek invoice hosting", "status hosting", "jatuh tempo hosting", "masa aktif hosting", "hosting expired", "hosting invoice"]):
+            return {
+                "intent": "hosting_invoice_inquiry",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "/hosting-invoices",
+                "button_text": "Buka Tagihan & Faktur Hosting Saya →",
+                "service_name": "Faktur & Tagihan Hosting WEBIA",
+                "data": {
+                    "portal_url": "/hosting-invoices",
+                    "due_period": "7 hari kalender sejak faktur terbit",
+                    "methods": ["QRIS (GoPay/ShopeePay)", "Virtual Account Bank (BCA, Mandiri, BRI, BNI)", "Kartu Kredit"],
+                    "unsuspend_policy": "Otomatis pulih dan aktif kembali begitu invoice diselesaikan via Midtrans.",
+                },
             }
 
         if any(w in normalized for w in ["login", "masuk akun", "daftar akun", "register", "bikin akun", "sign in", "sign up"]):
@@ -494,6 +511,65 @@ class L3IntentRouter:
             }
 
         # 3. Rekomendasi Spesifik Berdasarkan Kategori Industri (Recommendation Matrix PRD §7.6)
+        if any(w in normalized for w in ["event organizer", "wedding organizer", "organizer acara", "organizer", "eventora", "wedding planner", "promotor konser", "gathering korporat"]) or re.search(r'\b(eo|wo)\b', normalized):
+            return {
+                "intent": "recommend_event_organizer_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Eventora (Wedding & Event Organizer) →",
+                "service_name": "Solusi Website Event Organizer & Wedding Planner",
+                "recommendation": {
+                    "category": "Wedding & Event Organizer",
+                    "category_symbol": "🎉",
+                    "recommended_package": "Paket Pulse",
+                    "recommended_template": "Eventora - Wedding & Event Organizer Bold Sunset Gradient",
+                    "price": "Rp899.000",
+                    "reason": "Paket Pulse memberikan landing page bold sunset gradient yang elegan untuk portofolio event, klien korporat, showcase konser, dan tombol WhatsApp booking.",
+                    "cart_template_slug": "wedding-event-organizer-sunset-gradient",
+                },
+                "cart_template_slug": "wedding-event-organizer-sunset-gradient",
+            }
+
+        if any(w in normalized for w in ["alat pertanian", "mesin pertanian", "traktor", "peralatan tani", "alat semprot", "matchaagro", "frostyagro", "toko alat tani", "peralatan pertanian"]):
+            return {
+                "intent": "recommend_agro_machinery_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template MatchaAgro (Mesin & Alat Pertanian) →",
+                "service_name": "Solusi Website Peralatan & Mesin Pertanian",
+                "recommendation": {
+                    "category": "Agriculture & Farming Equipment",
+                    "category_symbol": "🌾",
+                    "recommended_package": "Paket Nexus",
+                    "recommended_template": "MatchaAgro Machinery - Creative Matcha Latte",
+                    "price": "Rp1.499.000",
+                    "reason": "Paket Nexus dilengkapi Dashboard CMS mandiri untuk katalog inventaris mesin tani, spesifikasi teknis traktor, dan pesanan suku cadang grosir.",
+                    "cart_template_slug": "agriculture-peralatanpertanian-creative-matchalatte-putri",
+                },
+                "cart_template_slug": "agriculture-peralatanpertanian-creative-matchalatte-putri",
+            }
+
+        if any(w in normalized for w in ["ugc", "content creator studio", "ugc creator", "agensi kreator", "studio influencer", "ugc studio"]):
+            return {
+                "intent": "recommend_ugc_studio_website",
+                "confidence": 0.98,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template UGC Content Creator Studio (Dark Mode) →",
+                "service_name": "Solusi Website Studio UGC & Content Creator",
+                "recommendation": {
+                    "category": "Photography & Creative Studio",
+                    "category_symbol": "📷",
+                    "recommended_package": "Paket Pulse",
+                    "recommended_template": "UGC Content Creator Studio - Futuristic Dark Mode",
+                    "price": "Rp899.000",
+                    "reason": "Paket Pulse dengan tampilan futuristik dark mode sangat cocok untuk agensi UGC, portofolio video reels/TikTok, rate card, dan booking kolaborasi brand.",
+                    "cart_template_slug": "ugc-content-creator-studio-dark-mode",
+                },
+                "cart_template_slug": "ugc-content-creator-studio-dark-mode",
+            }
         if (any(w in normalized for w in ["nonprofit", "non-profit", "yayasan", "komunitas", "relawan", "donasi", "charity", "filantropi", "panti asuhan", "organisasi sosial", "aksi sosial", "gerakan sosial", "baksos"]) or re.search(r'\bngo\b', normalized)) and not any(k in normalized for k in ["sekolah", "ppdb", "murid", "siswa", "preschool", "daycare"]):
             sol = recommend_webia_solution("nonprofit_community")
             return {
@@ -669,7 +745,7 @@ class L3IntentRouter:
                 "cart_template_slug": "mitra-jiwa-psikologi-konseling",
             }
 
-        if any(w in normalized for w in ["travel", "tour", "wisata", "liburan", "open trip", "trip planner", "biro perjalanan", "paket tour", "jalan-jalan"]):
+        if any(w in normalized for w in ["travel", "tour", "wisata", "liburan", "open trip", "trip planner", "biro perjalanan", "paket tour", "jalan-jalan", "umrah", "haji", "ziarah"]):
             sol = recommend_webia_solution("travel_tourism")
             return {
                 "intent": "recommend_travel_website",
@@ -695,7 +771,7 @@ class L3IntentRouter:
                 "cart_template_slug": sol.get("cart_template_slug", "furniture-mocha-cream"),
             }
 
-        if any(w in normalized for w in ["software house", "software", "teknologi", "technology", "developer", "pembuatan aplikasi", "saas", "tech startup", "jasa koding"]):
+        if any(w in normalized for w in ["software house", "software", "teknologi", "technology", "developer", "pembuatan aplikasi", "saas", "tech startup", "jasa koding", "hardware", "komputer", "networking", "jaringan"]):
             sol = recommend_webia_solution("technology_it", needs_cms=True)
             return {
                 "intent": "recommend_technology_website",
@@ -706,6 +782,19 @@ class L3IntentRouter:
                 "service_name": f"Solusi Website {sol['category']}",
                 "recommendation": sol,
                 "cart_template_slug": sol.get("cart_template_slug", "technology-softwarehouse-elegant-babyblue-putri"),
+            }
+
+        if any(w in normalized for w in ["penulis", "author", "buku", "novelis", "sastra", "personal brand", "creator", "portofolio diri"]):
+            sol = recommend_webia_solution("personal_brand")
+            return {
+                "intent": "recommend_personal_brand_website",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "#koleksi-template",
+                "button_text": "Lihat Template Personal Brand & Author (Arya Sanjaya / Creator) →",
+                "service_name": f"Solusi Website {sol['category']}",
+                "recommendation": sol,
+                "cart_template_slug": "arya-sanjaya-ruby-editorial",
             }
 
         if any(w in normalized for w in ["fnb", "kuliner", "resto", "restoran", "cafe", "kafe", "kopi", "coffee", "catering", "katering", "bakery"]):

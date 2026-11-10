@@ -1,12 +1,22 @@
 import pytest
 import json
+from unittest.mock import AsyncMock
 from app.core.context import RequestContext
 from app.pipeline.orchestrator import PipelineOrchestrator
 
 
 @pytest.mark.asyncio
 async def test_execute_stream_yields_meta_and_tokens():
-    orchestrator = PipelineOrchestrator()
+    mock_llm = AsyncMock()
+
+    async def fake_stream(*args, **kwargs):
+        tokens = ["Halo", ", ", "selamat ", "datang ", "di ", "WEBIA!"]
+        for t in tokens:
+            yield t
+
+    mock_llm.chat_stream = fake_stream
+
+    orchestrator = PipelineOrchestrator(llm_service=mock_llm)
     context = RequestContext(
         site_id="site_webia_1",
         site_name="WEBIA Business",

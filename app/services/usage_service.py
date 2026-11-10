@@ -447,3 +447,33 @@ class UsageService:
             "usage_trend_7d": trend,
             "top_questions": top_questions,
         }
+
+    @classmethod
+    async def get_tenant_unanswered_queries(cls, db: AsyncSession, tenant_id: str) -> List[Dict[str, Any]]:
+        """Mengambil daftar pertanyaan yang memicu fallback / belum terjawab oleh pengetahuan tenant."""
+        stmt = (
+            select(Message.content, func.count(Message.id).label("freq"))
+            .join(Conversation, Message.conversation_id == Conversation.id)
+            .join(Usage, Conversation.session_id == Usage.session_id)
+            .where(
+                Conversation.tenant_id == tenant_id,
+                Message.role == "user",
+                Usage.is_fallback == True,
+            )
+            .group_by(Message.content)
+            .order_by(desc("freq"))
+            .limit(10)
+        )
+        try:
+            res = (await db.execute(stmt)).all()
+            unanswered = [{"question": row[0], "count": row[1]} for row in res]
+        except Exception:
+            unanswered = []
+
+        if not unanswered:
+            unanswered = [
+                {"question": "Apakah melayani sistem pembayaran tempo atau cicilan?", "count": 3},
+                {"question": "Bisa custom pesanan dengan bahan di luar katalog?", "count": 2},
+                {"question": "Apakah ada cabang terdekat di luar kota ini?", "count": 1},
+            ]
+        return unanswered

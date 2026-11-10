@@ -198,6 +198,38 @@ DKARSA_THEMES = [
         "package_val": "Paket Basic - Rp50.000",
         "category": "Aqiqah",
     },
+    {
+        "id": "theme-minang-suntiang",
+        "demo_url": "/demo/minang-suntiang-gadang",
+        "name": "Adat Minang Suntiang Gadang",
+        "tier": "eksklusif",
+        "package_val": "Paket Eksklusif - Rp180.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-sunda-siger",
+        "demo_url": "/demo/sunda-siger-wangi",
+        "name": "Adat Sunda Siger Wangi",
+        "tier": "eksklusif",
+        "package_val": "Paket Eksklusif - Rp180.000",
+        "category": "Pernikahan",
+    },
+    {
+        "id": "theme-modern-graduate",
+        "demo_url": "/demo/modern-graduate",
+        "name": "Modern Graduate Scholar & Wisuda",
+        "tier": "premium",
+        "package_val": "Paket Premium - Rp110.000",
+        "category": "Wisuda",
+    },
+    {
+        "id": "theme-kids-birthday",
+        "demo_url": "/demo/kids-birthday",
+        "name": "Kids Birthday Party Balon Ceria",
+        "tier": "premium",
+        "package_val": "Paket Premium - Rp110.000",
+        "category": "Ulang Tahun",
+    },
 ]
 
 
@@ -474,6 +506,26 @@ class L2IntentRouter:
                 "service_name": "Tema SnowFall Minimalist White (Eksklusif - Rp180.000)",
             }
 
+        if any(w in normalized for w in ["minang", "padang", "suntiang", "rumah gadang", "gonjong", "marawa", "songket"]):
+            return {
+                "intent": "wedding_minang_heritage",
+                "confidence": 0.95,
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya tertarik memesan undangan tema Adat Minang Suntiang Gadang (Paket Eksklusif - Rp180.000)."),
+                "button_text": "Pesan Tema Adat Minang via WhatsApp →",
+                "service_name": "Tema Adat Minang Suntiang Gadang (Eksklusif - Rp180.000)",
+            }
+
+        if any(w in normalized for w in ["sunda", "siger", "mega mendung", "angklung", "parahyangan"]):
+            return {
+                "intent": "wedding_sunda_heritage",
+                "confidence": 0.95,
+                "action": "handoff",
+                "target_url": HandoffService.get_whatsapp_url("Halo CS D'Karsa, saya tertarik memesan undangan tema Adat Sunda Siger Wangi (Paket Eksklusif - Rp180.000)."),
+                "button_text": "Pesan Tema Adat Sunda via WhatsApp →",
+                "service_name": "Tema Adat Sunda Siger Wangi (Eksklusif - Rp180.000)",
+            }
+
         # 3. Kategori Bab Acara -> Katalog Desain / Konsultasi
         if any(w in normalized for w in ["nikah", "pernikahan", "wedding", "akad", "resepsi"]):
             return {
@@ -555,6 +607,18 @@ class L2IntentRouter:
                 "button_text": "Hitung Estimasi Paket & Tamu Live ⚡ →",
                 "service_name": "Kalkulator Paket & Tamu D'Karsa",
                 "calculation": calculate_guest_tier(150),
+            }
+
+        # 4b. Pertanyaan Website Bisnis / Company Profile / Toko Online (Arahkan sekilas ke WEBIA)
+        if any(w in normalized for w in ["website bisnis", "company profile", "toko online", "landing page bisnis", "web bisnis", "bikin website", "buat website", "buatkan website", "jasa website"]):
+            return {
+                "intent": "website_business_referral",
+                "confidence": 0.95,
+                "action": "navigate",
+                "target_url": "https://webia.id",
+                "button_text": "Kunjungi WEBIA untuk Website Bisnis →",
+                "service_name": "Layanan Website Bisnis WEBIA",
+                "note": "D'Karsa berfokus khusus pada undangan digital. Layanan website bisnis & company profile disediakan melalui WEBIA.",
             }
 
         # 5. WhatsApp CS / Pemesanan Langsung

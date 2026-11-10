@@ -35,3 +35,12 @@
   - Paket Premium: 10 foto + timeline Love Story
   - Paket Eksklusif: 20 foto + Video Teaser Sinematik
   - Paket Kustom: Kapasitas fleksibel sesuai kebutuhan event.
+
+## 6. Multi-Event Rangkaian Acara & Jadwal Fleksibel
+- Mendukung beberapa rangkaian acara dalam 1 undangan (misal: Akad Nikah, Pemberkatan, Resepsi, Syukuran, atau After Party).
+- Setiap sesi acara memiliki tanggal, jam, zona waktu, nama gedung/venue, alamat lengkap, dan tautan rute Google Maps masing-masing.
+- Dilengkapi countdown timer dinamis yang menghitung mundur menuju tanggal acara terdekat.
+
+## 7. Live Preview Sync (Pratinjau Realtime di Form Builder)
+- Formulir pembuatan undangan digital dilengkapi panel pratinjau live yang langsung merespons setiap ketikan data, tanggal, foto galeri, dan pilihan musik pengiring secara interaktif.
+- Calon pemesan dapat memastikan keindahan tata letak undangan secara transparan sebelum checkout.

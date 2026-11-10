@@ -17,9 +17,9 @@ class EmbeddingService:
             try:
                 from sentence_transformers import SentenceTransformer
                 logger.info(f"Loading embedding model: {self.model_name}")
-                EmbeddingService._shared_model = SentenceTransformer(self.model_name)
+                EmbeddingService._shared_model = SentenceTransformer(self.model_name, local_files_only=True)
             except Exception as e:
-                logger.warning(f"SentenceTransformer not loaded ({e}). Using lightweight fallback.")
+                logger.warning(f"SentenceTransformer local model not loaded ({e}). Using lightweight fallback.")
                 EmbeddingService._shared_model = "fallback"
         return EmbeddingService._shared_model
 

@@ -34,7 +34,7 @@ class Settings(BaseSettings):
 
     # Customer Support WhatsApp Handoff
     AI_CS_WHATSAPP: str = "6289603056349"
-    AI_CS_DEFAULT_MESSAGE: str = "Halo CS PakDe Group, saya ingin berkonsultasi mengenai layanan D-KREASI."
+    AI_CS_DEFAULT_MESSAGE: str = "Halo CS, saya ingin berkonsultasi mengenai layanan D-KREASI."
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

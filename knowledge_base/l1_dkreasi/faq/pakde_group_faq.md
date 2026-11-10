@@ -1,13 +1,15 @@
-# FAQ & Profil Perusahaan PakDe Group & D-KREASI
-
-## Apa itu PakDe Group?
-PakDe Group adalah grup usaha digital yang berfokus pada solusi teknologi, platform kreatif, dan pemberdayaan talenta digital di Indonesia.
+# FAQ & Profil D-KREASI
 
 ## Apa itu D-KREASI?
-D-KREASI adalah platform etalase utama (homebase) karya digital dari kreator PakDe Group yang mempercepat kreasi produk digital berkualitas tinggi berbasis reusable template.
+D-KREASI adalah platform etalase utama (homebase) karya digital kreatif yang mempercepat kreasi produk digital berkualitas tinggi berbasis reusable template.
+
+## Layanan apa saja yang disediakan di D-KREASI?
+D-KREASI menaungi dua lini layanan digital utama:
+1. **Undangan Digital (D'Karsa)**: Solusi undangan online interaktif untuk pernikahan adat nusantara, wisuda, khitanan, ulang tahun, dan acara spesial lainnya.
+2. **Website Bisnis (WEBIA)**: Solusi pembuatan website bisnis profesional siap pakai untuk 12+ kategori UMKM dan korporat.
 
 ## Apakah D-KREASI melayani pemesanan langsung?
-D-KREASI adalah platform pemandu. Pemesanan layanan diarahkan ke platform masing-masing (Undangan Digital dan Website Bisnis WEBIA) atau melalui Customer Support resmi.
+D-KREASI adalah platform pemandu. Pemesanan layanan diarahkan ke platform masing-masing (Undangan Digital D'Karsa dan Website Bisnis WEBIA) atau melalui Customer Support resmi.
 
 ## Bagaimana cara menghubungi tim manusia (Customer Service)?
-Customer Service resmi PakDe Group dapat dihubungi langsung melalui nomor WhatsApp resmi yang tertera pada platform D-KREASI.
+Customer Service resmi dapat dihubungi langsung melalui nomor WhatsApp resmi yang tertera pada platform D-KREASI.

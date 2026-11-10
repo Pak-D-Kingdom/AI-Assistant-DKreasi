@@ -1,5 +1,7 @@
 import pytest
 from app.services.rag_service import RagService
+from app.layers.l3_webia.prompts import get_l3_system_prompt
+from app.core.context import RequestContext
 
 
 def test_l4_requires_tenant_id():
@@ -20,3 +22,19 @@ def test_namespaces_are_strictly_isolated():
     assert "l1_dkreasi" in l1_path
     assert "tenant_fnb_01" in tenant_a_path
     assert "tenant_beauty_01" in tenant_b_path
+
+
+def test_l3_context_aware_hosting_prompt_injection():
+    context = RequestContext(
+        layer="l3_webia",
+        hosting_status={
+            "domain": "tokokita.webia.id",
+            "status": "aktif",
+            "expires_at": "2027-12-31",
+            "is_paid": True,
+        }
+    )
+    prompt = get_l3_system_prompt(context=context)
+    assert "CONTEXT-AWARE HOSTING STATUS" in prompt
+    assert "tokokita.webia.id" in prompt
+    assert "sudah lunas" in prompt

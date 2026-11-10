@@ -207,3 +207,11 @@ async def get_tenant_insights(tenant_id: str, db: AsyncSession = Depends(get_db)
     from app.services.usage_service import UsageService
     insights = await UsageService.get_tenant_customer_insights(db=db, tenant_id=tenant_id)
     return insights
+
+
+@router.get("/{tenant_id}/unanswered")
+async def get_tenant_unanswered(tenant_id: str, db: AsyncSession = Depends(get_db)):
+    """Mengambil daftar pertanyaan pengunjung yang belum terjawab / low-confidence."""
+    from app.services.usage_service import UsageService
+    unanswered = await UsageService.get_tenant_unanswered_queries(db=db, tenant_id=tenant_id)
+    return {"tenant_id": tenant_id, "unanswered_queries": unanswered}

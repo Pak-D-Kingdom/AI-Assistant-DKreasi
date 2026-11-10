@@ -1,6 +1,6 @@
-# Layanan Undangan Digital D-Karsa (PakDe Group)
+# Layanan Undangan Digital D'Karsa
 
-D-KREASI menghadirkan layanan Undangan Digital modern dan interaktif untuk berbagai jenis acara:
+D-KREASI menghadirkan layanan Undangan Digital D'Karsa yang modern dan interaktif untuk berbagai jenis acara:
 - Pernikahan (Wedding, Akad, Resepsi)
 - Khitanan / Sunatan
 - Ulang Tahun (Birthday Party, Sweet 17th)

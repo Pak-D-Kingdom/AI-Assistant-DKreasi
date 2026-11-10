@@ -1,0 +1,128 @@
+[
+  {
+    "id": "l2_eval_01",
+    "query": "Saya mau buat undangan pernikahan adat minang dengan rumah gadang dan suntiang",
+    "expected_intent": "wedding_minang_heritage",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_02",
+    "query": "Ada tema adat sunda dengan siger wangi dan mega mendung?",
+    "expected_intent": "wedding_sunda_heritage",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_03",
+    "query": "Saya tertarik dengan tema adat jawa keraton 3D gunungan wayang",
+    "expected_intent": "wedding_javanese_royal",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_04",
+    "query": "Mau pesan tema batak istimewa heritage dengan ulos dan gorga",
+    "expected_intent": "wedding_batak_heritage",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_05",
+    "query": "Bisa lihat tema bunga mawar rose romance wildflower pink?",
+    "expected_intent": "wedding_rose_romance",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_06",
+    "query": "Ada tema minimalis serba putih efek salju snowfall white?",
+    "expected_intent": "wedding_snow_white",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_07",
+    "query": "Saya butuh undangan ulang tahun sweet 17th anak remaja",
+    "expected_intent": "birthday_invitation",
+    "expected_action": "navigate",
+    "expected_target": "#desain"
+  },
+  {
+    "id": "l2_eval_08",
+    "query": "Ada undangan wisuda sarjana dan syukuran kelulusan keluarga?",
+    "expected_intent": "wisuda_invitation",
+    "expected_action": "navigate",
+    "expected_target": "#desain"
+  },
+  {
+    "id": "l2_eval_09",
+    "query": "Bisa buat undangan walimatul khitanan untuk anak saya?",
+    "expected_intent": "khitanan_invitation",
+    "expected_action": "navigate",
+    "expected_target": "#desain"
+  },
+  {
+    "id": "l2_eval_10",
+    "query": "Mau buat undangan aqiqah dan tasmiyah buah hati",
+    "expected_intent": "aqiqah_invitation",
+    "expected_action": "navigate",
+    "expected_target": "#desain"
+  },
+  {
+    "id": "l2_eval_11",
+    "query": "Bisa bikin undangan syukuran walimatus safar umrah dan haji?",
+    "expected_intent": "keagamaan_invitation",
+    "expected_action": "navigate",
+    "expected_target": "#desain"
+  },
+  {
+    "id": "l2_eval_12",
+    "query": "Saya mau susun undangan sendiri lewat online form builder",
+    "expected_intent": "online_builder",
+    "expected_action": "navigate",
+    "expected_target": "/buat-undangan"
+  },
+  {
+    "id": "l2_eval_13",
+    "query": "Bagaimana cara upload foto galeri dan berapa batas foto per paket?",
+    "expected_intent": "gallery_feature_inquiry",
+    "expected_action": "navigate",
+    "expected_target": "/buat-undangan"
+  },
+  {
+    "id": "l2_eval_14",
+    "query": "Bagaimana tamu bisa isi RSVP dan kirim ucapan doa restu online?",
+    "expected_intent": "rsvp_wish_feature",
+    "expected_action": "inform",
+    "expected_target": "#fitur"
+  },
+  {
+    "id": "l2_eval_15",
+    "query": "Bisa bayar pakai QRIS, ShopeePay, atau transfer Virtual Account BCA Midtrans?",
+    "expected_intent": "payment_inquiry",
+    "expected_action": "navigate",
+    "expected_target": "#harga"
+  },
+  {
+    "id": "l2_eval_16",
+    "query": "Saya punya referensi pinterest dan mau custom request desain dari nol",
+    "expected_intent": "custom_design_request",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_17",
+    "query": "Bagaimana cara order undangan digital di D-Karsa?",
+    "expected_intent": "order_consultation",
+    "expected_action": "handoff",
+    "expected_target": "wa.me"
+  },
+  {
+    "id": "l2_eval_18",
+    "query": "Saya mau buat undangan pernikahan",
+    "expected_intent": "wedding_invitation",
+    "expected_action": "navigate",
+    "expected_target": "#desain"
+  }
+]

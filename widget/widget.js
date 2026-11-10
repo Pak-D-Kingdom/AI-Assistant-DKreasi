@@ -79,21 +79,21 @@
             theme: 'dkreasi',
             layer: 'l1',
             title: 'D-KREASI Assistant',
-            subtitle: 'Online · Front-Desk PakDe Group',
-            eyebrow: '✦ PAKDE GROUP AI CONCIERGE',
+            subtitle: 'Online · Front-Desk D-KREASI',
+            eyebrow: '✦ D-KREASI AI CONCIERGE',
             launcherLabel: 'Tanya D-KREASI AI',
             launcherIcon: '✦',
             avatarIcon: '✦',
             welcomeTitle: 'Halo! Butuh solusi kreasi digital? ✨',
-            welcomeDesc: 'Saya siap memandu Anda menemukan layanan terbaik dari PakDe Group: mulai dari Website Bisnis (WEBIA) hingga Undangan Digital.',
+            welcomeDesc: 'Saya siap memandu Anda menemukan layanan terbaik: mulai dari Website Bisnis (WEBIA) hingga Undangan Digital.',
             initialMsg: 'Halo! Ada yang bisa saya bantu hari ini? Anda sedang mencari solusi Website Bisnis, Undangan Digital, atau ingin berkonsultasi seputar layanan kami?',
             chips: [
                 { label: '🌐 Website Bisnis (Webia)', prompt: 'Saya ingin membuat website bisnis profesional di Webia' },
                 { label: '💌 Undangan Digital (D-Karsa)', prompt: 'Saya ingin membuat undangan digital acara di D-Karsa' },
-                { label: '💼 Konsultasi Layanan', prompt: 'Layanan apa saja yang disediakan oleh PakDe Group?' }
+                { label: '💼 Konsultasi Layanan', prompt: 'Layanan apa saja yang disediakan oleh D-KREASI?' }
             ],
             resetIcon: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Mulai Obrolan Baru"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
-            footer: 'D-KREASI AI Assistant · Solusi Digital Kreatif by PakDe Group'
+            footer: 'D-KREASI AI Assistant · Solusi Digital Kreatif'
         },
         'site_webia_public': {
             theme: 'webia',
@@ -114,7 +114,7 @@
                 { label: '📝 Buat Business Brief', prompt: 'Bantu saya menyusun business brief untuk website bisnis' }
             ],
             resetIcon: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Mulai Obrolan Baru"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
-            footer: 'WEBIA Assistant · Sales AI by PakDe Group'
+            footer: 'WEBIA Assistant · Sales AI'
         },
         'site_dkarsa_public': {
             theme: 'dkarsa',
@@ -135,7 +135,7 @@
                 { label: '⚡ Layanan Terima Beres', prompt: 'Bagaimana alur pemesanan terima beres dibuatkan tim desainer?' }
             ],
             resetIcon: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Mulai Obrolan Baru"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
-            footer: "Tanya D'Karsa · Konsultan Undangan Digital by PakDe Group"
+            footer: "Tanya D'Karsa · Konsultan Undangan Digital"
         },
         'site_webia_tenant_public': {
             theme: 'client',
@@ -155,7 +155,7 @@
                 { label: '🏷️ Promo & Diskon Aktif', prompt: 'Apakah sedang ada promo atau diskon yang berlaku saat ini?' },
                 { label: '💬 Hubungi WhatsApp CS', prompt: 'Bisa hubungkan saya dengan WhatsApp atau customer service resmi?' }
             ],
-            footer: 'AI Business Chatbot · Powered by WEBIA Ekosistem PakDe Group'
+            footer: 'AI Business Chatbot · Powered by WEBIA'
         }
     };
     // Alias (sebelumnya duplikat penuh)
@@ -703,8 +703,8 @@
                     // D-Kreasi sections
                     { id: 'layanan', msg: 'Tertarik dengan Website Bisnis atau Undangan Digital? Tanyakan fitur & demo desainnya ke aku ya! ✨' },
                     { id: 'portfolio', msg: 'Tertarik membuat karya digital seperti ini? Konsultasikan proyekmu di sini! 🚀' },
-                    { id: 'tentang', msg: 'Ingin kenal lebih dalam tentang ekosistem PakDe Group? Tanya aku ya! 💡' },
-                    { id: 'identitas', msg: 'PakDe Group menghadirkan solusi kreasi digital terlengkap. Konsultasi di sini yuk! ✦' },
+                    { id: 'tentang', msg: 'Ingin kenal lebih dalam tentang ekosistem layanan kami? Tanya aku ya! 💡' },
+                    { id: 'identitas', msg: 'Kami menghadirkan solusi kreasi digital terlengkap. Konsultasi di sini yuk! ✦' },
                     { id: 'faq', msg: 'Ada pertanyaan seputar layanan kami yang belum terjawab? Tanyakan langsung ke AI Assistant! ✨' },
                     // Webia sections
                     { id: 'kategori-website', msg: 'Tertarik dengan kategori tertentu? Tanyakan fitur & demo desainnya ke aku ya! ✨' },
@@ -1045,74 +1045,8 @@
         }
     };
 
-    // Interactive Estimator Component (In-Chat Co-Pilot)
-    const renderInteractiveEstimator = (calcData) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'pakde-ai-estimator';
-        const initialCount = calcData?.guest_count || 150;
-
-        wrap.innerHTML = `
-            <div class="pakde-ai-estimator-header">
-                <span class="pakde-ai-estimator-title">⚡ Estimator Paket & Tamu Live</span>
-                <span class="pakde-ai-estimator-badge" id="estCountBadge">${initialCount} Tamu</span>
-            </div>
-            <div class="pakde-ai-estimator-slider-wrap">
-                <input type="range" class="pakde-ai-estimator-slider" id="estRangeInput" min="10" max="600" step="10" value="${initialCount}">
-                <div class="pakde-ai-estimator-labels">
-                    <span>10 Tamu</span>
-                    <span>100 (Batas Premium)</span>
-                    <span>600+ Tamu</span>
-                </div>
-            </div>
-            <div class="pakde-ai-estimator-result">
-                <div>
-                    <p class="pakde-ai-estimator-result-pkg" id="estPkgName">Paket Eksklusif</p>
-                    <p class="pakde-ai-estimator-note" id="estPkgDesc">Link Tamu Tanpa Batas (Unlimited)</p>
-                </div>
-                <p class="pakde-ai-estimator-result-price" id="estPkgPrice">Rp180.000</p>
-            </div>
-            <a href="#harga" class="pakde-ai-estimator-btn" id="estOrderBtn">Pilih Paket Ini →</a>
-        `;
-
-        const slider = wrap.querySelector('#estRangeInput');
-        const badge = wrap.querySelector('#estCountBadge');
-        const pkgName = wrap.querySelector('#estPkgName');
-        const pkgDesc = wrap.querySelector('#estPkgDesc');
-        const pkgPrice = wrap.querySelector('#estPkgPrice');
-
-        const updateCalc = (val) => {
-            const count = parseInt(val, 10);
-            badge.textContent = `${count} Tamu`;
-            if (count > 100) {
-                pkgName.textContent = 'Paket Eksklusif';
-                pkgDesc.textContent = 'Link Tamu Tanpa Batas (Unlimited), Live Streaming & 3D';
-                pkgPrice.textContent = 'Rp180.000';
-            } else if (count > 1) {
-                pkgName.textContent = 'Paket Premium';
-                pkgDesc.textContent = 'Personalisasi s.d 100 Tamu, Amplop Digital QRIS & Bank';
-                pkgPrice.textContent = 'Rp110.000';
-            } else {
-                pkgName.textContent = 'Paket Basic';
-                pkgDesc.textContent = '1 Link Umum Esensial, RSVP & Maps Ringkas';
-                pkgPrice.textContent = 'Rp50.000';
-            }
-        };
-
-        slider.addEventListener('input', (e) => updateCalc(e.target.value));
-        updateCalc(initialCount);
-
-        messages.insertBefore(wrap, typing);
-        messages.scrollTop = messages.scrollHeight;
-    };
-
     const renderActionCard = (routing) => {
         if (!routing) return;
-
-        // Render In-Chat Interactive Estimator jika intent kalkulator terdeteksi
-        if (routing.intent === 'guest_calculator' && routing.calculation) {
-            renderInteractiveEstimator(routing.calculation);
-            return;
-        }
 
         const card = document.createElement('div');
         card.className = 'pakde-ai-action-card';

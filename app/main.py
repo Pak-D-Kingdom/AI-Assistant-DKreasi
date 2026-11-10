@@ -46,7 +46,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.APP_NAME,
-    description="PakDe Group Central AI Engine & Multi-Tier Assistant Backend",
+    description="D-Kreasi Central AI Engine & Multi-Tier Assistant Backend",
     version="1.0.0",
     lifespan=lifespan,
 )

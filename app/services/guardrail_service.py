@@ -71,7 +71,7 @@ class GuardrailService:
         if layer in ["l1", "l1_dkreasi"]:
             output = re.sub(
                 r"(akan|pasti|dijadwalkan)\s+(rilis|meluncur|hadir|tersedia)\s+(pada\s+tanggal|bulan\s+depan|tahun\s+depan|\d{1,2}\s+[a-zA-Z]+\s+\d{4})",
-                "sedang dalam tahap persiapan dan pengembangan oleh tim PakDe Group",
+                "sedang dalam tahap persiapan dan pengembangan oleh tim D-KREASI",
                 output,
                 flags=re.IGNORECASE,
             )
@@ -84,5 +84,34 @@ class GuardrailService:
                 output,
                 flags=re.IGNORECASE,
             )
+
+        # White-Labeling Guardrail: Cegah kebocoran nama vendor backend LLM pihak ketiga
+        platform_name = "D'Karsa" if layer in ["l2", "l2_dkarsa"] else ("D-Kreasi" if layer in ["l1", "l1_dkreasi"] else "WEBIA")
+        output = re.sub(
+            r"(?:via\s+API\s+resmi\s*)?\(\s*(?:Google\s+Gemini|OpenAI|ChatGPT|Claude|Anthropic)(?:\s*/\s*(?:Google\s+Gemini|OpenAI|ChatGPT|Claude|Anthropic))*\s*\)",
+            f"yang dikembangkan dan dikelola khusus oleh tim {platform_name}",
+            output,
+            flags=re.IGNORECASE,
+        )
+        output = re.sub(
+            r"\b(?:Google\s+Gemini|OpenAI|ChatGPT|GPT-4o?|Claude|Anthropic)\b",
+            "teknologi AI cerdas",
+            output,
+            flags=re.IGNORECASE,
+        )
+
+        # Anti-PakDe Group Guardrail: Cegah penyebutan "PakDe Group" di seluruh layer (D'Karsa, Webia, D-Kreasi)
+        output = re.sub(
+            r"\b(?:dari\s+|by\s+|milik\s+|ekosistem\s+)?PakDe\s+Group\b",
+            platform_name,
+            output,
+            flags=re.IGNORECASE,
+        )
+        output = re.sub(
+            r"\bPakDe\s+Group\b",
+            platform_name,
+            output,
+            flags=re.IGNORECASE,
+        )
 
         return output

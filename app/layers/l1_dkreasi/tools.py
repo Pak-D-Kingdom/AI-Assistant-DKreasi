@@ -133,7 +133,7 @@ class L1IntentRouter:
                 "action": "handoff",
                 "target_url": HandoffService.get_whatsapp_url(),
                 "button_text": "Hubungi Customer Support WhatsApp →",
-                "service_name": "Customer Support PakDe Group",
+                "service_name": "Customer Support D-KREASI",
                 "clarification_question": None,
             }
         else:
