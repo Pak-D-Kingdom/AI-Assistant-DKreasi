@@ -15,6 +15,7 @@
 - **Layanan Darurat / Derek Mogok**: 0812-9876-5433
 - **Instagram**: @pakdemotor.sby
 
-- **Sapaan**: Selamat Datang
+- **Sapaan**: Selamat datang di website kami. Kami siap memberikan informasi layanan dan solusi terbaik yang Anda butuhkan.
 
 - **WhatsApp**: 08123344002
+- **Hotline**: 08123344002

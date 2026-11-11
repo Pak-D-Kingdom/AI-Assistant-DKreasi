@@ -5,6 +5,11 @@ Seluruh template di WEBIA dirancang siap pakai (*turnkey templates*) sesuai peri
 ---
 
 ## 1. Seri F&B (Food & Beverages)
+- **Solenne & Sugar – Luxury Wedding Catering** (`solenne-sugar-luxury-wedding-catering` · Style: *Luxury* · Tone: *Yellow Sunshine, Ivory & Champagne Gold*):
+  - Konsep: *BESPOKE WEDDING CATERING & DESSERT TABLE.*
+  - Target: Catering pernikahan mewah, custom wedding cake, dessert table eksklusif, private banquet.
+  - Fitur: Galeri hidangan wedding cake & dessert, kalkulator porsi undangan pesta, paket wedding menu kurasi, konsultasi menu via WhatsApp.
+  - Demo / Live: `/webia/template/wedding-event/catering-wedding-cake/solenne-sunshine`
 - **Little Corner** (`little-corner` · Style: *Modern* · Tone: *Warm Coffee*):
   - Konsep: *YOUR DAILY HAPPY PLACE — Good coffee, Good mood.*
   - Target: Cafe, coffee shop, casual restaurant, artisan eatery.
@@ -862,4 +867,108 @@ Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia La
 - **FrostyAgro Equipment - Perlengkapan & Peralatan Pertanian Playful & Colorful Arctic Frost** (`agriculture-peralatanpertanian-playfulcolorful-arcticfrost-putri` • Category: *agriculture-farming*):
   - Deskripsi: Website distributor perlengkapan dan peralatan pertanian modern bergaya Playful & Colorful dengan palet Arctic Frost ceria untuk FrostyAgro Equipment. Menghadirkan mini tractor cerdas, drone robotik sebar benih, greenhouse kit hidroponik, simulator gear tani interaktif, kuis pemilihan alat, FAQ ceria, WhatsApp concierge, dan FrostyBot AI.
   - Demo / Live: `/webia/template/agriculture-peralatanpertanian-playfulcolorful-arcticfrost-putri`
+
+
+
+## 16. Seri Pet & Animal Care
+- **Pawlora – Perawatan Hewan yang Hangat & Alami** (`pawlora-animal-care` · Style: *Warm & Natural* · Tone: *Warm Earthy Green & Soft Beige*):
+  - Konsep: *PERAWATAN PENUH KASIH UNTUK ANGGOTA KELUARGA BERBULU.*
+  - Target: Klinik hewan, pet salon & grooming, penitipan kucing & anjing (pet hotel), dokter hewan mandiri.
+  - Fitur: Katalog paket grooming (mandi kutu, potong kuku, styling bulu), jadwal vaksinasi & steril, booking slot grooming WhatsApp, fasilitas pet hotel.
+  - Demo / Live: `/webia/template/pawlora-animal-care`
+
+## 17. Seri Sports, Fitness & Personal Trainer
+- **Northline Performance – Corporate Personal Trainer** (`northline-performance-corporate-personal-trainer` · Style: *Corporate Athletic* · Tone: *Ocean Blue, Navy & Light Gray*):
+  - Konsep: *TRANSFORM YOUR FITNESS. ACHIEVE YOUR PEAK GOALS.*
+  - Target: Personal trainer privat, pelatih kebugaran korporat/eksekutif, private fitness studio.
+  - Fitur: Program periodisasi latihan, kalkulator target berat/otot, bukti transformasi klien, booking konsultasi fitness gratis.
+  - Demo / Live: `/webia/template/sports-fitness/personal-trainer/northline-blue`
+- **VANTA//FORM – Cyber Neon Personal Training Lab** (`vanta-form-cyber-neon-personal-trainer` · Style: *Cyber Neon Futuristic* · Tone: *Electric Blue, Purple & Obsidian Black*):
+  - Konsep: *HUMAN PERFORMANCE LAB – UNLEASH YOUR POTENTIAL.*
+  - Target: Fitness lab modern, HIIT & strength conditioning, kelas kebugaran intensif.
+  - Fitur: Protocol card latihan, tracker progres mingguan, galeri fasilitas studio modern, pendaftaran member baru.
+  - Demo / Live: `/webia/template/sports-fitness/personal-trainer/cyber-neon`
+
+## 18. Seri Photography, Creative Studio & 3D
+- **AuraMotion 3D Studio – Motion Graphics & 3D** (`photography-motiongraphics-premiumminimal-champagneglow-putri` · Style: *Premium Minimal* · Tone: *Champagne Glow & Deep Charcoal*):
+  - Konsep: *SENI GERAK PRESISI, VISUAL 3D BERNILAI TINGGI.*
+  - Target: Studio animasi 3D, desainer motion graphics, visual effects studio, agensi branding kinetik.
+  - Fitur: Showcase video showreel 3D fotorealistik, portofolio animasi iklan, kalkulator estimasi durasi & biaya produksi, concierge konsultasi WhatsApp.
+  - Demo / Live: `/webia/template/photography-motiongraphics-premiumminimal-champagneglow-putri`
+- **SOROT Studio – UGC & Content Creator Studio** (`photography-ugc-content-creator-studio-dark-mode` · Style: *Futuristic Dark Mode* · Tone: *Dark Violet & Neon Cyan*):
+  - Konsep: *KREASI KONTEN VIRAL UNTUK TIKTOK, INSTAGRAM REELS & YOUTUBE SHORTS.*
+  - Target: Studio kreator UGC, talent management influencer, studio shooting podcast & live streaming.
+  - Fitur: Showcase video portofolio vertikal, paket sewa studio per jam, talent roster, booking jadwal syuting online.
+  - Demo / Live: `/webia/template/photography-ugc-content-creator-studio-dark-mode`
+
+
+---
+
+## 🔄 Katalog Template Tambahan Hasil Sinkronisasi Webia
+Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia Laravel:
+
+### Kategori: NONPROFIT-COMMUNITY
+- **Relakita - Warm Sunrise Volunteer Community** (`relakita-volunteer-warm-sunrise` • Category: *nonprofit-community*):
+  - Deskripsi: Community volunteer landing page with an organization profile, three social-impact programs, volunteer registration form, impact stories, FAQs, AI volunteer assistant, and coordinator contact.
+  - Demo / Live: `/webia/template/relakita-volunteer-warm-sunrise`
+
+- **Kolektif Aksi Kita - Midnight Navy Volunteer Network** (`kolektif-aksi-kita-volunteer-midnight-navy` • Category: *nonprofit-community*):
+  - Deskripsi: Modern volunteer-network landing page with organization benefits, open service programs, impact metrics, volunteer eligibility and FAQs, mobile navigation, a volunteer interest form, WhatsApp coordination, and an AI assistant demo.
+  - Demo / Live: `/webia/template/kolektif-aksi-kita-volunteer-midnight-navy`
+
+### Kategori: HOME-SERVICES
+- **MaduBersih - Vintage Warm Bee Home Cleaning** (`madubersih-home-cleaning-vintage` • Category: *home-services*):
+  - Deskripsi: Traditional home-cleaning landing page with cleaning and sanitizing packages, room-based cost estimator, eco-friendly service details, customer FAQs, service-area information, and WhatsApp booking.
+  - Demo / Live: `/webia/template/madubersih-home-cleaning-vintage`
+
+- **AstroClean - Cosmic Deep Cleaning** (`astroclean-home-cleaning-cosmic` • Category: *home-services*):
+  - Deskripsi: Modern deep-cleaning and home-sanitization landing page with service packages, room-based AI estimate calculator, cleaning-team credentials, service coverage, FAQs, and WhatsApp booking.
+  - Demo / Live: `/webia/template/astroclean-home-cleaning-cosmic`
+
+### Kategori: PET-ANIMAL-SERVICE
+- **Pawstead - Rumah Kedua untuk Si Bulu** (`pawstead-animal-care` • Category: *pet-animal-service*):
+  - Deskripsi: Klinik hewan, grooming, penitipan, pet taxi, pelatihan, dan pet shop dengan kartu member interaktif, galeri, harga dan diskon, FAQ, booking WhatsApp, serta asisten virtual.
+  - Demo / Live: `/webia/template/pawstead`
+
+### Kategori: PROPERTY
+- **Hearthstone Property - Rumah Hangat untuk Hidup Anda** (`hearthstone-property` • Category: *property*):
+  - Deskripsi: Website agen properti rumah, villa, tanah, dan apartemen dengan pencarian listing, filter jual atau sewa, simulasi KPR interaktif, kawasan favorit, profil agen, permintaan taksiran harga, FAQ, WhatsApp, dan asisten virtual.
+  - Demo / Live: `/webia/template/property/hearthstone-property`
+
+### Kategori: HEALTHCARE
+- **Aurelia Mind - Psikologi & Konseling Eksklusif** (`aurelia-mind-psikologi-konseling` • Category: *healthcare*):
+  - Deskripsi: Website psikologi dan konseling eksklusif dengan layanan individu, pasangan, asesmen, check-in diri interaktif, profil psikolog, ruang konsultasi, paket sesi, FAQ, reservasi WhatsApp, dan concierge virtual.
+  - Demo / Live: `/webia/template/healthcare/psychology/aurelia-mind`
+
+### Kategori: WEDDING-EVENT
+- **Eventora - Wedding & Event Event Organizer Creative Purple Dream** (`wedding-event-organizer-purple-dream` • Category: *wedding-event*):
+  - Deskripsi: Website event organizer & planner kreatif dengan warna purple dream, layanan event, portofolio event, paket corporate & private event, proyek sebelumnya, logo klien, proses perencanaan event, permintaan penawaran, tombol WhatsApp, dan asisten AI FAQ layanan event.
+  - Demo / Live: `/webia/template/wedding-event/creative/event-organizer-purple-dream`
+
+### Kategori: TRAVEL-TOURISM
+- **Al Hijrah Travel - Travel & Tourism Umrah & Haji Elegant Navy Champagne Gold** (`travel-umrah-haji-navy-champagne-gold` • Category: *travel-tourism*):
+  - Deskripsi: Website travel umrah & haji elegan dengan warna navy champagne gold, paket umrah & haji, jadwal keberangkatan, harga paket, informasi hotel & pesawat, itinerary, tim pembimbing, persyaratan pendaftaran, testimoni jamaah, WhatsApp, dan asisten AI FAQ paket & pendaftaran.
+  - Demo / Live: `/webia/template/travel-tourism/elegan/umrah-haji-navy-champagne-gold`
+
+- **Nur Rahmat Travel - Travel & Tourism Umrah & Haji Classic Emerald Green** (`travel-umrah-haji-emerald-green` • Category: *travel-tourism*):
+  - Deskripsi: Website travel umrah & haji klasik dengan warna emerald green, paket umrah & haji, jadwal keberangkatan, harga paket, informasi hotel & pesawat, itinerary perjalanan, profil pembimbing, persyaratan pendaftaran, testimoni jemaah, tombol WhatsApp, dan asisten AI FAQ paket & pendaftaran.
+  - Demo / Live: `/webia/template/travel-tourism/classic/umrah-haji-emerald-green`
+
+- **WILDTRAIL - Explore the Wild** (`wildtrail-adventure-outdoor` • Category: *travel-tourism*):
+  - Deskripsi: Vintage outdoor expedition website with adventure discovery map, expedition finder, trail profiles, seasonal calendar, packages, gear checklist, guides, safety guide, departures and WhatsApp registration.
+  - Demo / Live: `/webia/template/wildtrail-adventure-outdoor`
+
+### Kategori: PHOTOGRAPHY-CREATIVE-STUDIO
+- **PusakaMotion 3D Studio - Motion Graphics & 3D Studio Traditional Cultural Coral & Peach** (`photography-motiongraphics-traditionalcultural-coralpeach-putri` • Category: *photography-creative-studio*):
+  - Deskripsi: Website studio motion graphics & visual 3D bernuansa tradisional kultural dengan palet Coral & Peach untuk PusakaMotion 3D Studio. Menggabungkan narasi warisan Nusantara dengan CGI 3D modern, animasi kinetik motif etnik, rekonstruksi candi purbakala, kalkulator estimasi render budaya, FAQ interaktif, concierge WhatsApp, dan PusakaAI Creative Assistant.
+  - Demo / Live: `/webia/template/photography-motiongraphics-traditionalcultural-coralpeach-putri`
+
+### Kategori: PROFESSIONAL-SERVICE
+- **VERBA - Editorial Translation House** (`verba-translation-interpreter` • Category: *professional-service*):
+  - Deskripsi: Editorial translation, sworn document appraisal, localization, and professional interpretation services.
+  - Demo / Live: `/webia/template/verba-translation-interpreter`
+
+- **VANGUARD - Heritage Counsel** (`vanguard-lawyer` • Category: *professional-service*):
+  - Deskripsi: Rustic editorial law firm website with consultation booking, practice areas, legal assessment, document checklist, and client portal preview.
+  - Demo / Live: `/webia/template/vanguard-lawyer`
 

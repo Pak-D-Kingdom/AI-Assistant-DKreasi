@@ -275,6 +275,15 @@ class SemanticCacheService:
 _shared_cache_instance: Optional[SemanticCacheService] = None
 
 
+def invalidate_semantic_cache_safely(layer: Optional[str] = None, tenant_id: Optional[str] = None) -> bool:
+    """Mengosongkan semantic cache dengan aman tanpa inisialisasi paksa jika cache belum pernah dibuat."""
+    global _shared_cache_instance
+    if _shared_cache_instance is not None:
+        _shared_cache_instance.invalidate(layer=layer, tenant_id=tenant_id)
+        return True
+    return False
+
+
 def get_semantic_cache() -> SemanticCacheService:
     """Mengembalikan singleton instance SemanticCacheService untuk seluruh aplikasi."""
     global _shared_cache_instance

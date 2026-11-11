@@ -36,3 +36,14 @@ Untuk mempercepat pembuatan website, AI Assistant dapat membantu merangkum data 
 - Jam Operasional (Hari & Jam Buka)
 - Daftar Layanan / Produk Unggulan & Kisaran Harga
 - Nomor WhatsApp untuk Layanan Pelanggan (CS)
+
+## 6. Panduan Keamanan Akun, Lupa Password & Reset Kata Sandi
+- **Bagaimana jika klien lupa password akun WEBIA?**
+  Klien dapat mengakses halaman login `/login` dan mengklik tautan **"Lupa kata sandi?"** atau langsung membuka URL `/forgot-password`.
+- **Alur Reset Password**:
+  1. Masukkan alamat email yang terdaftar saat pemesanan website.
+  2. Sistem WEBIA akan mengirimkan tautan verifikasi aman langsung ke kotak masuk email klien.
+  3. Klien mengklik tautan tersebut untuk membuat password baru yang aman di halaman `/reset-password`.
+  4. Setelah berhasil, klien dapat langsung login ke Dashboard dengan kata sandi baru.
+- **Pembaruan Profil & Password Mandiri**:
+  Setelah login ke Dashboard, klien juga dapat memperbarui nama, nomor telepon, dan mengganti kata sandi kapan saja melalui menu **Pengaturan Akun / Profil**.

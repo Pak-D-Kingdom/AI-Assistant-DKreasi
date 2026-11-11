@@ -1,4 +1,7 @@
+import html
 import json
+import os
+import re
 import calendar
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
@@ -40,6 +43,67 @@ class AnalyticsService:
         }
 
     @classmethod
+    def _get_tenant_detail_info(cls, tenant_id: str) -> Dict[str, Any]:
+        """Ekstrak informasi lengkap profil bisnis dan kelengkapan knowledge base tenant."""
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "knowledge_base", "l4_tenant", tenant_id))
+
+        info = {
+            "whatsapp": "-",
+            "address": "-",
+            "operating_hours": "-",
+            "description": "-",
+            "greeting": "-",
+            "instagram": "-",
+            "has_profil": False,
+            "has_layanan": False,
+            "has_kebijakan": False,
+            "has_faq": False,
+        }
+
+        if not os.path.exists(base_dir):
+            return info
+
+        info["has_profil"] = os.path.exists(os.path.join(base_dir, "profil.md"))
+        info["has_layanan"] = os.path.exists(os.path.join(base_dir, "layanan.md"))
+        info["has_kebijakan"] = os.path.exists(os.path.join(base_dir, "kebijakan.md"))
+        info["has_faq"] = os.path.exists(os.path.join(base_dir, "faq.md"))
+
+        profil_path = os.path.join(base_dir, "profil.md")
+        if os.path.exists(profil_path):
+            try:
+                with open(profil_path, "r", encoding="utf-8") as f:
+                    text = f.read()
+
+                wa_m = re.search(r"-\s+\*\*(?:WhatsApp(?:[^\*]+)?|Kontak|Hotline)\*\*:\s*(.*)", text, re.IGNORECASE)
+                if wa_m:
+                    info["whatsapp"] = wa_m.group(1).strip()
+
+                addr_m = re.search(r"-\s+\*\*Alamat\*\*:\s*(.*)", text, re.IGNORECASE)
+                if addr_m:
+                    info["address"] = addr_m.group(1).strip()
+
+                hours_m = re.search(r"-\s+\*\*Jam Operasional\*\*:\s*([\s\S]*?)(?=\n-|\n##|$)", text, re.IGNORECASE)
+                if hours_m:
+                    clean_h = " ".join([line.strip().lstrip("-* ") for line in hours_m.group(1).splitlines() if line.strip()])
+                    info["operating_hours"] = clean_h or "-"
+
+                desc_m = re.search(r"-\s+\*\*Deskripsi\*\*:\s*(.*)", text, re.IGNORECASE)
+                if desc_m:
+                    info["description"] = desc_m.group(1).strip()
+
+                greet_m = re.search(r"-\s+\*\*Sapaan\*\*:\s*(.*)", text, re.IGNORECASE)
+                if greet_m:
+                    info["greeting"] = greet_m.group(1).strip()
+
+                ig_m = re.search(r"-\s+\*\*Instagram\*\*:\s*(.*)", text, re.IGNORECASE)
+                if ig_m:
+                    info["instagram"] = ig_m.group(1).strip()
+            except Exception:
+                pass
+
+        return info
+
+    @classmethod
     def _render_quota_rows(cls, quotas_list: List[Dict[str, Any]]) -> str:
         if not quotas_list:
             return '<tr><td colspan="7" class="py-8 text-center text-slate-400">Belum ada tenant yang terdaftar di database.</td></tr>'
@@ -62,6 +126,9 @@ class AnalyticsService:
             pct = t.get("percentage_used", round((used / limit) * 100, 1) if limit > 0 else 0)
             name = t.get("name", t.get("tenant_id", "Unknown"))
             t_id = t.get("tenant_id", "")
+            category = t.get("category", "Bisnis")
+
+            kb_info = t if "whatsapp" in t else cls._get_tenant_detail_info(t_id)
 
             if tier == "infinity":
                 tier_badge = '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">INFINITY</span>'
@@ -90,32 +157,70 @@ class AnalyticsService:
 
             bar_width = min(100.0, float(pct))
 
+            modal_data = {
+                "tenant_id": t_id,
+                "name": name,
+                "category": category,
+                "tier": tier.upper(),
+                "used": f"{used:,}",
+                "limit": f"{limit:,}",
+                "remaining": f"{remaining:,}",
+                "pct": f"{pct}%",
+                "bar_width": bar_width,
+                "status_cat": status_cat,
+                "status_badge": status_badge,
+                "cycle_end": cycle_end_str,
+                "reset_date": reset_date_str,
+                "days_left": days_left,
+                "whatsapp": kb_info.get("whatsapp", "-"),
+                "address": kb_info.get("address", "-"),
+                "operating_hours": kb_info.get("operating_hours", "-"),
+                "description": kb_info.get("description", "-"),
+                "greeting": kb_info.get("greeting", "-"),
+                "has_profil": kb_info.get("has_profil", False),
+                "has_layanan": kb_info.get("has_layanan", False),
+                "has_kebijakan": kb_info.get("has_kebijakan", False),
+                "has_faq": kb_info.get("has_faq", False),
+            }
+            modal_json = html.escape(json.dumps(modal_data), quote=True)
+
             rows.append(f"""
             <tr class="tenant-row hover:bg-slate-50 transition border-b border-slate-200/80" data-name="{name.lower()}" data-id="{t_id.lower()}" data-status="{status_cat}">
                 <td class="py-3.5 px-5">
-                    <div class="font-semibold text-slate-900">{name}</div>
-                    <div class="text-xs text-slate-500 font-mono mt-0.5">{t_id}</div>
+                    <button type="button" 
+                            onclick="openTenantModal(this)"
+                            data-tenant="{modal_json}"
+                            title="Klik untuk melihat detail & mengedit konfigurasi AI {name}"
+                            class="text-left group/btn focus:outline-none cursor-pointer block">
+                        <div class="font-bold text-slate-900 group-hover/btn:text-indigo-600 transition flex items-center gap-1.5">
+                            <span class="tenant-name-span underline decoration-slate-300 group-hover/btn:decoration-indigo-500 decoration-1 underline-offset-3">{name}</span>
+                            <span class="inline-flex items-center justify-center w-4.5 h-4.5 rounded-md bg-indigo-50 text-indigo-600 opacity-60 group-hover/btn:opacity-100 group-hover/btn:bg-indigo-600 group-hover/btn:text-white transition shadow-2xs text-[10px]" title="Detail & Edit AI Klien">
+                                ✏️
+                            </span>
+                        </div>
+                        <div class="text-xs text-slate-500 font-mono mt-0.5 group-hover/btn:text-indigo-500 transition">{t_id}</div>
+                    </button>
                 </td>
-                <td class="py-3.5 px-5">{tier_badge}</td>
+                <td class="tenant-tier-td py-3.5 px-5">{tier_badge}</td>
                 <td class="py-3.5 px-5 font-mono text-sm text-slate-800">
-                    <span class="font-bold text-slate-900">{used:,}</span> <span class="text-slate-500 text-xs font-normal">/ {limit:,}</span>
+                    <span class="tenant-quota-used font-bold text-slate-900">{used:,}</span> <span class="text-slate-500 text-xs font-normal">/ <span class="tenant-quota-limit">{limit:,}</span></span>
                 </td>
                 <td class="py-3.5 px-5 font-mono text-sm font-semibold text-slate-700">
-                    {remaining:,}
+                    <span class="tenant-remaining">{remaining:,}</span>
                 </td>
                 <td class="py-3.5 px-5">
                     <div class="flex items-center gap-3">
                         <div class="w-28 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-                            <div class="{bar_color} h-2 rounded-full transition-all duration-500" style="width: {bar_width}%;"></div>
+                            <div class="tenant-pbar {bar_color} h-2 rounded-full transition-all duration-500" style="width: {bar_width}%;"></div>
                         </div>
-                        <span class="text-xs {pct_color} font-mono">{pct}%</span>
+                        <span class="tenant-pct-span text-xs {pct_color} font-mono">{pct}%</span>
                     </div>
                 </td>
                 <td class="py-3.5 px-5">
                     <div class="text-xs font-semibold text-slate-900">s/d {cycle_end_str}</div>
                     <div class="text-[11px] text-indigo-600 font-mono mt-0.5">Reset {reset_date_str} ({days_left} hr lagi)</div>
                 </td>
-                <td class="py-3.5 px-5">{status_badge}</td>
+                <td class="tenant-status-td py-3.5 px-5">{status_badge}</td>
             </tr>
             """)
         return "".join(rows)
@@ -475,6 +580,12 @@ class AnalyticsService:
                     <a href="?days=30" class="px-2.5 py-1 rounded-md {'bg-indigo-600 text-white shadow-xs font-bold' if days == 30 else 'text-slate-600 hover:text-slate-900 transition'}">30 Hari</a>
                 </div>
 
+                <button type="button" onclick="openGlobalAiModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-xs transition cursor-pointer" title="Buka Pengaturan Prompt & Engine AI">
+                    <svg class="w-3.5 h-3.5 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="hidden md:inline">Konfigurasi AI Engine</span>
+                    <span class="md:hidden">Settings AI</span>
+                </button>
+
                 <a href="/api/v1/analytics/overview?days={days}" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-xs transition">
                     <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     <span>Raw JSON</span>
@@ -740,6 +851,421 @@ class AnalyticsService:
 
     </div>
 
+    <!-- Modal Detail & Editor AI Klien (Tenant Intelligence & Knowledge Editor) -->
+    <div id="tenantDetailModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 transition-all duration-200 hidden" role="dialog" aria-modal="true" aria-labelledby="modalTenantName">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 max-w-2xl w-full overflow-hidden transform transition-all flex flex-col max-h-[92vh]">
+            
+            <!-- Modal Header with Tab Switcher -->
+            <div class="px-6 py-4 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-xl shrink-0">
+                        🏢
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 id="modalTenantName" class="text-base font-bold text-white tracking-tight truncate">Nama Bisnis</h3>
+                            <span id="modalTenantCategory" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-indigo-200 border border-white/10 uppercase tracking-wider">Kategori</span>
+                        </div>
+                        <div id="modalTenantId" class="text-xs text-indigo-300 font-mono mt-0.5 truncate">tenant_id</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                    <!-- Mode Switcher Tabs -->
+                    <div class="flex items-center bg-white/10 p-1 rounded-xl border border-white/10 text-xs">
+                        <button type="button" onclick="switchModalTab('overview')" id="modalTabBtnOverview" class="px-3 py-1 rounded-lg font-bold bg-white text-slate-900 shadow-xs transition cursor-pointer">
+                            👁️ Ringkasan
+                        </button>
+                        <button type="button" onclick="switchModalTab('edit')" id="modalTabBtnEdit" class="px-3 py-1 rounded-lg font-medium text-slate-200 hover:text-white transition cursor-pointer">
+                            ✏️ Edit AI
+                        </button>
+                    </div>
+
+                    <button type="button" onclick="closeTenantModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer text-lg font-bold" aria-label="Tutup Modal">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 1: OVERVIEW VIEW -->
+            <div id="modalViewOverview" class="p-6 overflow-y-auto space-y-5 text-sm text-slate-700 bg-slate-50/50">
+                <!-- Status & Paket AI Highlights -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Status Kuota &amp; Langganan</span>
+                        <div id="modalStatusBadge"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Paket Tier</div>
+                            <div id="modalTierBadge" class="mt-1 font-bold text-slate-900">PIXEL</div>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Limit Kuota</div>
+                            <div id="modalQuotaLimit" class="mt-1 font-bold text-slate-900 font-mono">500</div>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Terpakai</div>
+                            <div id="modalQuotaUsed" class="mt-1 font-bold text-slate-900 font-mono">0</div>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Sisa Pesan</div>
+                            <div id="modalQuotaRemaining" class="mt-1 font-bold text-emerald-700 font-mono">500</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="pt-1">
+                        <div class="flex justify-between text-xs mb-1 font-semibold">
+                            <span class="text-slate-600">Konsumsi Bulan Berjalan</span>
+                            <span id="modalPercentage" class="font-mono text-slate-900">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-slate-200">
+                            <div id="modalProgressBar" class="h-2.5 rounded-full transition-all duration-300 bg-indigo-600" style="width: 0%;"></div>
+                        </div>
+                        <div class="flex items-center justify-between text-[11px] text-slate-500 mt-1.5 font-mono">
+                            <span>Siklus s/d: <strong id="modalCycleEnd" class="text-slate-700">-</strong></span>
+                            <span class="text-indigo-600">Reset: <strong id="modalResetDate" class="text-indigo-700">-</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informasi Operasional Bisnis -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs space-y-3">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-2 border-b border-slate-100 flex items-center justify-between">
+                        <span>Informasi Profil Bisnis Klien</span>
+                        <span class="text-[11px] text-slate-500 font-normal">Tersinkronisasi otomatis</span>
+                    </div>
+
+                    <div class="space-y-2.5 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-1 border-b border-slate-50">
+                            <span class="font-semibold text-slate-500">Nomor WhatsApp CS:</span>
+                            <div class="sm:col-span-2 font-mono font-bold text-slate-900 flex items-center gap-2">
+                                <span id="modalWhatsApp">-</span>
+                                <a id="modalWhatsAppLink" href="#" target="_blank" rel="noopener" class="text-emerald-600 hover:text-emerald-700 underline text-[11px] font-sans font-semibold">Chat WA ↗</a>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-1 border-b border-slate-50">
+                            <span class="font-semibold text-slate-500">Alamat / Lokasi:</span>
+                            <span id="modalAddress" class="sm:col-span-2 text-slate-800 font-medium">-</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-1 border-b border-slate-50">
+                            <span class="font-semibold text-slate-500">Jam Operasional:</span>
+                            <span id="modalOperatingHours" class="sm:col-span-2 text-slate-800 font-medium">-</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-1">
+                            <span class="font-semibold text-slate-500">Sapaan Asisten AI:</span>
+                            <div id="modalGreeting" class="sm:col-span-2 p-2 rounded bg-slate-50 border border-slate-200 text-slate-700 italic font-normal text-[11px]">
+                                -
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Berkas Knowledge Base AI (L4) -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs space-y-2.5">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-1.5 border-b border-slate-100 flex items-center justify-between">
+                        <span>Kelengkapan Pengetahuan AI (Layer 4)</span>
+                        <button type="button" onclick="switchModalTab('edit'); switchEditSubTab('kb');" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 transition cursor-pointer">
+                            Buka Editor Dokumen ↗
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+                        <div id="kbBadgeProfil" class="p-2 rounded-lg border flex items-center justify-between">
+                            <span class="font-mono">profil.md</span>
+                            <span>✓</span>
+                        </div>
+                        <div id="kbBadgeLayanan" class="p-2 rounded-lg border flex items-center justify-between">
+                            <span class="font-mono">layanan.md</span>
+                            <span>✓</span>
+                        </div>
+                        <div id="kbBadgeKebijakan" class="p-2 rounded-lg border flex items-center justify-between">
+                            <span class="font-mono">kebijakan.md</span>
+                            <span>✓</span>
+                        </div>
+                        <div id="kbBadgeFaq" class="p-2 rounded-lg border flex items-center justify-between">
+                            <span class="font-mono">faq.md</span>
+                            <span>✓</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: EDIT AI VIEW (Comprehensive AI & Knowledge Base Editor) -->
+            <div id="modalViewEdit" class="p-6 overflow-y-auto space-y-4 text-sm text-slate-700 bg-slate-50/50 hidden">
+                <!-- Sub-Tabs inside Edit Mode -->
+                <div class="flex items-center gap-1.5 p-1 bg-slate-200/70 rounded-xl border border-slate-200 text-xs font-semibold">
+                    <button type="button" onclick="switchEditSubTab('profile')" id="subTabBtnProfile" class="flex-1 py-1.5 rounded-lg bg-white text-indigo-700 font-bold shadow-xs transition cursor-pointer">
+                        🏢 Profil &amp; Sapaan AI
+                    </button>
+                    <button type="button" onclick="switchEditSubTab('quota')" id="subTabBtnQuota" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer font-medium">
+                        📊 Paket &amp; Kuota AI
+                    </button>
+                    <button type="button" onclick="switchEditSubTab('kb')" id="subTabBtnKb" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer font-medium">
+                        📚 Knowledge Base L4 (4 Berkas)
+                    </button>
+                </div>
+
+                <!-- Sub-Pane 1: Profil & Sapaan AI -->
+                <div id="subPaneProfile" class="space-y-3.5 bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Resmi Bisnis</label>
+                            <input type="text" id="editTenantName" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Industri</label>
+                            <input type="text" id="editTenantCategory" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nomor WhatsApp CS (Handoff)</label>
+                            <input type="text" id="editTenantWhatsApp" placeholder="contoh: 081234567890" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Jam Operasional</label>
+                            <input type="text" id="editTenantHours" placeholder="contoh: Senin - Sabtu 08.00 - 17.00 WIB" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Alamat / Lokasi Fisik Bisnis</label>
+                        <textarea id="editTenantAddress" rows="2" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                            <span>Sapaan Pembuka AI (Greeting Message)</span>
+                            <span class="text-[10px] text-slate-400 font-normal">Diucapkan saat pengunjung membuka widget chat</span>
+                        </label>
+                        <textarea id="editTenantGreeting" rows="2" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none italic"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi &amp; Cakupan Layanan Bisnis</label>
+                        <textarea id="editTenantDescription" rows="2" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- Sub-Pane 2: Paket & Kuota AI -->
+                <div id="subPaneQuota" class="space-y-4 bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hidden">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Paket Tier AI</label>
+                            <select id="editTenantTier" onchange="onTierChange(this.value)" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none bg-white">
+                                <option value="pixel">Pixel (500 pesan / bulan)</option>
+                                <option value="pulse">Pulse / Vector (1.000 pesan / bulan)</option>
+                                <option value="nexus">Nexus / Artisan (2.500 pesan / bulan)</option>
+                                <option value="infinity">Infinity (5.000 pesan / bulan)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Batas Kuota Pesan per Bulan</label>
+                            <input type="number" id="editTenantQuota" min="50" step="50" class="w-full text-xs font-mono font-bold px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                        </div>
+                    </div>
+
+                    <!-- Reset Kuota Checkbox -->
+                    <label class="flex items-start gap-3 p-3.5 rounded-xl bg-amber-50 border border-amber-200 cursor-pointer">
+                        <input type="checkbox" id="editTenantResetUsage" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
+                        <div>
+                            <div class="text-xs font-bold text-amber-900">Reset Total Pesan Terpakai Bulan Ini ke 0</div>
+                            <div class="text-[11px] text-amber-700 mt-0.5">Centang opsi ini jika Anda ingin mengembalikan total kuota yang telah terkonsumsi menjadi 0 pesan (membuka blokir secara instan jika kuota habis).</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Sub-Pane 3: Knowledge Base L4 (Markdown Editor) -->
+                <div id="subPaneKb" class="space-y-3 bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hidden">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-100 flex-wrap gap-2">
+                        <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-lg">
+                            <button type="button" onclick="switchKbFile('profil')" id="kbTabBtn_profil" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-indigo-600 text-white shadow-xs transition cursor-pointer">
+                                profil.md
+                            </button>
+                            <button type="button" onclick="switchKbFile('layanan')" id="kbTabBtn_layanan" class="px-2.5 py-1 rounded-md text-xs font-mono text-slate-300 hover:text-white transition cursor-pointer">
+                                layanan.md
+                            </button>
+                            <button type="button" onclick="switchKbFile('kebijakan')" id="kbTabBtn_kebijakan" class="px-2.5 py-1 rounded-md text-xs font-mono text-slate-300 hover:text-white transition cursor-pointer">
+                                kebijakan.md
+                            </button>
+                            <button type="button" onclick="switchKbFile('faq')" id="kbTabBtn_faq" class="px-2.5 py-1 rounded-md text-xs font-mono text-slate-300 hover:text-white transition cursor-pointer">
+                                faq.md
+                            </button>
+                        </div>
+
+                        <div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span id="activeKbFileName">profil.md</span>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <textarea id="editKbTextarea" rows="11" class="w-full font-mono text-xs p-3 rounded-xl bg-slate-950 text-slate-100 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none leading-relaxed" placeholder="Memuat isi dokumen markdown..."></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] text-slate-500">
+                        <span>ℹ Markdown ini di-chunk otomatis dan diindeks ke FAISS saat disimpan.</span>
+                        <button type="button" onclick="reloadActiveKbFile()" class="text-indigo-600 hover:text-indigo-800 font-semibold cursor-pointer">
+                            Muat Ulang Berkas ↺
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footers -->
+            <!-- Overview Footer -->
+            <div id="modalFooterOverview" class="px-6 py-3.5 bg-white border-t border-slate-200 flex items-center justify-between gap-3">
+                <span class="text-xs text-slate-400 font-mono">AI Engine · Tenant Intelligence</span>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="switchModalTab('edit')" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                        <span>✏️ Edit AI Klien Ini</span>
+                    </button>
+                    <a id="modalBtnWhatsApp" href="#" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition inline-flex items-center gap-1.5 cursor-pointer">
+                        <span>💬 WhatsApp</span>
+                    </a>
+                    <button type="button" onclick="closeTenantModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+
+            <!-- Edit Footer -->
+            <div id="modalFooterEdit" class="px-6 py-3.5 bg-white border-t border-slate-200 flex items-center justify-between gap-3 hidden">
+                <button type="button" onclick="switchModalTab('overview')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer">
+                    Batal
+                </button>
+                <div class="flex items-center gap-2">
+                    <button type="button" id="btnSaveAiConfig" onclick="saveTenantAiChanges()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-2 cursor-pointer">
+                        <span>💾 Simpan Perubahan AI &amp; Rebuild FAISS</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal Konfigurasi Global AI Engine (Prompts & Parameter) -->
+    <div id="globalAiModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 transition-all duration-200 hidden" role="dialog" aria-modal="true" aria-labelledby="globalModalTitle">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 max-w-3xl w-full overflow-hidden transform transition-all flex flex-col max-h-[92vh]">
+            
+            <!-- Global Modal Header -->
+            <div class="px-6 py-4 bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0">
+                        ⚙️
+                    </div>
+                    <div>
+                        <h3 id="globalModalTitle" class="text-base font-bold text-white tracking-tight">Konfigurasi Global AI Engine</h3>
+                        <div class="text-xs text-indigo-200 font-mono mt-0.5">Prompt Multi-Layer, Parameter Gateway LLM &amp; Cache</div>
+                    </div>
+                </div>
+                <button type="button" onclick="closeGlobalAiModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer text-lg font-bold" aria-label="Tutup">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Global Modal Body (Tabs & Panes) -->
+            <div class="p-6 overflow-y-auto space-y-4 text-sm text-slate-700 bg-slate-50/50">
+                <!-- Sub-Tabs -->
+                <div class="flex items-center gap-1.5 p-1 bg-slate-200/70 rounded-xl border border-slate-200 text-xs font-semibold">
+                    <button type="button" onclick="switchGlobalTab('prompts')" id="globalTabBtn_prompts" class="flex-1 py-1.5 rounded-lg bg-white text-indigo-700 font-bold shadow-xs transition cursor-pointer">
+                        📝 System Prompts (L1, L2, L3, L4)
+                    </button>
+                    <button type="button" onclick="switchGlobalTab('params')" id="globalTabBtn_params" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer font-medium">
+                        🎛 Parameter LLM Gateway
+                    </button>
+                </div>
+
+                <!-- Pane 1: Layer Prompts -->
+                <div id="globalPanePrompts" class="space-y-4">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-900">Layer 1 · D-Kreasi Concierge Prompt</label>
+                            <span class="text-[11px] text-indigo-600 font-mono">app/layers/l1_dkreasi</span>
+                        </div>
+                        <textarea id="globalL1Prompt" rows="4" class="w-full font-mono text-xs p-3 rounded-lg bg-slate-950 text-slate-100 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none leading-relaxed"></textarea>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-900">Layer 2 · D-Karsa Portfolio AI Prompt</label>
+                            <span class="text-[11px] text-indigo-600 font-mono">app/layers/l2_dkarsa</span>
+                        </div>
+                        <textarea id="globalL2Prompt" rows="4" class="w-full font-mono text-xs p-3 rounded-lg bg-slate-950 text-slate-100 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none leading-relaxed"></textarea>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-900">Layer 3 · Webia Sales AI Prompt</label>
+                            <span class="text-[11px] text-indigo-600 font-mono">app/layers/l3_webia</span>
+                        </div>
+                        <textarea id="globalL3Prompt" rows="4" class="w-full font-mono text-xs p-3 rounded-lg bg-slate-950 text-slate-100 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none leading-relaxed"></textarea>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-900">Layer 4 · Base Business Prompt</label>
+                            <span class="text-[11px] text-indigo-600 font-mono">app/layers/l4_business</span>
+                        </div>
+                        <textarea id="globalL4Prompt" rows="4" class="w-full font-mono text-xs p-3 rounded-lg bg-slate-950 text-slate-100 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none leading-relaxed"></textarea>
+                    </div>
+                </div>
+
+                <!-- Pane 2: LLM Parameters -->
+                <div id="globalPaneParams" class="space-y-4 hidden">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Model Name (Gateway)</label>
+                                <input type="text" id="globalLlmModel" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Temperature (0.0 - 1.0)</label>
+                                <input type="number" step="0.1" min="0" max="1" id="globalLlmTemp" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Max Tokens</label>
+                                <input type="number" id="globalLlmTokens" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Customer Support WhatsApp Handoff</label>
+                                <input type="text" id="globalCsWa" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                        <div class="text-xs font-bold text-slate-900">Aksi Pemeliharaan Cache</div>
+                        <div class="text-xs text-slate-500">Kosongkan semantic cache agar AI langsung merefleksikan perubahan prompt terbaru.</div>
+                        <button type="button" onclick="clearGlobalCache()" class="mt-2 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold transition cursor-pointer">
+                            Bersihkan Semantic Cache Sekarang 🗑️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Modal Footer -->
+            <div class="px-6 py-3.5 bg-white border-t border-slate-200 flex items-center justify-between gap-3">
+                <button type="button" onclick="closeGlobalAiModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer">
+                    Tutup
+                </button>
+                <button type="button" id="btnSaveGlobalAi" onclick="saveGlobalAiSettings()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-2 cursor-pointer">
+                    <span>💾 Simpan Pengaturan Global</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Client-side Interactive Logic -->
     <script>
         // 1. Sidebar Active State & Smooth Navigation
@@ -838,7 +1364,7 @@ class AnalyticsService:
             applyFilters();
         }}
 
-        // 4. Asynchronous Filter for Peak Hours & Traffic Trend (Animated, Dynamic X-Axis, No Page Reload)
+        // 4. Asynchronous Filter for Peak Hours & Traffic Trend
         async function loadTrafficChart(days) {{
             const chartWrapper = document.getElementById('hourlyChartWrapper');
             const peakLabel = document.getElementById('trafficPeakLabel');
@@ -884,6 +1410,496 @@ class AnalyticsService:
             }} finally {{
                 chartWrapper.classList.remove('opacity-40', 'pointer-events-none');
             }}
+        }}
+
+        // 5. Tenant Detail & Edit Modal Logic
+        const tenantModal = document.getElementById('tenantDetailModal');
+        let currentTenantData = null;
+        let currentKbFiles = {{ profil: '', layanan: '', kebijakan: '', faq: '' }};
+        let activeKbFileKey = 'profil';
+        let currentActiveTenantButton = null;
+
+        function openTenantModal(button) {{
+            if (!tenantModal) return;
+            const rawData = button.getAttribute('data-tenant');
+            if (!rawData) return;
+
+            try {{
+                currentActiveTenantButton = button;
+                const data = JSON.parse(rawData);
+                currentTenantData = data;
+
+                // 1. Populate Overview View
+                document.getElementById('modalTenantName').textContent = data.name || 'Detail Klien';
+                document.getElementById('modalTenantId').textContent = data.tenant_id || '-';
+                document.getElementById('modalTenantCategory').textContent = data.category || 'Bisnis';
+                
+                document.getElementById('modalTierBadge').textContent = data.tier || 'PIXEL';
+                document.getElementById('modalQuotaLimit').textContent = data.limit || '500';
+                document.getElementById('modalQuotaUsed').textContent = data.used || '0';
+                document.getElementById('modalQuotaRemaining').textContent = data.remaining || '0';
+                document.getElementById('modalPercentage').textContent = data.pct || '0%';
+                
+                const pBar = document.getElementById('modalProgressBar');
+                if (pBar) {{
+                    pBar.style.width = (data.bar_width || 0) + '%';
+                    pBar.className = 'h-2.5 rounded-full transition-all duration-300 ' + (data.status_cat === 'blocked' ? 'bg-rose-500' : (data.status_cat === 'warning' ? 'bg-amber-500' : 'bg-emerald-500'));
+                }}
+                
+                const statusBadgeContainer = document.getElementById('modalStatusBadge');
+                if (statusBadgeContainer) {{
+                    statusBadgeContainer.innerHTML = data.status_badge || '';
+                }}
+
+                document.getElementById('modalCycleEnd').textContent = data.cycle_end || '-';
+                document.getElementById('modalResetDate').textContent = (data.reset_date || '-') + ' (' + (data.days_left || 0) + ' hari lagi)';
+
+                document.getElementById('modalWhatsApp').textContent = data.whatsapp || '-';
+                document.getElementById('modalAddress').textContent = data.address || '-';
+                document.getElementById('modalOperatingHours').textContent = data.operating_hours || '-';
+                document.getElementById('modalGreeting').textContent = data.greeting || '-';
+
+                const cleanWa = (data.whatsapp || '').replace(/[^0-9]/g, '');
+                const waFormatted = cleanWa.startsWith('0') ? '62' + cleanWa.substring(1) : cleanWa;
+                const waUrl = waFormatted ? ('https://wa.me/' + waFormatted + '?text=' + encodeURIComponent('Halo ' + (data.name || '') + ', kami dari Tim D-Kreasi / Webia ingin mengonfirmasikan terkait performa AI Assistant website Anda.')) : '#';
+
+                const waLink = document.getElementById('modalWhatsAppLink');
+                const btnWa = document.getElementById('modalBtnWhatsApp');
+                if (waLink) {{
+                    waLink.href = waUrl;
+                    waLink.style.display = waFormatted ? 'inline-block' : 'none';
+                }}
+                if (btnWa) {{
+                    btnWa.href = waUrl;
+                    btnWa.style.display = waFormatted ? 'inline-flex' : 'none';
+                }}
+
+                function updateKbBadge(id, exists) {{
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    if (exists) {{
+                        el.className = 'p-2 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-800 flex items-center justify-between font-medium';
+                        el.lastElementChild.textContent = '✓';
+                    }} else {{
+                        el.className = 'p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-400 flex items-center justify-between';
+                        el.lastElementChild.textContent = '–';
+                    }}
+                }}
+                updateKbBadge('kbBadgeProfil', data.has_profil);
+                updateKbBadge('kbBadgeLayanan', data.has_layanan);
+                updateKbBadge('kbBadgeKebijakan', data.has_kebijakan);
+                updateKbBadge('kbBadgeFaq', data.has_faq);
+
+                // 2. Populate Edit Form Fields
+                document.getElementById('editTenantName').value = data.name || '';
+                document.getElementById('editTenantCategory').value = data.category || '';
+                document.getElementById('editTenantWhatsApp').value = data.whatsapp === '-' ? '' : (data.whatsapp || '');
+                document.getElementById('editTenantHours').value = data.operating_hours === '-' ? '' : (data.operating_hours || '');
+                document.getElementById('editTenantAddress').value = data.address === '-' ? '' : (data.address || '');
+                document.getElementById('editTenantGreeting').value = data.greeting === '-' ? '' : (data.greeting || '');
+                document.getElementById('editTenantDescription').value = data.description === '-' ? '' : (data.description || '');
+                
+                const tierSel = document.getElementById('editTenantTier');
+                if (tierSel) {{
+                    tierSel.value = (data.tier || 'pixel').toLowerCase();
+                }}
+                const numQuota = parseInt((data.limit || '500').replace(/[^0-9]/g, '')) || 500;
+                document.getElementById('editTenantQuota').value = numQuota;
+                document.getElementById('editTenantResetUsage').checked = false;
+
+                // Reset views to overview tab
+                switchModalTab('overview');
+
+                // 3. Fetch Knowledge Base files in background
+                fetchTenantKnowledgeFiles(data.tenant_id);
+
+                tenantModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }} catch (err) {{
+                console.error('Gagal membuka modal tenant:', err);
+            }}
+        }}
+
+        function closeTenantModal() {{
+            if (!tenantModal) return;
+            tenantModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }}
+
+        function switchModalTab(tab) {{
+            const viewOverview = document.getElementById('modalViewOverview');
+            const viewEdit = document.getElementById('modalViewEdit');
+            const btnOverview = document.getElementById('modalTabBtnOverview');
+            const btnEdit = document.getElementById('modalTabBtnEdit');
+            const footerOverview = document.getElementById('modalFooterOverview');
+            const footerEdit = document.getElementById('modalFooterEdit');
+
+            if (tab === 'edit') {{
+                viewOverview.classList.add('hidden');
+                viewEdit.classList.remove('hidden');
+                footerOverview.classList.add('hidden');
+                footerEdit.classList.remove('hidden');
+                btnOverview.className = 'px-3 py-1 rounded-lg font-medium text-slate-200 hover:text-white transition cursor-pointer';
+                btnEdit.className = 'px-3 py-1 rounded-lg font-bold bg-white text-slate-900 shadow-xs transition cursor-pointer';
+                switchEditSubTab('profile');
+            }} else {{
+                viewOverview.classList.remove('hidden');
+                viewEdit.classList.add('hidden');
+                footerOverview.classList.remove('hidden');
+                footerEdit.classList.add('hidden');
+                btnOverview.className = 'px-3 py-1 rounded-lg font-bold bg-white text-slate-900 shadow-xs transition cursor-pointer';
+                btnEdit.className = 'px-3 py-1 rounded-lg font-medium text-slate-200 hover:text-white transition cursor-pointer';
+            }}
+        }}
+
+        function switchEditSubTab(subTab) {{
+            const panes = {{
+                profile: document.getElementById('subPaneProfile'),
+                quota: document.getElementById('subPaneQuota'),
+                kb: document.getElementById('subPaneKb')
+            }};
+            const btns = {{
+                profile: document.getElementById('subTabBtnProfile'),
+                quota: document.getElementById('subTabBtnQuota'),
+                kb: document.getElementById('subTabBtnKb')
+            }};
+
+            for (const key in panes) {{
+                if (key === subTab) {{
+                    if (panes[key]) panes[key].classList.remove('hidden');
+                    if (btns[key]) btns[key].className = 'flex-1 py-1.5 rounded-lg bg-white text-indigo-700 font-bold shadow-xs transition cursor-pointer';
+                }} else {{
+                    if (panes[key]) panes[key].classList.add('hidden');
+                    if (btns[key]) btns[key].className = 'flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer font-medium';
+                }}
+            }}
+        }}
+
+        function onTierChange(val) {{
+            const quotaMap = {{ pixel: 500, pulse: 1000, nexus: 2500, infinity: 5000 }};
+            const input = document.getElementById('editTenantQuota');
+            if (input && quotaMap[val]) {{
+                input.value = quotaMap[val];
+            }}
+        }}
+
+        async function fetchTenantKnowledgeFiles(tenantId) {{
+            try {{
+                const res = await fetch('/api/v1/tenants/' + tenantId + '/knowledge');
+                if (!res.ok) return;
+                const data = await res.json();
+                currentKbFiles = {{
+                    profil: data.profil || '',
+                    layanan: data.layanan || '',
+                    kebijakan: data.kebijakan || '',
+                    faq: data.faq || '',
+                }};
+                switchKbFile(activeKbFileKey);
+            }} catch (err) {{
+                console.warn('Gagal mengambil berkas knowledge base:', err);
+            }}
+        }}
+
+        function switchKbFile(fileKey) {{
+            const txt = document.getElementById('editKbTextarea');
+            if (txt && activeKbFileKey && currentKbFiles[activeKbFileKey] !== undefined) {{
+                currentKbFiles[activeKbFileKey] = txt.value;
+            }}
+
+            activeKbFileKey = fileKey;
+            ['profil', 'layanan', 'kebijakan', 'faq'].forEach(k => {{
+                const b = document.getElementById('kbTabBtn_' + k);
+                if (b) {{
+                    if (k === fileKey) {{
+                        b.className = 'px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-indigo-600 text-white shadow-xs transition cursor-pointer';
+                    }} else {{
+                        b.className = 'px-2.5 py-1 rounded-md text-xs font-mono text-slate-300 hover:text-white transition cursor-pointer';
+                    }}
+                }}
+            }});
+
+            const lbl = document.getElementById('activeKbFileName');
+            if (lbl && currentTenantData) {{
+                lbl.textContent = fileKey + '.md (' + currentTenantData.tenant_id + ')';
+            }}
+
+            if (txt) {{
+                txt.value = currentKbFiles[fileKey] || '';
+            }}
+        }}
+
+        function reloadActiveKbFile() {{
+            if (!currentTenantData || !currentTenantData.tenant_id) return;
+            fetchTenantKnowledgeFiles(currentTenantData.tenant_id);
+            showToast('Memuat ulang berkas dari server...');
+        }}
+
+        async function saveTenantAiChanges() {{
+            if (!currentTenantData || !currentTenantData.tenant_id) return;
+
+            const txt = document.getElementById('editKbTextarea');
+            if (txt && activeKbFileKey) {{
+                currentKbFiles[activeKbFileKey] = txt.value;
+            }}
+
+            const btnSave = document.getElementById('btnSaveAiConfig');
+            if (btnSave) {{
+                btnSave.disabled = true;
+                btnSave.innerHTML = '<svg class="w-4 h-4 animate-spin text-white inline-block mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> <span>Menyimpan &amp; Rebuild FAISS...</span>';
+            }}
+
+            const payload = {{
+                name: document.getElementById('editTenantName').value.trim(),
+                category: document.getElementById('editTenantCategory').value.trim(),
+                package_tier: document.getElementById('editTenantTier').value,
+                monthly_quota: parseInt(document.getElementById('editTenantQuota').value) || 500,
+                reset_usage: document.getElementById('editTenantResetUsage').checked,
+                whatsapp: document.getElementById('editTenantWhatsApp').value.trim(),
+                operating_hours: document.getElementById('editTenantHours').value.trim(),
+                address: document.getElementById('editTenantAddress').value.trim(),
+                greeting: document.getElementById('editTenantGreeting').value.trim(),
+                description: document.getElementById('editTenantDescription').value.trim(),
+                profil_md: currentKbFiles.profil,
+                layanan_md: currentKbFiles.layanan,
+                kebijakan_md: currentKbFiles.kebijakan,
+                faq_md: currentKbFiles.faq,
+            }};
+
+            try {{
+                const res = await fetch('/api/v1/tenants/' + currentTenantData.tenant_id + '/update-ai', {{
+                    method: 'POST',
+                    headers: {{ 'Content-Type': 'application/json' }},
+                    body: JSON.stringify(payload),
+                }});
+
+                const resData = await res.json();
+                if (!res.ok) {{
+                    throw new Error(resData.detail || 'Gagal menyimpan perubahan.');
+                }}
+
+                // Update currentTenantData
+                currentTenantData.name = resData.name;
+                currentTenantData.category = resData.category;
+                currentTenantData.tier = (resData.package_tier || 'PIXEL').toUpperCase();
+                currentTenantData.limit = (resData.monthly_quota || 500).toLocaleString();
+
+                if (payload.reset_usage) {{
+                    currentTenantData.used = '0';
+                    currentTenantData.remaining = currentTenantData.limit;
+                    currentTenantData.pct = '0.0%';
+                    currentTenantData.bar_width = 0;
+                    currentTenantData.status_cat = 'normal';
+                    currentTenantData.status_badge = '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aman</span>';
+                }} else {{
+                    const used = resData.stats.usage || 0;
+                    const limit = resData.monthly_quota || 500;
+                    const pct = limit > 0 ? (used / limit * 100) : 0;
+                    currentTenantData.used = used.toLocaleString();
+                    currentTenantData.remaining = Math.max(0, limit - used).toLocaleString();
+                    currentTenantData.pct = pct.toFixed(1) + '%';
+                    currentTenantData.bar_width = Math.min(100, pct);
+                    if (used >= limit) {{
+                        currentTenantData.status_cat = 'blocked';
+                        currentTenantData.status_badge = '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Habis (Blocked)</span>';
+                    }} else if (pct >= 80) {{
+                        currentTenantData.status_cat = 'warning';
+                        currentTenantData.status_badge = '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Waspada (&ge;80%)</span>';
+                    }} else {{
+                        currentTenantData.status_cat = 'normal';
+                        currentTenantData.status_badge = '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aman</span>';
+                    }}
+                }}
+
+                if (resData.detail) {{
+                    currentTenantData.whatsapp = resData.detail.whatsapp;
+                    currentTenantData.address = resData.detail.address;
+                    currentTenantData.operating_hours = resData.detail.operating_hours;
+                    currentTenantData.greeting = resData.detail.greeting;
+                    currentTenantData.description = resData.detail.description;
+                    currentTenantData.has_profil = resData.detail.has_profil;
+                    currentTenantData.has_layanan = resData.detail.has_layanan;
+                    currentTenantData.has_kebijakan = resData.detail.has_kebijakan;
+                    currentTenantData.has_faq = resData.detail.has_faq;
+                }}
+
+                // Update table row DOM element
+                if (currentActiveTenantButton) {{
+                    currentActiveTenantButton.setAttribute('data-tenant', JSON.stringify(currentTenantData));
+                    const tr = currentActiveTenantButton.closest('tr');
+                    if (tr) {{
+                        const nameSpan = tr.querySelector('.tenant-name-span');
+                        if (nameSpan) nameSpan.textContent = currentTenantData.name;
+                        const tierCell = tr.querySelector('.tenant-tier-td');
+                        if (tierCell) tierCell.innerHTML = '<span class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-800 border border-slate-200">' + currentTenantData.tier + '</span>';
+                        const quotaLimit = tr.querySelector('.tenant-quota-limit');
+                        if (quotaLimit) quotaLimit.textContent = currentTenantData.limit;
+                        const quotaUsed = tr.querySelector('.tenant-quota-used');
+                        if (quotaUsed) quotaUsed.textContent = currentTenantData.used;
+                        const remaining = tr.querySelector('.tenant-remaining');
+                        if (remaining) remaining.textContent = currentTenantData.remaining;
+                        const pctSpan = tr.querySelector('.tenant-pct-span');
+                        if (pctSpan) pctSpan.textContent = currentTenantData.pct;
+                        const pBar = tr.querySelector('.tenant-pbar');
+                        if (pBar) {{
+                            pBar.style.width = currentTenantData.bar_width + '%';
+                            pBar.className = 'tenant-pbar h-2 rounded-full transition-all duration-500 ' + (currentTenantData.status_cat === 'blocked' ? 'bg-rose-500' : (currentTenantData.status_cat === 'warning' ? 'bg-amber-500' : 'bg-emerald-500'));
+                        }}
+                        const statusTd = tr.querySelector('.tenant-status-td');
+                        if (statusTd) statusTd.innerHTML = currentTenantData.status_badge;
+                    }}
+                }}
+
+                // Re-populate modal and switch back to overview
+                openTenantModal(currentActiveTenantButton);
+                switchModalTab('overview');
+
+                showToast('✓ Konfigurasi AI &amp; Knowledge Base ' + currentTenantData.name + ' berhasil disimpan &amp; di-index ke FAISS!');
+            }} catch (err) {{
+                alert('Gagal menyimpan perubahan AI: ' + err.message);
+            }} finally {{
+                if (btnSave) {{
+                    btnSave.disabled = false;
+                    btnSave.innerHTML = '<span>💾 Simpan Perubahan AI &amp; Rebuild FAISS</span>';
+                }}
+            }}
+        }}
+
+        if (tenantModal) {{
+            tenantModal.addEventListener('click', function(e) {{
+                if (e.target === tenantModal) closeTenantModal();
+            }});
+        }}
+        document.addEventListener('keydown', function(e) {{
+            if (e.key === 'Escape' && tenantModal && !tenantModal.classList.contains('hidden')) {{
+                closeTenantModal();
+            }}
+        }});
+
+        // 6. Global AI Engine Modal Logic
+        const globalAiModal = document.getElementById('globalAiModal');
+        function openGlobalAiModal() {{
+            if (!globalAiModal) return;
+            loadGlobalAiSettings();
+            globalAiModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }}
+
+        function closeGlobalAiModal() {{
+            if (!globalAiModal) return;
+            globalAiModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }}
+
+        function switchGlobalTab(tab) {{
+            const panePrompts = document.getElementById('globalPanePrompts');
+            const paneParams = document.getElementById('globalPaneParams');
+            const btnPrompts = document.getElementById('globalTabBtn_prompts');
+            const btnParams = document.getElementById('globalTabBtn_params');
+
+            if (tab === 'params') {{
+                panePrompts.classList.add('hidden');
+                paneParams.classList.remove('hidden');
+                btnPrompts.className = 'flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer font-medium';
+                btnParams.className = 'flex-1 py-1.5 rounded-lg bg-white text-indigo-700 font-bold shadow-xs transition cursor-pointer';
+            }} else {{
+                panePrompts.classList.remove('hidden');
+                paneParams.classList.add('hidden');
+                btnPrompts.className = 'flex-1 py-1.5 rounded-lg bg-white text-indigo-700 font-bold shadow-xs transition cursor-pointer';
+                btnParams.className = 'flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer font-medium';
+            }}
+        }}
+
+        async function loadGlobalAiSettings() {{
+            try {{
+                const res = await fetch('/api/v1/analytics/engine-config');
+                if (!res.ok) return;
+                const data = await res.json();
+                document.getElementById('globalLlmModel').value = data.llm_model || 'd-kreasi';
+                document.getElementById('globalLlmTemp').value = data.llm_temperature !== undefined ? data.llm_temperature : 0.2;
+                document.getElementById('globalLlmTokens').value = data.llm_max_tokens || 2048;
+                document.getElementById('globalCsWa').value = data.ai_cs_whatsapp || '';
+                document.getElementById('globalL1Prompt').value = data.l1_prompt || '';
+                document.getElementById('globalL2Prompt').value = data.l2_prompt || '';
+                document.getElementById('globalL3Prompt').value = data.l3_prompt || '';
+                document.getElementById('globalL4Prompt').value = data.l4_prompt || '';
+            }} catch (err) {{
+                console.error('Gagal memuat setting engine:', err);
+            }}
+        }}
+
+        async function saveGlobalAiSettings() {{
+            const btn = document.getElementById('btnSaveGlobalAi');
+            if (btn) {{
+                btn.disabled = true;
+                btn.innerHTML = '<svg class="w-4 h-4 animate-spin text-white inline-block mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> <span>Menyimpan...</span>';
+            }}
+
+            const payload = {{
+                llm_model: document.getElementById('globalLlmModel').value.trim(),
+                llm_temperature: parseFloat(document.getElementById('globalLlmTemp').value) || 0.2,
+                llm_max_tokens: parseInt(document.getElementById('globalLlmTokens').value) || 2048,
+                ai_cs_whatsapp: document.getElementById('globalCsWa').value.trim(),
+                l1_prompt: document.getElementById('globalL1Prompt').value,
+                l2_prompt: document.getElementById('globalL2Prompt').value,
+                l3_prompt: document.getElementById('globalL3Prompt').value,
+                l4_prompt: document.getElementById('globalL4Prompt').value,
+            }};
+
+            try {{
+                const res = await fetch('/api/v1/analytics/engine-config', {{
+                    method: 'POST',
+                    headers: {{ 'Content-Type': 'application/json' }},
+                    body: JSON.stringify(payload)
+                }});
+                if (!res.ok) throw new Error('Gagal menyimpan konfigurasi global.');
+                closeGlobalAiModal();
+                showToast('✓ Konfigurasi Global AI Engine &amp; Prompts berhasil disimpan &amp; cache dibersihkan!');
+            }} catch (err) {{
+                alert('Gagal: ' + err.message);
+            }} finally {{
+                if (btn) {{
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>💾 Simpan Pengaturan Global</span>';
+                }}
+            }}
+        }}
+
+        async function clearGlobalCache() {{
+            try {{
+                const res = await fetch('/api/v1/analytics/cache/clear', {{ method: 'POST' }});
+                if (res.ok) {{
+                    showToast('✓ Semantic cache berhasil dibersihkan!');
+                }}
+            }} catch (err) {{
+                alert('Gagal membersihkan cache: ' + err.message);
+            }}
+        }}
+
+        if (globalAiModal) {{
+            globalAiModal.addEventListener('click', function(e) {{
+                if (e.target === globalAiModal) closeGlobalAiModal();
+            }});
+        }}
+        document.addEventListener('keydown', function(e) {{
+            if (e.key === 'Escape' && globalAiModal && !globalAiModal.classList.contains('hidden')) {{
+                closeGlobalAiModal();
+            }}
+        }});
+
+        // 7. Toast Notification Utility
+        function showToast(msg) {{
+            let t = document.getElementById('dashboardToast');
+            if (!t) {{
+                t = document.createElement('div');
+                t.id = 'dashboardToast';
+                t.className = 'fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 text-xs font-semibold transform transition-all duration-300 opacity-0 translate-y-3';
+                document.body.appendChild(t);
+            }}
+            t.innerHTML = '<span class="text-emerald-400 font-bold">✓</span><span>' + msg + '</span>';
+            t.classList.remove('opacity-0', 'translate-y-3');
+            setTimeout(() => {{
+                t.classList.add('opacity-0', 'translate-y-3');
+            }}, 4000);
         }}
     </script>
 </body>
@@ -1003,6 +2019,9 @@ class AnalyticsService:
             for t in tenant_rows:
                 stats = await UsageService.get_tenant_usage_stats(db=db, tenant_id=t.id)
                 stats["name"] = t.name or t.id.replace("_", " ").title()
+                stats["category"] = getattr(t, "category", "Bisnis") or "Bisnis"
+                kb_info = cls._get_tenant_detail_info(t.id)
+                stats.update(kb_info)
                 tenant_quotas.append(stats)
 
             # 11. Distribusi & Tren Lalu Lintas AI (Traffic Trend)

@@ -115,6 +115,28 @@ def test_render_dashboard_html():
     assert "loadTrafficChart" in html
     assert "hourlyChartWrapper" in html
     assert "traffic-btn" in html
+    assert "tenantDetailModal" in html
+    assert "openTenantModal" in html
+    assert "closeTenantModal" in html
+    assert 'onclick="openTenantModal(this)"' in html
+    assert "data-tenant=" in html
+    assert "modalViewEdit" in html
+    assert "globalAiModal" in html
+    assert "switchModalTab" in html
+    assert "saveTenantAiChanges" in html
+    assert "saveGlobalAiSettings" in html
+    assert "editTenantGreeting" in html
+    assert "editTenantQuota" in html
+
+
+def test_get_tenant_detail_info():
+    detail = AnalyticsService._get_tenant_detail_info("tenant_automotive_01")
+    assert "whatsapp" in detail
+    assert "address" in detail
+    assert "operating_hours" in detail
+    assert "greeting" in detail
+    assert detail["has_profil"] is True
+
 
 
 def test_render_hourly_chart_svg():
@@ -160,3 +182,36 @@ def test_render_traffic_chart_7_days():
     assert "Rab, 29/10" in html
     assert "Hari Ini" in html
     assert "Kamis, 30 Okt 2026" in html
+
+
+def test_engine_config_endpoints():
+    from app.api.v1.analytics import get_engine_config, save_engine_config, EngineConfigPayload
+    cfg = get_engine_config()
+    assert cfg["status"] == "success"
+    assert "llm_model" in cfg
+    assert "l1_prompt" in cfg
+    assert "l4_prompt" in cfg
+
+    # Test saving custom config
+    payload = EngineConfigPayload(
+        llm_temperature=0.35,
+        ai_cs_whatsapp="628111222333"
+    )
+    saved = save_engine_config(payload)
+    assert saved["status"] == "success"
+    assert saved["config"]["llm_temperature"] == 0.35
+
+
+def test_tenant_full_update_payload_schema():
+    from app.api.v1.tenants import TenantAiFullUpdatePayload
+    p = TenantAiFullUpdatePayload(
+        name="Bengkel PakDe Motor Jaya",
+        package_tier="vector",
+        monthly_quota=1000,
+        greeting="Halo! Selamat datang di bengkel kami.",
+        reset_usage=True
+    )
+    assert p.package_tier == "vector"
+    assert p.monthly_quota == 1000
+    assert p.reset_usage is True
+
