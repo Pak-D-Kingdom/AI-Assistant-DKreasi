@@ -610,7 +610,7 @@ class L2IntentRouter:
             }
 
         # 4b. Pertanyaan Website Bisnis / Company Profile / Toko Online (Arahkan sekilas ke WEBIA)
-        if any(w in normalized for w in ["website bisnis", "company profile", "toko online", "landing page bisnis", "web bisnis", "bikin website", "buat website", "buatkan website", "jasa website"]):
+        if any(w in normalized for w in ["website bisnis", "company profile", "toko online", "landing page bisnis", "web bisnis", "bikin website", "buat website", "buatkan website", "jasa website", "layanan website", "website", "situs web"]):
             return {
                 "intent": "website_business_referral",
                 "confidence": 0.95,

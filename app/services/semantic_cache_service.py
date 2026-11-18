@@ -119,10 +119,14 @@ class SemanticCacheService:
             entries = active_entries
 
         norm_query = SemanticCacheEntry.normalize_text(query_clean)
+        from app.services.fallback_service import FallbackService
 
         # LEVEL 1: Exact Normalized Match (< 1ms)
-        for entry in entries:
+        for entry in list(entries):
             if entry.normalized_query == norm_query:
+                if FallbackService.is_fallback_text(entry.response):
+                    entries.remove(entry)
+                    continue
                 entry.hit_count += 1
                 self.stats["cache_hits"] += 1
                 self.stats["tokens_saved_estimate"] += 350
@@ -148,7 +152,7 @@ class SemanticCacheService:
             best_entry: Optional[SemanticCacheEntry] = None
             highest_sim = -1.0
 
-            for entry in entries:
+            for entry in list(entries):
                 # Cosine similarity pada unit vector: dot product
                 sim = float(np.dot(query_vector, entry.embedding))
                 if sim > highest_sim:
@@ -156,6 +160,10 @@ class SemanticCacheService:
                     best_entry = entry
 
             if best_entry and highest_sim >= sim_threshold:
+                if FallbackService.is_fallback_text(best_entry.response):
+                    entries.remove(best_entry)
+                    self.stats["cache_misses"] += 1
+                    return None
                 best_entry.hit_count += 1
                 self.stats["cache_hits"] += 1
                 self.stats["tokens_saved_estimate"] += 350
@@ -195,10 +203,15 @@ class SemanticCacheService:
             return False
 
         # Jangan simpan respon penolakan / fallback / kuota habis
+        from app.services.fallback_service import FallbackService
+        if FallbackService.is_fallback_text(response):
+            return False
+
         forbidden_keywords = [
             "kuota layanan asisten chat otomatis bulan ini",
             "maaf, saya tidak menemukan informasi",
             "hubungi kami langsung via whatsapp",
+            "siap membantu anda melalui whatsapp",
             "terjadi kesalahan sistem",
         ]
         resp_lower = response.lower()

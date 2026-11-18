@@ -972,3 +972,12 @@ Daftar template berikut disinkronkan langsung dari seluruh seeder resmi Webia La
   - Deskripsi: Rustic editorial law firm website with consultation booking, practice areas, legal assessment, document checklist, and client portal preview.
   - Demo / Live: `/webia/template/vanguard-lawyer`
 
+
+- **Kroma Creative Studio - Branding & Creative Agency Creative Cobalt Pop** (`branding-creative-agency-cobalt-pop` • Category: *professional-service*):
+  - Deskripsi: Website agensi branding & desain kreatif kontemporer bernuansa Cobalt Pop untuk studio kreatif, agensi periklanan, dan desainer identitas visual. Menghadirkan showcase portofolio interaktif, client wall brand ternama, jurnal studi kasus, 4 pilar layanan branding (Brand Strategy, Visual Identity, Packaging, UI/UX System), formulir brief proyek terstruktur, integrasi WhatsApp, dan asisten virtual BCA Chatbot.
+  - Demo / Live: `/webia/template/professional-service/creative/branding-creative-agency-cobalt-pop`
+
+### Kategori: FOOD-SUBSCRIPTION
+- **SodaTable - Weekly Family Meal Plan Catering** (`sodatable-family-meal-plan` • Category: *food-subscription*):
+  - Deskripsi: Website langganan catering & meal plan mingguan keluarga sehat dengan kurasi menu mingguan, opsi langganan harian & mingguan, kalkulator porsi keluarga, formulir preferensi alergi/diet, jadwal pengiriman tepat waktu, estimasi biaya otomatis, dan asisten SodaAI interaktif.
+  - Demo / Live: `/webia/template/sodatable-family-meal-plan`

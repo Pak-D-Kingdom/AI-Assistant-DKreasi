@@ -39,3 +39,13 @@ class FallbackService:
             "is_fallback": True,
             "handoff_url": handoff_url,
         }
+
+    @classmethod
+    def is_fallback_text(cls, text: str) -> bool:
+        if not text:
+            return False
+        for l in ["l1", "l2", "l3", "l4"]:
+            fb = cls.get_fallback_response(l).get("content", "")
+            if fb and (fb.strip() in text or text.strip() in fb):
+                return True
+        return False

@@ -501,6 +501,9 @@ class PipelineOrchestrator:
         if sanitized_output != raw_output:
             yield sse({"type": "replace", "content": sanitized_output})
 
+        from app.services.fallback_service import FallbackService
+        is_fallback = FallbackService.is_fallback_text(sanitized_output)
+
         if db:
             try:
                 await UsageService.log_interaction(
@@ -511,15 +514,15 @@ class PipelineOrchestrator:
                     assistant_message=sanitized_output,
                     tenant_id=tenant_id,
                     site_id=context.site_id,
-                    provider="llm-stream",
-                    model="stream-v1",
-                    is_fallback=False,
+                    provider="fallback" if is_fallback else "llm-stream",
+                    model="fallback-safe" if is_fallback else "stream-v1",
+                    is_fallback=is_fallback,
                 )
             except Exception as e:
                 logger.warning(f"Failed to log streamed interaction: {e}")
 
-        # Store in Semantic Cache for future streaming
-        if len(sanitized_output) > 15:
+        # Store in Semantic Cache for future streaming ONLY IF not fallback
+        if not is_fallback and len(sanitized_output) > 15:
             await self.cache_service.set(
                 layer=layer_name,
                 query=latest_user_message,
