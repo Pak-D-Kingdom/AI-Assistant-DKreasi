@@ -78,35 +78,35 @@
         'site_dkreasi_public': {
             theme: 'dkreasi',
             layer: 'l1',
-            title: 'D-KREASI Assistant',
+            title: "Tanya D'Kreasi",
             subtitle: 'Online · Front-Desk D-KREASI',
             eyebrow: '✦ D-KREASI AI CONCIERGE',
-            launcherLabel: 'Tanya D-KREASI AI',
+            launcherLabel: "Tanya D'Kreasi",
             launcherIcon: '✦',
             avatarIcon: '✦',
             welcomeTitle: 'Halo! Butuh solusi kreasi digital? ✨',
             welcomeDesc: 'Saya siap memandu Anda menemukan layanan terbaik: mulai dari Website Bisnis (WEBIA) hingga Undangan Digital.',
-            initialMsg: 'Halo! Ada yang bisa saya bantu hari ini? Anda sedang mencari solusi Website Bisnis, Undangan Digital, atau ingin berkonsultasi seputar layanan kami?',
+            initialMsg: "Halo! Selamat datang di Tanya D'Kreasi. Ada yang bisa saya bantu hari ini? Anda sedang mencari solusi Website Bisnis, Undangan Digital, atau ingin berkonsultasi seputar layanan kami?",
             chips: [
                 { label: '🌐 Website Bisnis (Webia)', prompt: 'Saya ingin membuat website bisnis profesional di Webia' },
                 { label: '💌 Undangan Digital (D-Karsa)', prompt: 'Saya ingin membuat undangan digital acara di D-Karsa' },
                 { label: '💼 Konsultasi Layanan', prompt: 'Layanan apa saja yang disediakan oleh D-KREASI?' }
             ],
             resetIcon: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Mulai Obrolan Baru"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
-            footer: 'D-KREASI AI Assistant · Solusi Digital Kreatif'
+            footer: "Tanya D'Kreasi · Solusi Digital Kreatif"
         },
         'site_webia_public': {
             theme: 'webia',
             layer: 'l3',
-            title: 'WEBIA Assistant',
+            title: 'Tanya Webia',
             subtitle: 'Online · Asisten Digital WEBIA',
             eyebrow: 'WELCOME TO WEBIA',
-            launcherLabel: 'AI Assistant',
+            launcherLabel: 'Tanya Webia',
             launcherIcon: '✦',
             avatarIcon: '✦',
             welcomeTitle: 'Hai! Mau bikin website impianmu? ✨',
             welcomeDesc: 'Aku siap membantumu menjelajahi layanan WEBIA. Pilih topik di bawah atau tulis pertanyaanmu.',
-            initialMsg: 'Halo! Kamu sedang mencari website untuk bisnis, ingin melihat paket layanan, atau butuh bantuan menentukan jenis website yang cocok?',
+            initialMsg: 'Halo! Selamat datang di Tanya Webia. Kamu sedang mencari website untuk bisnis, ingin melihat paket layanan, atau butuh bantuan menentukan jenis website yang cocok?',
             chips: [
                 { label: '📦 Paket & Biaya', prompt: 'Apa saja paket pembuatan website bisnis di Webia dan berapa harganya?' },
                 { label: '🎨 Rekomendasi Template', prompt: 'Rekomendasikan template website bisnis yang cocok untuk usaha saya' },
@@ -114,7 +114,7 @@
                 { label: '📝 Buat Business Brief', prompt: 'Bantu saya menyusun business brief untuk website bisnis' }
             ],
             resetIcon: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Mulai Obrolan Baru"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
-            footer: 'WEBIA Assistant · Sales AI'
+            footer: 'Tanya Webia · Sales AI'
         },
         'site_dkarsa_public': {
             theme: 'dkarsa',
